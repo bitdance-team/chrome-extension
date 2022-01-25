@@ -1,0 +1,13 @@
+{
+  "name": "BitDance浏览器小插件",
+  "version": "0.1.0",
+  "description": "BitDance Chrome Extension",
+  "manifest_version": 3,
+  "browser_action": {
+     "default_icon": "assets/image/ico19_disable.png",
+     "default_popup": "popup.html",
+     "default_title": "这是一个默认title"
+  },
+  "default_locale": "zh_CN",
+  "permissions": [ "background", "contextMenus", "storage", "unlimitedStorage", "webRequest", "webRequestBlocking", "tabs" ]
+}
