@@ -4,7 +4,6 @@
   "description": "BitDance Chrome Extension",
   "manifest_version": 2,
   "_locale": "zh_CN",
-  "manifest_version": 3,
   "content_scripts": [
     {
       "matches": [
