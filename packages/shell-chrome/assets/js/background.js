@@ -1,1 +1,1 @@
-console.log("[BitDance extension] 学生助手插件启已启用")
+console.log("[BitDance extension] 学生助手插件已启用")

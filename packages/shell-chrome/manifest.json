@@ -21,6 +21,15 @@
     "default_popup": "popup.html",
     "default_title": "这是一个默认title"
   },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+Comma",
+        "mac": "Alt+Comma"
+      },
+      "description": "打开 [学生助手] 插件"
+    }
+  },
   "permissions": [
     "background",
     "contextMenus",
