@@ -7,6 +7,7 @@
   "background": {
     "scripts": [
       "assets/js/background.js"
+      "pages/advanced-search/js/background.js"
     ]
   },
   "content_scripts": [
@@ -15,7 +16,8 @@
         "<all_urls>"
       ],
       "js": [
-        "assets/js/content.js"
+        "assets/js/content.js",
+        "pages/advanced-search/js/content.js"
       ],
       "css": []
     }
