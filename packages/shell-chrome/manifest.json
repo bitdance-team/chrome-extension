@@ -6,7 +6,7 @@
   "_locale": "zh_CN",
   "background": {
     "scripts": [
-      "assets/js/background.js"
+      "assets/js/background.js",
       "pages/advanced-search/js/background.js"
     ]
   },
