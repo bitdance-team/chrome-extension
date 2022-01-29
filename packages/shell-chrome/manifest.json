@@ -1,9 +1,16 @@
 {
-  "name": "BitDance浏览器小插件",
+  "name": "学生助手",
   "version": "0.1.0",
   "description": "BitDance Chrome Extension",
   "manifest_version": 2,
-  "_locale": "zh_CN",
+  "omnibox": {
+    "keyword": "ss"
+  },
+  "icons":{
+    "16": "assets/image/search-256.png",
+    "48": "assets/image/search-256.png",
+    "128": "assets/image/search-256.png"
+  },
   "background": {
     "scripts": [
       "assets/js/background.js",
