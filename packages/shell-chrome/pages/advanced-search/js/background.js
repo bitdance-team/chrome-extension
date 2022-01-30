@@ -51,15 +51,25 @@ function encodeXML(str) {
 /**
  * refer:
  *
+ * omnibox 搜索
  * GitHub demo: https://github.com/GoogleChrome/chrome-extensions-samples/tree/main/mv2-archive/extensions/chrome_search
  * Blog: https://www.cnblogs.com/cc11001100/p/12353361.html
+ * Debug: https://chrome.google.com/webstore/detail/omnibox-debug/nhgkpjdgjmjhgjhgjhgjhgjhgjhgjhgjhg
  */
 
 // 支持的搜索方式，第一位保留为默认搜索方式（文字）
 var omniboxSearchModes = [
   {
     key: "",
-    showText: "文字"
+    showText: "文字",
+    search: function (text) {
+      var url = "https://www.baidu.com/s?wd=" + encodeURIComponent(text);
+      navigate(url, newTab = false);
+      return {
+        status: true,
+        result: null
+      };
+    }
   },
   {
     key: "yn",
@@ -70,6 +80,12 @@ var omniboxSearchModes = [
     getInputText: function (text, encodeText = true) {
       let returnText = /^yn(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
       return encodeText ? encodeXML(returnText) : returnText
+    },
+    search: function (text) {
+      return {
+        status: true,
+        result: null
+      };
     }
   },
   {
@@ -293,11 +309,11 @@ function search(query, callback) {
  * 将当前标签页导航到指定Url / 或者新建标签页
  *
  * @param String url 要导航到的url
- * @param bool newTab 是否打开新标签页
+ * @param bool openInNewTab 是否打开新标签页
  */
-function navigate(url, newTab = false) {
+function navigate(url, openInNewTab = false) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    if (!newTab) {
+    if (!openInNewTab) {
       chrome.tabs.update(tabs[0].id, { url: url });
     } else {
       chrome.tabs.create({ url: url });
