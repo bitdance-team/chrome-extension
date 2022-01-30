@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my todo list</title>
+    <link rel="stylesheet" href="./assets/css/popup.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <audio id="audio">
+        <source src="./src/alarm.mp3" type="audio/mp3">
+    </audio>
+    
+
+    <header id="timer">
+      <div class="buttons">
+        <div class="slider">
+          <span class="left">&lt;</span>
+          <span class="right">&gt;</span>
+        </div>
+        
+        <div class="button" id="pomodoro-btn">开始专注</div>
+        <!-- <div class="button" id="short-break-btn">Short Break</div>
+        <div class="button" id="long-break-btn">Long Break</div> -->
+      </div>
+      <div id="countdown">
+          <span>25:00</span>
+      </div>
+      <div id="start-btn">Start</div>
+      <div id="reset-btn">Reset</div>
+    </header>
+    
+
+    <div id="worklist">
+      <div id="current-task-display">
+        <div id="message">You are working on:</div>
+        <div id="selected-task"></div>
+      </div>
+      
+      <div id="tasks-container">
+        <ul id="tasks"></ul>
+        <div id="add-task-btn">Add Task</div>
+      
+        <form id="task-form" class="hide">
+          <input id="text" type="text" placeholder="What are you working on?">
+          <label for="est-pomodoro">Est Rounds</label>
+          <input id="est-pomodoro" type="number">
+          <div id="btn-container">
+            <button id="save" type="submit">Save</button> 
+            <button id="cancel" type="button">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="settings">
+        <a href="./assets/html/options.html">settings</a>
+      </div>
+    </footer>
+    <script src="./assets/js/"></script>
+</body>
+</html>
