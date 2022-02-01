@@ -33,22 +33,6 @@ chrome.contextMenus.create({
  */
 
 /**
- * 将 & < > 等特殊字符转义，但保留中文不进行转义
- *
- * 测试通过: [ re：    百度&nbsp;<>!@#$%%^&*()_+-=[]{}|\:;'",./? ]
- *
- * refer: https://www.javaroad.cn/questions/108186
- * @param string str
- * @returns
- */
-var holder = document.createElement('div');
-function encodeXML(str) {
-  // var holder = document.createElement('div');
-  holder.textContent = str;
-  return holder.innerHTML;
-}
-
-/**
  * refer:
  *
  * omnibox 搜索
@@ -57,20 +41,61 @@ function encodeXML(str) {
  * Debug: https://chrome.google.com/webstore/detail/omnibox-debug/nhgkpjdgjmjhgjhgjhgjhgjhgjhgjhgjhg
  */
 
-// 支持的搜索方式，第一位保留为默认搜索方式（文字）
+
+
+/**
+ * ****************************************************************************************
+ *
+ * 搜索模式配置部分
+ *
+ * ****************************************************************************************
+ */
+
+/**
+ * 支持的搜索方式
+ *
+ * Notes:
+ * - 第一位需要保留为默认搜索方式（文字）
+ * - getSuggestions / search 方法传入参数应该是经过 getInputText 过滤前面搜索模式字符的字符串
+ */
 var omniboxSearchModes = [
+  // #############################################################################################################
   {
     key: "",
+    // 显示文字
     showText: "文字",
+    // 搜索建议
+    getSuggestions: async function (text) {
+      var url = "https://code.google.com/p/chromium/codesearch#search/&type=cs&q=" + query +
+        "&exact_package=chromium&type=cs";
+      var req = new XMLHttpRequest();
+      req.open("GET", url, true);
+      req.setRequestHeader("GData-Version", "2");
+      req.onreadystatechange = function () {
+        if (req.readyState == 4) callback(req.responseXML);
+      }
+      req.send(null);
+      // return req;
+
+
+      suggestions.forEach((suggestion) => { suggestion.deletable = false /* 用户不可删除 */ });
+      /**
+       * SuggestResult
+       * refer: https://developer.chrome.com/docs/extensions/reference/omnibox/
+       * { content, description[, deletable] }
+       */
+      suggest(suggestions);
+
+      // suggest([
+      //   { content: "one", description: "the <match>aaa</match><url>www</url>first one", deletable: false },
+      //   { content: "number two", description: "the second entry", deletable: false }
+      // ]);
+    },
     search: function (text) {
-      var url = "https://www.baidu.com/s?wd=" + encodeURIComponent(text);
-      navigate(url, newTab = false);
-      return {
-        status: true,
-        result: null
-      };
+      navigate("https://www.baidu.com/s?wd=" + encodeURIComponent(text), newTab = false);
     }
   },
+  // #############################################################################################################
   {
     key: "yn",
     showText: "网页内搜索",
@@ -82,12 +107,10 @@ var omniboxSearchModes = [
       return encodeText ? encodeXML(returnText) : returnText
     },
     search: function (text) {
-      return {
-        status: true,
-        result: null
-      };
+
     }
   },
+  // #############################################################################################################
   {
     key: "re",
     showText: "网页内正则表达式搜索",
@@ -97,8 +120,36 @@ var omniboxSearchModes = [
     getInputText: function (text, encodeText = true) {
       let returnText = /^re(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
       return encodeText ? encodeXML(returnText) : returnText
+    },
+    search: function (text) {
+
     }
   },
+  // #############################################################################################################
+  {
+    key: "ls",
+    showText: "历史记录搜索",
+    match: function (text) {
+      return /^ls( |:|\uff1a)?/.test(text)
+    },
+    getInputText: function (text, encodeText = true) {
+      let returnText = /^ls(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
+      return encodeText ? encodeXML(returnText) : returnText
+    },
+    search: function (text) {
+      function onGot(historyItems) {
+        for (item of historyItems) {
+          console.log(item.url);
+          console.log(new Date(item.lastVisitTime));
+        }
+      }
+
+      var searching = browser.history.search({ text: text, startTime: 0 });
+
+      searching.then(onGot);
+    }
+  },
+  // #############################################################################################################
   {
     key: "img",
     showText: "图片搜索",
@@ -108,25 +159,65 @@ var omniboxSearchModes = [
     getInputText: function (text, encodeText = true) {
       let returnText = /^img(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
       return encodeText ? encodeXML(returnText) : returnText
+    },
+    search: function (text) {
+
     }
   },
+  // #############################################################################################################
   {
     key: "boss",
     showText: "老板键",
     match: function (text) {
-      return text.trim() == "boss"
+      // return text.trim() == "boss"
+      return /^boss( |:|\uff1a)?$/.test(text)
     },
-    getInputText: (text) => ""
+    getInputText: (text) => "回车执行"
   }
 ]
 
+
+
+/**
+ * ****************************************************************************************
+ *
+ * 全局变量定义部分
+ *
+ * ****************************************************************************************
+ */
 // 当前匹配的搜索模式的下标
 var currentSearchModeIndex = 0;
 
 // 当前正在向服务端进行的请求
 var currentRequest = null;
 
-// 输入框文本改变事件
+
+
+/**
+ * ****************************************************************************************
+ *
+ * 搜索模式配置部分
+ *
+ * ****************************************************************************************
+ */
+
+/**
+ * 用户开始输入文本
+ */
+chrome.omnibox.onInputStarted.addListener(function () {
+  updateDefaultSuggestion('');
+});
+
+/**
+ * 搜索框失去焦点
+ */
+chrome.omnibox.onInputCancelled.addListener(function () {
+  updateDefaultSuggestion('');
+});
+
+/**
+ * 输入框文本改变事件
+ */
 chrome.omnibox.onInputChanged.addListener(
   function (text, suggest) {
 
@@ -144,64 +235,81 @@ chrome.omnibox.onInputChanged.addListener(
     if (text.trim() == '')
       return;
 
-    // 访问后台完成搜索建议获取（传入搜索文字及回调函数）
-    // 获得搜索建议后，执行以下回调函数
-    currentRequest = search(text, function (xml) {
-      console.log(xml);
-
-      return;
-
-      var results = [];
-      var entries = xml.getElementsByTagName("entry");
-
-      for (var i = 0, entry; i < 5 && (entry = entries[i]); i++) {
-        var path = entry.getElementsByTagName("file")[0].getAttribute("name");
-        var line =
-          entry.getElementsByTagName("match")[0].getAttribute("lineNumber");
-        var file = path.split("/").pop();
-
-        var description = '<url>' + file + '</url>';
-        if (/^file:/.test(text)) {
-          description += ' <dim>' + path + '</dim>';
-        } else {
-          var content = entry.getElementsByTagName("content")[0].textContent;
-
-          // There can be multiple lines. Kill all the ones except the one that
-          // contains the first match. We can ocassionally fail to find a single
-          // line that matches, so we still handle multiple lines below.
-          var matches = content.split(/\n/);
-          for (var j = 0, match; match = matches[j]; j++) {
-            if (match.indexOf('<b>') > -1) {
-              content = match;
-              break;
-            }
-          }
-
-          // Replace any extraneous whitespace to make it look nicer.
-          content = content.replace(/[\n\t]/g, ' ');
-          content = content.replace(/ {2,}/g, ' ');
-
-          // Codesearch wraps the result in <pre> tags. Remove those if they're
-          // still there.
-          content = content.replace(/<\/?pre>/g, '');
-
-          // Codesearch highlights the matches with 'b' tags. Replaces those
-          // with 'match'.
-          content = content.replace(/<(\/)?b>/g, '<$1match>');
-
-          description += ' ' + content;
-        }
-
-        results.push({
-          content: path + '@' + line,
-          description: description
-        });
-      }
-
-      suggest(results);
-    });
+    // 访问后端服务获得搜索建议
+    var currentSearchMode = omniboxSearchModes[currentSearchModeIndex];
+    currentSearchMode.getSuggestions(currentSearchMode.getInputText(text));
   }
 );
+
+/**
+ * 用户输入完成，按下回车键
+ */
+chrome.omnibox.onInputEntered.addListener(function (text) {
+  var searchText = omniboxSearchModes[currentSearchModeIndex].getInputText(text);
+  alert(text)
+});
+
+
+
+/**
+ * ****************************************************************************************
+ *
+ * 公共函数部分
+ *
+ * ****************************************************************************************
+ */
+
+/**
+ * 将 & < > 等特殊字符转义，但保留中文不进行转义
+ *
+ * 测试通过: [ re：    百度&nbsp;<>!@#$%%^&*()_+-=[]{}|\:;'",./? ]
+ *
+ * refer: https://www.javaroad.cn/questions/108186
+ * @param string str
+ * @returns
+ */
+function encodeXML(str) {
+  var holder = document.createElement('div');
+  holder.textContent = str;
+  return holder.innerHTML;
+}
+
+
+/**
+ * 将当前标签页导航到指定Url / 或者新建标签页
+ *
+ * @param String url 要导航到的url
+ * @param bool openInNewTab 是否打开新标签页
+ */
+function navigate(url, openInNewTab = false) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    if (!openInNewTab) {
+      chrome.tabs.update(tabs[0].id, { url: url });
+    } else {
+      chrome.tabs.create({ url: url });
+    }
+  });
+}
+
+
+
+/**
+ * 获取当前是否是新标签页
+ */
+function isCurrentNewTab() {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    if (tabs && tabs.length > 0 && !!tabs[0].url && /^(.*?):\/\/newtab\/$/.test(tabs[0].url)) {
+      console.log(tabs[0].url)
+      return true;
+    }
+    else {
+      console.log(false)
+      return false;
+    }
+  });
+}
+
+
 
 /**
  * 更新下拉框中提示
@@ -217,7 +325,7 @@ function updateDefaultSuggestion(text) {
 
   // 如果用户输入不为空，先假设为文字搜索，如果后面匹配上了其他搜索方式，则更新
   let isPlaintext = !!text.trim().length;
-  currentSearchModeIndex = 0; // 初始化搜索方式下标s
+  currentSearchModeIndex = 0; // 初始化搜索方式下标
 
   // 默认第 0 个为文字搜索，除此之外的搜索方式如果都没有匹配到，则显示文字搜索
   for (var i = 1, keyword; i < omniboxSearchModes.length && (keyword = omniboxSearchModes[i]); i++) {
@@ -263,81 +371,43 @@ function updateDefaultSuggestion(text) {
   // });
 }
 
-/**
- * 用户开始输入文本
- */
-chrome.omnibox.onInputStarted.addListener(function () {
-  updateDefaultSuggestion('');
-});
+
+// /**
+//  * 执行搜索
+//  * @param {*} query
+//  * @param {*} callback
+//  * @returns
+//  */
+// function search(query, callback) {
+
+//   var url = "https://code.google.com/p/chromium/codesearch#search/&type=cs&q=" + query +
+//     "&exact_package=chromium&type=cs";
+//   var req = new XMLHttpRequest();
+//   req.open("GET", url, true);
+//   req.setRequestHeader("GData-Version", "2");
+//   req.onreadystatechange = function () {
+//     if (req.readyState == 4) {
+//       callback(req.responseXML);
+//     }
+//   }
+//   req.send(null);
+//   return req;
+// }
+
 
 /**
- * 搜索框失去焦点
- */
-chrome.omnibox.onInputCancelled.addListener(function () {
-  updateDefaultSuggestion('');
-});
-
-/**
- * 执行搜索
- * @param {*} query
- * @param {*} callback
- * @returns
- */
-function search(query, callback) {
-  if (/^re:/.test(query))
-    query = query.substring('re:'.length);
-  else if (/^file:/.test(query))
-    query = 'file:"' + query.substring('file:'.length) + '"';
-  else
-    query = '"' + query + '"';
-
-  var url = "https://code.google.com/p/chromium/codesearch#search/&type=cs&q=" + query +
-    "&exact_package=chromium&type=cs";
-  var req = new XMLHttpRequest();
-  req.open("GET", url, true);
-  req.setRequestHeader("GData-Version", "2");
-  req.onreadystatechange = function () {
-    if (req.readyState == 4) {
-      callback(req.responseXML);
-    }
-  }
-  req.send(null);
-  return req;
-}
-
-/**
- * 将当前标签页导航到指定Url / 或者新建标签页
+ * ****************************************************************************************
  *
- * @param String url 要导航到的url
- * @param bool openInNewTab 是否打开新标签页
+ * 测试代码及其他
+ *
+ * ****************************************************************************************
  */
-function navigate(url, openInNewTab = false) {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    if (!openInNewTab) {
-      chrome.tabs.update(tabs[0].id, { url: url });
-    } else {
-      chrome.tabs.create({ url: url });
-    }
-  });
-}
 
-/**
- * 用户输入完成，按下回车键
+/*
+先抛砖。未来在 Chrome 中输入：Chrome 过去1年最重要的变化？ 知乎(或者zh)我们将带你进入问题页面，如果没有类似问题，就会直接提问。这个东西带来的想象力是，你可以用浏览器简单快捷的做不少事情，比如发微博，就输入「wb 知乎很给力」，京东购物，就输入「jd买 iPhone 4」。但很可能是一个相对小众的工具。
+
+作者：李申申
+链接：https://www.zhihu.com/question/19565733/answer/12236808
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
  */
-chrome.omnibox.onInputEntered.addListener(function (text) {
-  alert(text)
-  navigate("https://www.baidu.com/s?wd=" + text)
-  return
-  if (/@\d+\b/.test(text)) {
-    var chunks = text.split('@');
-    var path = chunks[0];
-    var line = chunks[1];
-    navigate(getUrl(path, line));
-  } else if (text == 'halp') {
-    // TODO(aa)
-  } else {
-    navigate("https://code.google.com/p/chromium/codesearch#search/&type=cs" +
-      "&q=" + text +
-      "&exact_package=chromium&type=cs");
-  }
-});
