@@ -46,7 +46,11 @@ body {
     color: aliceblue;
 }
 
-#start-btn {
+#countdown span{
+    opacity: 0;
+}
+
+#start-btn ,#end-btn{
     width: 40px;
     margin: 10px auto 0;
     padding: 10px 30px;
@@ -64,8 +68,14 @@ body {
     cursor: pointer;
 }
 
+#end-btn{
+    background-color: rgb(0, 128, 187);
+    display: none;
+}
+
+/*选中的按钮*/
 .selected {
-    background-color: rgb(33, 10, 70);;
+    background-color: rgb(244, 242, 248);
 } 
 
 #current-task-display {
@@ -106,7 +116,7 @@ li {
 #add-task-btn {
     width: 200px;
     margin: 0 auto 10px;
-    background-color: rgb(33, 10, 70);
+    /* background-color: rgb(33, 10, 70); */
     padding: 8px;
     cursor: pointer;
     text-align: center;
