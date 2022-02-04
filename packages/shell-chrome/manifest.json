@@ -6,33 +6,52 @@
   "omnibox": {
     "keyword": "ss"
   },
-  "icons":{
-    "16": "assets/image/search-256.png",
-    "48": "assets/image/search-256.png",
-    "128": "assets/image/search-256.png"
+  "icons": {
+    "16": "assets/image/logo.png",
+    "48": "assets/image/logo.png",
+    "128": "assets/image/logo.png"
   },
   "background": {
     "scripts": [
+      "assets/js/lib/jquery.min.js",
       "assets/js/background.js",
-      "pages/advanced-search/js/background.js"
+      "assets/js/advanced-search/background.js"
     ]
   },
   "content_scripts": [
     {
       "matches": [
-        "<all_urls>"
+        "<all_urls>",
+        "*://*/*"
       ],
       "js": [
+        "assets/js/lib/jquery.min.js",
         "assets/js/content.js",
-        "pages/advanced-search/js/content.js"
+        "assets/js/advanced-search/content.js",
+        "assets/js/mouse-effects/click.js",
+        "assets/js/mouse-effects/mouse-style.js"
       ],
-      "css": []
+      "css": [],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "http://blog.csdn.net/*",
+        "https://blog.csdn.net/*"
+      ],
+      "js": [
+        "assets/js/lib/jquery.min.js",
+        "assets/js/expand-full-text/expand.js" //,
+        // "assets/js/content-scripts/click.js",
+        // "assets/js/content-scripts/mouse-style.js"
+      ],
+      "run_at": "document_start"
     }
   ],
   "browser_action": {
-    "default_icon": "assets/image/icon_disabled.png",
+    "default_icon": "assets/image/logo.png",
     "default_popup": "popup.html",
-    "default_title": "这是一个默认title"
+    "default_title": "学生助手"
   },
   "commands": {
     "_execute_browser_action": {
@@ -43,6 +62,10 @@
       "description": "打开 [学生助手] 插件"
     }
   },
+  "web_accessible_resources": [
+    "/assets/image/*"
+  ],
+  // "default_locale": "zh_CN",
   "permissions": [
     "background",
     "contextMenus",
