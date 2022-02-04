@@ -29,6 +29,8 @@ const resetBtn = document.getElementById("reset-btn");
 const endBtn = document.getElementById("end-btn");
 const countdownTimer = document.getElementById("countdown");
 
+const audio = document.getElementById("audio");
+//全局唯一的定时器
 let timer = null;
 
 let minutes, seconds;
@@ -90,11 +92,9 @@ function start() {
       (response) => {
         console.log(response);
 
-  
-          startBtn.style.display = "none";
-          endBtn.style.display = "block";
-          getTimer();
-        
+        startBtn.style.display = "none";
+        endBtn.style.display = "block";
+        getTimer();
       }
     );
   });
@@ -120,12 +120,35 @@ function end() {
 }
 
 function getTimer() {
-  clearTimer()
+  clearTimer();
   timer = setInterval(() => {
     chrome.storage.sync.get("pomoData", ({ pomoData }) => {
+      // console.log("pomodata****",pomoData)
+      // const{minutes,seconds,countdownTimer} = pomoData;
       countdownTimer.innerHTML = pomoData.countdownTimer;
+
+      //更新后倒计时判断，如果结束则重新初始化界面
+      if(pomoData.countdownTimer == "00:00"){
+
+        audio.play();
+        chrome.runtime.sendMessage(
+          {
+            status: "init",
+          },
+          (response) => {
+            console.log(response);
+            countdownTimer.innerHTML = "25:00";
+    
+            startBtn.style.display = "block";
+            endBtn.style.display = "none";
+            clearTimer();
+          }
+        );
+
+      }
     });
   }, 200);
+
 }
 
 function clearTimer() {
@@ -167,9 +190,7 @@ resetBtn.addEventListener("click", () => {
   }, 100);
 });
 
-//页面反复打开时初始化
-// start();
-
+//页面反复打开时页面初始化
 chrome.storage.sync.get("pomoData", ({ pomoData }) => {
   console.log(pomoData);
   const { status } = pomoData;
@@ -179,13 +200,12 @@ chrome.storage.sync.get("pomoData", ({ pomoData }) => {
     endBtn.style.display = "block";
     getTimer();
   } else if (status === "paused") {
-   
     startBtn.style.display = "block";
     endBtn.style.display = "none";
     chrome.storage.sync.get("pomoData", ({ pomoData }) => {
       countdownTimer.innerHTML = pomoData.countdownTimer;
     });
-  } else if(status === "init"){
+  } else if (status === "init") {
     chrome.runtime.sendMessage({
       status: "init",
     });

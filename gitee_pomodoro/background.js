@@ -2,6 +2,7 @@
 chrome.runtime.onInstalled.addListener(() => {
   // 插件功能安装默认启用
   chrome.storage.sync.set({
+    //初始化数据
     pomoData: {
       minutes: 24,
       seconds: 60,
@@ -17,12 +18,9 @@ let pomodoro = "pomodoro";
 
 let array = ["minutes", "seconds", "pause", "countdownTimer", "pbutton"];
 
+//全局唯一的定时器
 let timer = null;
-// chorme.runtime.onMessage.addListener(()=>{
-//     chorme.storage.sync.get("pause",({pause})=>{
 
-//     })
-// })
 
 // 记住 是否暂停、
 
@@ -37,7 +35,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // sendResponse({
     //   status:message.status
     // })
-
     countdown({ ...content, status });
   } else if (status === "paused") {
     clearTimeout(timer);
@@ -59,8 +56,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     //init初始化
     chrome.storage.sync.set({
       pomoData: {
-        minutes: 24,
-        seconds: 60,
+        minutes: 0,
+        seconds: 5,
         countdownTimer: "25:00",
         status: "start",
       },
@@ -74,7 +71,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 // 番茄钟倒计时功能
 function countdown({ minutes, seconds, status }) {
-  console.log("分秒=============", minutes, seconds);
+  
   // 设置分钟和秒数
   // let currentMins = minutes - 1;
   seconds--;
@@ -85,7 +82,8 @@ function countdown({ minutes, seconds, status }) {
     (seconds < 10 ? "0" : "") +
     seconds;
   // countdownTimer.innerHTML = currentTimer; 拿到
-
+  console.log("分秒=============", minutes, seconds);
+  
   chrome.storage.sync.set(
     {
       pomoData: {
@@ -127,9 +125,6 @@ function countdown({ minutes, seconds, status }) {
         }
       }
     );
-    countdown({ minutes, seconds });
-  } else if (currentMins === 0) {
-    audio.play();
-    reset();
-  }
+    countdown({ minutes, seconds,status });
+  } 
 }
