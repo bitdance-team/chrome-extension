@@ -1,16 +1,3 @@
-// 注册右键菜单
-chrome.contextMenus.create({
-  id: 'bitdance-advanced-search',
-  title: '高级搜索',
-  parentId: 'bitdance',
-  onclick: function (info) {
-    alert('当前菜单信息:' + JSON.stringify(info))
-    alert("[BitDance extension] 学生助手插件 - 高级搜索 已点击菜单")
-  }
-})
-
-
-
 /**
  * ss 的寓意
  *
@@ -40,186 +27,6 @@ chrome.contextMenus.create({
  * Blog: https://www.cnblogs.com/cc11001100/p/12353361.html
  * Debug: https://chrome.google.com/webstore/detail/omnibox-debug/nhgkpjdgjmjhgjhgjhgjhgjhgjhgjhgjhg
  */
-
-
-
-/**
- * ****************************************************************************************
- *
- * app.js/base.js
- *
- * ****************************************************************************************
- */
-//  'use strict';
-
-const app = {};
-window.app = app;
-
-/* runtime */
-app.runtime = {
-  on(e, callback) {
-    if (e === 'start') {
-      chrome.runtime.onStartup.addListener(callback);
-      chrome.runtime.onInstalled.addListener(callback);
-    }
-  },
-  get manifest() {
-    return chrome.runtime.getManifest();
-  },
-  connect(tabId, connectInfo) {
-    let port;
-    if (typeof tabId === 'object') {
-      port = chrome.runtime.connect(tabId);
-    }
-    else {
-      port = chrome.tabs.connect(tabId, connectInfo);
-    }
-    return {
-      on(e, callback) {
-        if (e === 'message') {
-          port.onMessage.addListener(callback);
-        }
-      },
-      post(msg) {
-        port.postMessage(msg);
-      }
-    };
-  }
-};
-
-//  /* storage */
-//  app.storage = {
-//    get(prefs, type = 'managed') {
-//      return new Promise(resolve => {
-//        if (type === 'managed') {
-//          chrome.storage.managed.get(prefs, ps => {
-//            chrome.storage.local.get(chrome.runtime.lastError ? prefs : ps || prefs, resolve);
-//          });
-//        }
-//        else {
-//          chrome.storage[type].get(prefs, resolve);
-//        }
-//      });
-//    },
-//    set(prefs, type = 'managed') {
-//      return new Promise(resolve => {
-//        chrome.storage[type === 'remote' ? 'remote' : 'local'].set(prefs, resolve);
-//      });
-//    },
-//    on(e, callback) {
-//      if (e === 'changed') {
-//        chrome.storage.onChanged.addListener(callback);
-//      }
-//    }
-//  };
-
-//  /* button */
-//  app.button = {
-//    set({
-//      popup
-//    }, tabId) {
-//      if (popup !== undefined) {
-//        chrome.browserAction.setPopup({
-//          tabId,
-//          popup
-//        });
-//      }
-//    },
-//    on(e, callback) {
-//      if (e === 'clicked') {
-//        chrome.browserAction.onClicked.addListener(callback);
-//      }
-//    }
-//  };
-
-// /* tab */
-// app.tabs = {
-//   open({
-//     url
-//   }) {
-//     return new Promise(resolve => chrome.tabs.create({ url }, resolve));
-//   },
-//   current() {
-//     return new Promise(resolve => chrome.tabs.query({
-//       active: true,
-//       currentWindow: true
-//     }, (tabs = []) => resolve(tabs[0])));
-//   },
-//   inject: {
-//     js(tabId, details) {
-//       if (typeof tabId === 'object') {
-//         details = tabId;
-//         tabId = undefined;
-//       }
-//       return new Promise((resolve, reject) => {
-//         chrome.tabs.executeScript(tabId, Object.assign({
-//           runAt: 'document_start'
-//         }, details), results => {
-//           const lastError = chrome.runtime.lastError;
-//           if (lastError) {
-//             reject(lastError);
-//           }
-//           else {
-//             resolve(results);
-//           }
-//         });
-//       });
-//     },
-//     css(tabId, details) {
-//       if (typeof tabId === 'object') {
-//         details = tabId;
-//         tabId = undefined;
-//       }
-//       return new Promise((resolve, reject) => {
-//         chrome.tabs.insertCSS(tabId, Object.assign({
-//           runAt: 'document_start'
-//         }, details), results => {
-//           const lastError = chrome.runtime.lastError;
-//           if (lastError) {
-//             reject(lastError);
-//           }
-//           else {
-//             resolve(results);
-//           }
-//         });
-//       });
-//     }
-//   }
-// };
-
-//  /* window */
-//  app.windows = {
-//    open({url, left, top, width, height, type}) {
-//      width = width || 700;
-//      height = height || 500;
-//      if (left === undefined) {
-//        left = screen.availLeft + Math.round((screen.availWidth - width) / 2);
-//      }
-//      if (top === undefined) {
-//        top = screen.availTop + Math.round((screen.availHeight - height) / 2);
-//      }
-//      return new Promise(resolve => chrome.windows.create(
-//        {url, width, height, left, top, type: type || 'popup'},
-//        resolve
-//      ));
-//    }
-//  };
-
-//  /* menus */
-//  app.menus = {
-//    add(...items) {
-//      for (const item of items) {
-//        chrome.contextMenus.create(Object.assign({
-//          contexts: item.contexts || ['browser_action']
-//        }, item));
-//      }
-//    },
-//    on(e, callback) {
-//      if (e === 'clicked') {
-//        chrome.contextMenus.onClicked.addListener(callback);
-//      }
-//    }
-//  };
 
 
 
@@ -302,19 +109,19 @@ var omniboxSearchModes = [
       switch (searchType) {
         default:
         case "[百度]":
-          navigate("https://www.baidu.com/s?wd="+ encodeURIComponent(searchText), true);
+          navigate("https://www.baidu.com/s?wd=" + encodeURIComponent(searchText), true);
           break;
         case "[搜狗]":
-          navigate("https://www.sogou.com/web?query="+ encodeURIComponent(searchText), true);
+          navigate("https://www.sogou.com/web?query=" + encodeURIComponent(searchText), true);
           break;
         case "[必应]":
-          navigate("https://cn.bing.com/search?q="+ encodeURIComponent(searchText), true);
+          navigate("https://cn.bing.com/search?q=" + encodeURIComponent(searchText), true);
           break;
         case "[360]":
-          navigate("https://www.so.com/s?q="+ encodeURIComponent(searchText), true);
+          navigate("https://www.so.com/s?q=" + encodeURIComponent(searchText), true);
           break;
         case "[微博]":
-          navigate("https://s.weibo.com/weibo?q="+ encodeURIComponent(searchText), true);
+          navigate("https://s.weibo.com/weibo?q=" + encodeURIComponent(searchText), true);
           break;
         case "[中国搜索]":
           navigate("http://www.chinaso.com/newssearch/all/allResults?q=" + encodeURIComponent(searchText), true);
@@ -657,9 +464,16 @@ chrome.omnibox.onInputEntered.addListener(function (text) {
  * @returns
  */
 function encodeXML(str) {
-  var holder = document.createElement('div');
-  holder.textContent = str;
-  return holder.innerHTML;
+  // var holder = document.createElement('div');
+  // holder.textContent = str;
+  // return holder.innerHTML;
+
+  // refer: stackoverflow.com/a/1091953/89484
+  return str.replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/'/g, '&apos;')
+    .replace(/"/g, '&quot;')
 }
 
 
@@ -743,7 +557,7 @@ function updateDefaultSuggestion(text) {
   console.log("    text：", text);
   console.log("    当前匹配搜索模式：", omniboxSearchModes[currentSearchModeIndex].showText);
   console.log("    isPlaintext：", isPlaintext);
-  // console.log(description.join(''));
+  console.log("    omnibox显示", description.join(''));
   console.log("[更新下拉框提示结束]");
 
   chrome.omnibox.setDefaultSuggestion({

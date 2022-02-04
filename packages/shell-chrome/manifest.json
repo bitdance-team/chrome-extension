@@ -2,7 +2,7 @@
   "name": "学生助手",
   "version": "0.1.0",
   "description": "BitDance Chrome Extension",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "omnibox": {
     "keyword": "ss"
   },
@@ -12,11 +12,7 @@
     "128": "assets/image/logo.png"
   },
   "background": {
-    "scripts": [
-      "assets/js/lib/jquery.min.js",
-      "assets/js/background.js",
-      "assets/js/advanced-search/background.js"
-    ]
+    "service_worker": "service-worker.js"
   },
   "content_scripts": [
     {
@@ -46,7 +42,7 @@
       "run_at": "document_start"
     }
   ],
-  "browser_action": {
+  "action": {
     "default_icon": "assets/image/logo.png",
     "default_popup": "popup.html",
     "default_title": "学生助手"
@@ -61,7 +57,14 @@
     }
   },
   "web_accessible_resources": [
-    "/assets/image/*"
+    {
+      "resources": [
+        "/assets/image/*"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
   ],
   "permissions": [
     "background",
@@ -69,10 +72,16 @@
     "storage",
     "unlimitedStorage",
     "webRequest",
-    "webRequestBlocking",
     "tabs",
     "storage",
     "activeTab",
     "notifications"
-  ]
+  ],
+  "optional_permissions": [
+    "bookmarks"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_security_policy": {}
 }
