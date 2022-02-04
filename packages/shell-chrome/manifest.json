@@ -41,9 +41,7 @@
       ],
       "js": [
         "assets/js/lib/jquery.min.js",
-        "assets/js/expand-full-text/expand.js" //,
-        // "assets/js/content-scripts/click.js",
-        // "assets/js/content-scripts/mouse-style.js"
+        "assets/js/expand-full-text/expand.js"
       ],
       "run_at": "document_start"
     }
@@ -65,7 +63,6 @@
   "web_accessible_resources": [
     "/assets/image/*"
   ],
-  // "default_locale": "zh_CN",
   "permissions": [
     "background",
     "contextMenus",
