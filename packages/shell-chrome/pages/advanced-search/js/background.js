@@ -46,6 +46,186 @@ chrome.contextMenus.create({
 /**
  * ****************************************************************************************
  *
+ * app.js/base.js
+ *
+ * ****************************************************************************************
+ */
+//  'use strict';
+
+const app = {};
+window.app = app;
+
+/* runtime */
+app.runtime = {
+  on(e, callback) {
+    if (e === 'start') {
+      chrome.runtime.onStartup.addListener(callback);
+      chrome.runtime.onInstalled.addListener(callback);
+    }
+  },
+  get manifest() {
+    return chrome.runtime.getManifest();
+  },
+  connect(tabId, connectInfo) {
+    let port;
+    if (typeof tabId === 'object') {
+      port = chrome.runtime.connect(tabId);
+    }
+    else {
+      port = chrome.tabs.connect(tabId, connectInfo);
+    }
+    return {
+      on(e, callback) {
+        if (e === 'message') {
+          port.onMessage.addListener(callback);
+        }
+      },
+      post(msg) {
+        port.postMessage(msg);
+      }
+    };
+  }
+};
+
+//  /* storage */
+//  app.storage = {
+//    get(prefs, type = 'managed') {
+//      return new Promise(resolve => {
+//        if (type === 'managed') {
+//          chrome.storage.managed.get(prefs, ps => {
+//            chrome.storage.local.get(chrome.runtime.lastError ? prefs : ps || prefs, resolve);
+//          });
+//        }
+//        else {
+//          chrome.storage[type].get(prefs, resolve);
+//        }
+//      });
+//    },
+//    set(prefs, type = 'managed') {
+//      return new Promise(resolve => {
+//        chrome.storage[type === 'remote' ? 'remote' : 'local'].set(prefs, resolve);
+//      });
+//    },
+//    on(e, callback) {
+//      if (e === 'changed') {
+//        chrome.storage.onChanged.addListener(callback);
+//      }
+//    }
+//  };
+
+//  /* button */
+//  app.button = {
+//    set({
+//      popup
+//    }, tabId) {
+//      if (popup !== undefined) {
+//        chrome.browserAction.setPopup({
+//          tabId,
+//          popup
+//        });
+//      }
+//    },
+//    on(e, callback) {
+//      if (e === 'clicked') {
+//        chrome.browserAction.onClicked.addListener(callback);
+//      }
+//    }
+//  };
+
+// /* tab */
+// app.tabs = {
+//   open({
+//     url
+//   }) {
+//     return new Promise(resolve => chrome.tabs.create({ url }, resolve));
+//   },
+//   current() {
+//     return new Promise(resolve => chrome.tabs.query({
+//       active: true,
+//       currentWindow: true
+//     }, (tabs = []) => resolve(tabs[0])));
+//   },
+//   inject: {
+//     js(tabId, details) {
+//       if (typeof tabId === 'object') {
+//         details = tabId;
+//         tabId = undefined;
+//       }
+//       return new Promise((resolve, reject) => {
+//         chrome.tabs.executeScript(tabId, Object.assign({
+//           runAt: 'document_start'
+//         }, details), results => {
+//           const lastError = chrome.runtime.lastError;
+//           if (lastError) {
+//             reject(lastError);
+//           }
+//           else {
+//             resolve(results);
+//           }
+//         });
+//       });
+//     },
+//     css(tabId, details) {
+//       if (typeof tabId === 'object') {
+//         details = tabId;
+//         tabId = undefined;
+//       }
+//       return new Promise((resolve, reject) => {
+//         chrome.tabs.insertCSS(tabId, Object.assign({
+//           runAt: 'document_start'
+//         }, details), results => {
+//           const lastError = chrome.runtime.lastError;
+//           if (lastError) {
+//             reject(lastError);
+//           }
+//           else {
+//             resolve(results);
+//           }
+//         });
+//       });
+//     }
+//   }
+// };
+
+//  /* window */
+//  app.windows = {
+//    open({url, left, top, width, height, type}) {
+//      width = width || 700;
+//      height = height || 500;
+//      if (left === undefined) {
+//        left = screen.availLeft + Math.round((screen.availWidth - width) / 2);
+//      }
+//      if (top === undefined) {
+//        top = screen.availTop + Math.round((screen.availHeight - height) / 2);
+//      }
+//      return new Promise(resolve => chrome.windows.create(
+//        {url, width, height, left, top, type: type || 'popup'},
+//        resolve
+//      ));
+//    }
+//  };
+
+//  /* menus */
+//  app.menus = {
+//    add(...items) {
+//      for (const item of items) {
+//        chrome.contextMenus.create(Object.assign({
+//          contexts: item.contexts || ['browser_action']
+//        }, item));
+//      }
+//    },
+//    on(e, callback) {
+//      if (e === 'clicked') {
+//        chrome.contextMenus.onClicked.addListener(callback);
+//      }
+//    }
+//  };
+
+
+
+/**
+ * ****************************************************************************************
+ *
  * 搜索模式配置部分
  *
  * ****************************************************************************************
@@ -64,8 +244,26 @@ var omniboxSearchModes = [
     key: "",
     // 显示文字
     showText: "文字",
+    // 搜索模式匹配
+    // match: function (text) { },
+    // 获取输入文字
+    getInputText: function (text, encodeText = true) {
+      return encodeText ? encodeXML(text) : text
+    },
     // 搜索建议
-    getSuggestions: async function (text) {
+    getSuggestions: async function (text, suggest) {
+      // 如果前面已经有了 【[xx] 】，则先去掉
+      text = text.replace(/^\[.*?\]\s*/, "");
+      suggest([
+        { content: "[百度] " + text, description: "使用 <url>[百度]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "[搜狗] " + text, description: "使用 <url>[搜狗]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "[必应] " + text, description: "使用 <url>[必应]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "[360] " + text, description: "使用 <url>[360]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "[微博] " + text, description: "使用 <url>[微博]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "[中国搜索] " + text, description: "使用 <url>[中国搜索]</url> 搜索 <match>" + text + "</match>", deletable: false },
+      ]);
+      return;
+
       var url = "https://code.google.com/p/chromium/codesearch#search/&type=cs&q=" + query +
         "&exact_package=chromium&type=cs";
       var req = new XMLHttpRequest();
@@ -91,21 +289,59 @@ var omniboxSearchModes = [
       //   { content: "number two", description: "the second entry", deletable: false }
       // ]);
     },
+    // 执行搜索
     search: function (text) {
-      navigate("https://www.baidu.com/s?wd=" + encodeURIComponent(text), newTab = false);
+      let searchInput = /^(\[.*?\])?( )?(.*)$/.exec(text)
+      let searchType = /^\[(.*?)\]$/.exec((searchInput[1] ?? "[百度]"/* 默认百度搜索 */).trim())[0].trim()
+      let searchText = searchInput[3].trim()
+      console.log("[文字搜索开始]");
+      console.log("    传入参数为：", text);
+      console.log("    searchInput为：", searchInput);
+      console.log("    searchType为：", searchType);
+      console.log("    searchText为：", searchText);
+      switch (searchType) {
+        default:
+        case "[百度]":
+          navigate("https://www.baidu.com/s?wd="+ encodeURIComponent(searchText), true);
+          break;
+        case "[搜狗]":
+          navigate("https://www.sogou.com/web?query="+ encodeURIComponent(searchText), true);
+          break;
+        case "[必应]":
+          navigate("https://cn.bing.com/search?q="+ encodeURIComponent(searchText), true);
+          break;
+        case "[360]":
+          navigate("https://www.so.com/s?q="+ encodeURIComponent(searchText), true);
+          break;
+        case "[微博]":
+          navigate("https://s.weibo.com/weibo?q="+ encodeURIComponent(searchText), true);
+          break;
+        case "[中国搜索]":
+          navigate("http://www.chinaso.com/newssearch/all/allResults?q=" + encodeURIComponent(searchText), true);
+          break;
+      }
+      console.log("[文字搜索结束]");
     }
   },
   // #############################################################################################################
   {
     key: "yn",
-    showText: "网页内搜索",
+    // 显示文字
+    showText: "网页内搜索(Todo)",
+    // 搜索模式匹配
     match: function (text) {
       return /^yn( |:|\uff1a)?/.test(text)
     },
+    // 获取输入文字
     getInputText: function (text, encodeText = true) {
       let returnText = /^yn(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
       return encodeText ? encodeXML(returnText) : returnText
     },
+    // 搜索建议
+    getSuggestions: async function (text, suggest) {
+      return;
+    },
+    // 执行搜索
     search: function (text) {
 
     }
@@ -113,14 +349,22 @@ var omniboxSearchModes = [
   // #############################################################################################################
   {
     key: "re",
-    showText: "网页内正则表达式搜索",
+    // 显示文字
+    showText: "网页内正则表达式搜索(Todo)",
+    // 搜索模式匹配
     match: function (text) {
       return /^re( |:|\uff1a)?/.test(text)
     },
+    // 获取输入文字
     getInputText: function (text, encodeText = true) {
       let returnText = /^re(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
       return encodeText ? encodeXML(returnText) : returnText
     },
+    // 搜索建议
+    getSuggestions: async function (text, suggest) {
+      return;
+    },
+    // 执行搜索
     search: function (text) {
 
     }
@@ -128,14 +372,22 @@ var omniboxSearchModes = [
   // #############################################################################################################
   {
     key: "ls",
+    // 显示文字
     showText: "历史记录搜索",
+    // 搜索模式匹配
     match: function (text) {
       return /^ls( |:|\uff1a)?/.test(text)
     },
+    // 获取输入文字
     getInputText: function (text, encodeText = true) {
       let returnText = /^ls(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
       return encodeText ? encodeXML(returnText) : returnText
     },
+    // 搜索建议
+    getSuggestions: async function (text, suggest) {
+      return;
+    },
+    // 执行搜索
     search: function (text) {
       function onGot(historyItems) {
         for (item of historyItems) {
@@ -152,27 +404,150 @@ var omniboxSearchModes = [
   // #############################################################################################################
   {
     key: "img",
+    // 显示文字
     showText: "图片搜索",
+    // 搜索模式匹配
     match: function (text) {
       return /^img( |:|\uff1a)?/.test(text)
     },
+    // 获取输入文字
     getInputText: function (text, encodeText = true) {
       let returnText = /^img(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
       return encodeText ? encodeXML(returnText) : returnText
     },
+    // 搜索建议
+    getSuggestions: async function (text, suggest) {
+      // 如果前面已经有了 【[xx] 】，则先去掉
+      text = text.replace(/^\[.*?\]\s*/, "");
+      suggest([
+        { content: "img: [百度] " + text, description: "使用 <url>[百度图片]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "img: [搜狗] " + text, description: "使用 <url>[搜狗图片]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "img: [必应] " + text, description: "使用 <url>[必应图片]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "img: [360] " + text, description: "使用 <url>[360图片]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "img: [微博] " + text, description: "使用 <url>[微博图片]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "img: [中国搜索] " + text, description: "使用 <url>[中国搜索图片]</url> 搜索 <match>" + text + "</match>", deletable: false },
+      ]);
+      return;
+    },
+    // 执行搜索
     search: function (text) {
+      let searchInput = /^(\[.*?\])?( )?(.*)$/.exec(text)
+      let searchType = /^\[(.*?)\]$/.exec((searchInput[1] ?? "[百度]"/* 默认百度图片搜索 */).trim())[0].trim()
+      let searchText = searchInput[3].trim()
+      console.log("[图片搜索开始]");
+      console.log("    传入参数为：", text);
+      console.log("    searchInput为：", searchInput);
+      console.log("    searchType为：", searchType);
+      console.log("    searchText为：", searchText);
+      switch (searchType) {
+        default:
+        case "[百度]":
+          navigate("https://image.baidu.com/search/index?tn=baiduimage&word=" + encodeURIComponent(searchText), true);
+          break;
+        case "[搜狗]":
+          navigate("https://pic.sogou.com/pics?query=" + encodeURIComponent(searchText), true);
+          break;
+        case "[必应]":
+          navigate("https://cn.bing.com/images/search?q=" + encodeURIComponent(searchText), true);
+          break;
+        case "[360]":
+          navigate("https://image.so.com/i?q=" + encodeURIComponent(searchText), true);
+          break;
+        case "[微博]":
+          navigate("https://s.weibo.com/pic?q=" + encodeURIComponent(searchText), true);
+          break;
+        case "[中国搜索]":
+          navigate("http://www.chinaso.com/newssearch/image?q=" + encodeURIComponent(searchText), true);
+          break;
 
+      }
+      console.log("[图片搜索结束]");
     }
   },
   // #############################################################################################################
+  // Todo: 视频搜索
+  // {
+  //   key: "video",
+  //   // 显示文字
+  //   showText: "视频搜索",
+  //   // 搜索模式匹配
+  //   match: function (text) {
+  //     return /^video( |:|\uff1a)?/.test(text)
+  //   },
+  //   // 获取输入文字
+  //   getInputText: function (text, encodeText = true) {
+  //     let returnText = /^video(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
+  //     return encodeText ? encodeXML(returnText) : returnText
+  //   },
+  //   // 搜索建议
+  //   getSuggestions: async function (text, suggest) {
+  //     // 如果前面已经有了 【[xx] 】，则先去掉
+  //     text = text.replace(/^\[.*?\]\s*/, "");
+  //     suggest([
+  //       { content: "video: [百度] " + text, description: "使用 <url>[百度视频]</url> 搜索 <match>" + text + "</match>", deletable: false },
+  //       { content: "video: [搜狗] " + text, description: "使用 <url>[搜狗视频]</url> 搜索 <match>" + text + "</match>", deletable: false },
+  //       { content: "video: [必应] " + text, description: "使用 <url>[必应视频]</url> 搜索 <match>" + text + "</match>", deletable: false },
+  //       { content: "video: [360] " + text, description: "使用 <url>[360视频]</url> 搜索 <match>" + text + "</match>", deletable: false },
+  //       { content: "video: [微博] " + text, description: "使用 <url>[微博视频]</url> 搜索 <match>" + text + "</match>", deletable: false },
+  //       { content: "video: [中国搜索] " + text, description: "使用 <url>[中国搜索视频]</url> 搜索 <match>" + text + "</match>", deletable: false },
+  //     ]);
+  //     return;
+  //   },
+  //   // 执行搜索
+  //   search: function (text) {
+  //     let searchInput = /^(\[.*?\])?( )?(.*)$/.exec(text)
+  //     let searchType = /^\[(.*?)\]$/.exec((searchInput[1] ?? "[百度]"/* 默认百度视频搜索 */).trim())[0].trim()
+  //     let searchText = searchInput[3].trim()
+  //     console.log("[视频搜索开始]");
+  //     console.log("    传入参数为：", text);
+  //     console.log("    searchInput为：", searchInput);
+  //     console.log("    searchType为：", searchType);
+  //     console.log("    searchText为：", searchText);
+  //     switch (searchType) {
+  //       default:
+  //       case "[百度]":
+  //         navigate("https://v.baidu.com/v?word=" + encodeURIComponent(searchText), true);
+  //         break;
+  //       case "[搜狗]":
+  //         navigate("https://pic.sogou.com/pics?query=" + encodeURIComponent(searchText), true);
+  //         break;
+  //       case "[必应]":
+  //         navigate("https://cn.bing.com/images/search?q=" + encodeURIComponent(searchText), true);
+  //         break;
+  //       case "[360]":
+  //         navigate("https://image.so.com/i?q=" + encodeURIComponent(searchText), true);
+  //         break;
+  //       case "[微博]":
+  //         navigate("https://s.weibo.com/pic?q=" + encodeURIComponent(searchText), true);
+  //         break;
+  //       case "[中国搜索]":
+  //         navigate("http://www.chinaso.com/newssearch/image?q=" + encodeURIComponent(searchText), true);
+  //         break;
+
+  //     }
+  //     console.log("[图片搜索结束]");
+  //   }
+  // },
+  // #############################################################################################################
   {
     key: "boss",
-    showText: "老板键",
+    // 显示文字
+    showText: "召唤“学生助手”",
+    // 搜索模式匹配
     match: function (text) {
       // return text.trim() == "boss"
       return /^boss( |:|\uff1a)?$/.test(text)
     },
-    getInputText: (text) => "回车执行"
+    // 获取输入文字
+    getInputText: (text) => "回车执行",
+    // 搜索建议
+    getSuggestions: async function (text, suggest) {
+      return;
+    },
+    // 执行搜索
+    search: function (text) {
+
+    }
   }
 ]
 
@@ -191,6 +566,9 @@ var currentSearchModeIndex = 0;
 // 当前正在向服务端进行的请求
 var currentRequest = null;
 
+//
+var ajaxUrl = "https://www.baidu.com/s?wd=";
+
 
 
 /**
@@ -205,6 +583,7 @@ var currentRequest = null;
  * 用户开始输入文本
  */
 chrome.omnibox.onInputStarted.addListener(function () {
+  console.log("chrome.omnibox.onInputStarted");
   updateDefaultSuggestion('');
 });
 
@@ -212,41 +591,50 @@ chrome.omnibox.onInputStarted.addListener(function () {
  * 搜索框失去焦点
  */
 chrome.omnibox.onInputCancelled.addListener(function () {
+  console.log("chrome.omnibox.onInputCancelled");
   updateDefaultSuggestion('');
 });
 
 /**
  * 输入框文本改变事件
  */
-chrome.omnibox.onInputChanged.addListener(
-  function (text, suggest) {
+chrome.omnibox.onInputChanged.addListener(function (text, suggest) {
+  console.log("chrome.omnibox.onInputChanged", text);
 
-    // 停止上一次搜索行为
-    if (currentRequest != null) {
-      currentRequest.onreadystatechange = null;
-      currentRequest.abort();
-      currentRequest = null;
-    }
-
-    // 更新输入框回显提示信息
-    updateDefaultSuggestion(text);
-
-    // 如果啥也没有输入就返回
-    if (text.trim() == '')
-      return;
-
-    // 访问后端服务获得搜索建议
-    var currentSearchMode = omniboxSearchModes[currentSearchModeIndex];
-    currentSearchMode.getSuggestions(currentSearchMode.getInputText(text));
+  // 停止上一次搜索行为
+  if (currentRequest != null) {
+    currentRequest.onreadystatechange = null;
+    currentRequest.abort();
+    currentRequest = null;
   }
-);
+
+  // 更新输入框回显提示信息
+  updateDefaultSuggestion(text);
+
+  // 如果啥也没有输入就返回
+  if (text.trim() == '')
+    return;
+
+  // 访问后端服务获得搜索建议
+  var currentSearchMode = omniboxSearchModes[currentSearchModeIndex];
+  currentSearchMode.getSuggestions(currentSearchMode.getInputText(text), suggest);
+});
 
 /**
  * 用户输入完成，按下回车键
  */
 chrome.omnibox.onInputEntered.addListener(function (text) {
-  var searchText = omniboxSearchModes[currentSearchModeIndex].getInputText(text);
-  alert(text)
+  console.log("chrome.omnibox.onInputEntered");
+
+  // 更新输入框回显提示信息
+  // 注意：这里必须还要更新一次，因为用户在输入时使用上下键选择suggest项目时，会触发 chrome.omnibox.onInputChanged 事件
+  //       如果不执行，那么输入 ss img 之后上下选择对应搜索，按回车会被解析为文字搜索，而不是图片搜索
+  updateDefaultSuggestion(text);
+
+  var searchMode = omniboxSearchModes[currentSearchModeIndex];
+  var searchText = searchMode.getInputText(text);
+  searchMode.search(searchText);
+  console.log("用户输入：" + text);
 });
 
 
@@ -283,9 +671,11 @@ function encodeXML(str) {
  */
 function navigate(url, openInNewTab = false) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    if (!openInNewTab) {
+    if (!openInNewTab || isCurrentNewTab()) {
+      // 如果不在新标签页打开，或者当前标签页是新标签页
       chrome.tabs.update(tabs[0].id, { url: url });
     } else {
+      // 如果在新标签页打开，且当前标签页不是新标签页
       chrome.tabs.create({ url: url });
     }
   });
@@ -299,11 +689,11 @@ function navigate(url, openInNewTab = false) {
 function isCurrentNewTab() {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     if (tabs && tabs.length > 0 && !!tabs[0].url && /^(.*?):\/\/newtab\/$/.test(tabs[0].url)) {
-      console.log(tabs[0].url)
+      console.log("当前标签页是新标签页");
       return true;
     }
     else {
-      console.log(false)
+      console.log("当前标签页不是新标签页");
       return false;
     }
   });
@@ -328,7 +718,9 @@ function updateDefaultSuggestion(text) {
   currentSearchModeIndex = 0; // 初始化搜索方式下标
 
   // 默认第 0 个为文字搜索，除此之外的搜索方式如果都没有匹配到，则显示文字搜索
-  for (var i = 1, keyword; i < omniboxSearchModes.length && (keyword = omniboxSearchModes[i]); i++) {
+  for (var i = 1, keyword; i < omniboxSearchModes.length; i++) {
+    keyword = omniboxSearchModes[i];
+
     // 分隔符
     description.push('<dim> \| </dim>');
 
@@ -346,6 +738,13 @@ function updateDefaultSuggestion(text) {
   description.push('<dim> ] </dim>');
 
   description[2] = isPlaintext ? ('<match>' + text.trim() + '</match>') : ('<dim>' + omniboxSearchModes[0].showText + '</dim>');
+
+  console.log("[更新下拉框提示开始]");
+  console.log("    text：", text);
+  console.log("    当前匹配搜索模式：", omniboxSearchModes[currentSearchModeIndex].showText);
+  console.log("    isPlaintext：", isPlaintext);
+  // console.log(description.join(''));
+  console.log("[更新下拉框提示结束]");
 
   chrome.omnibox.setDefaultSuggestion({
     description: description.join('')
