@@ -130,15 +130,16 @@ function getTimer() {
       //更新后倒计时判断，如果结束则重新初始化界面
       if(pomoData.countdownTimer == "00:00"){
 
-        audio.play();
+        audio.play();  
+        //不能放在页面上，要在后台进行
         chrome.runtime.sendMessage(
           {
-            status: "init",
+            status: "playend",
           },
           (response) => {
-            console.log(response);
+            console.log(response,"**************下面");
             countdownTimer.innerHTML = "25:00";
-    
+            
             startBtn.style.display = "block";
             endBtn.style.display = "none";
             clearTimer();
@@ -209,6 +210,8 @@ chrome.storage.sync.get("pomoData", ({ pomoData }) => {
     chrome.runtime.sendMessage({
       status: "init",
     });
+    countdownTimer.innerHTML = "25:00";
+  }else if(status === 'playend'){
     countdownTimer.innerHTML = "25:00";
   }
 });

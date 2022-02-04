@@ -1,11 +1,12 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 
 body {
     /* background-color: rgb(51, 11, 116); */
-    background: url(../../images/pomo_ocean.jpg) no-repeat;
+    background: url(../../images/pomo_green.jpeg) no-repeat;
     background-image: "../../";
     /* color: white; */
-    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Source Sans Pro','Fira Sans', sans-serif;
     margin: 0;
     padding: 0;
     width: 280px;
@@ -42,7 +43,7 @@ body {
     margin: auto;
     font-size: 60px;
     font-weight: 500;
-    padding: 20px;
+    padding: 20%;
     color: aliceblue;
 }
 
@@ -50,44 +51,101 @@ body {
     opacity: 0;
 }
 
-#start-btn ,#end-btn{
-    width: 40px;
-    margin: 10px auto 0;
-    padding: 10px 30px;
+
+#start-btn,#end-btn,#reset-btn {
+    /* 文字颜色 */
+    color: #f5e4b9; 
+    /* 清除背景色 */
+    background: transparent; 
+    /* 边框样式、颜色、宽度 */
+    border: 1px solid #f5e4b9;
+    /* 给边框添加圆角 */
+    border-radius: 6px; 
+    /* 字母转大写 */
+    border: none;
+    color: white;
+    padding: 10px 26px;
+    display: block;
     text-align: center;
-    background-color: rgb(0, 179, 12);
+    /* width: 40px; */
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
     cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    text-shadow: 1px 1px 1px rgba(255,255,255, .1);
+     border-radius: 25px;
+     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+
+}
+#start-btn {
+    background-color: white; 
+    color: black; 
+    border: 1px solid #f5e4b9;
+}
+/* 悬停样式 */
+#start-btn:hover {
+    background-color: #f5e4b9;
+    color: white;
 }
 
-#reset-btn {
-    width: 40px;
-    margin: 10px auto 0;
-    padding: 10px 30px;
-    text-align: center;
-    background-color: rgb(187, 0, 0);
-    cursor: pointer;
-}
-
-#end-btn{
-    background-color: rgb(0, 128, 187);
+#end-btn {
+    background-color: white; 
+    color: black; 
+    border: 1px solid #ECB390;
     display: none;
 }
+/* 悬停样式 */
+#end-btn:hover {
+    background-color: #ECB390;
+    color: white;
+}
+
+/* #end-btn{
+    width: 40px;
+    margin: 10px auto 0;
+    padding: 10px 30px;
+    text-align: center;
+    background-color: #F5EEDC;
+    cursor: pointer;
+} */
+
+/* #reset-btn {
+    width: 40px;
+    margin: 10px auto 0;
+    padding: 10px 30px;
+    text-align: center;
+    background-color: #DD4A48;
+    cursor: pointer;
+} */
+
+#reset-btn {
+    background-color: white; 
+    color: black; 
+    border: 1px solid #DD4A48;
+}
+/* 悬停样式 */
+#reset-btn:hover {
+    background-color: #DD4A48;
+    color: white;
+}
+
+
+/* #end-btn{
+    background-color: #ECB390;
+    display: none;
+} */
 
 /*选中的按钮*/
 .selected {
     background-color: rgb(244, 242, 248);
 } 
 
-#current-task-display {
-    width: 100%;
-    padding-top: 30px;
-    margin: auto;
-    text-align: center;
-}
 
-#tasks-container {
-    margin: auto;
-}
 
 ul {
     padding: 0;
@@ -105,52 +163,6 @@ li {
     float: right;
 }
 
-.delete-btn {
-    padding: 10px;
-    background-color: rgb(33, 10, 70);
-    color: white;
-    margin-left: 10px;
-    cursor: pointer;
-}
-
-#add-task-btn {
-    width: 200px;
-    margin: 0 auto 10px;
-    /* background-color: rgb(33, 10, 70); */
-    padding: 8px;
-    cursor: pointer;
-    text-align: center;
-}
-
-#task-form {
-    clear: both;
-    background-color: white;
-    color: black;
-    height: 100px;
-    padding: 15px;
-}
-
-#text {
-    border: none;
-    width: 95%;
-    font-size: 18px;
-    margin-bottom: 5px;
-}
-
-#est-pomodoro {
-    margin: 10px 10px 0;
-    width: 50px;
-    padding: 5px;
-}
-
-#save, #cancel {
-    border: none;
-    width: 60px;
-    padding: 8px;
-    margin-left: 5px;
-    cursor: pointer;
-    float: right;
-}
 
 .hide {
     display: none;

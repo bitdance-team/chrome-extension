@@ -21,11 +21,6 @@ let array = ["minutes", "seconds", "pause", "countdownTimer", "pbutton"];
 //全局唯一的定时器
 let timer = null;
 
-
-// 记住 是否暂停、
-
-// 判断计时剩余时间
-
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const { status, content } = message;
 
@@ -52,26 +47,42 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         status: "init",
       },
     });
-  } else {
+  } else if (status === "init") {
     //init初始化
     chrome.storage.sync.set({
       pomoData: {
-        minutes: 0,
-        seconds: 5,
+        minutes: 24,
+        seconds: 60,
         countdownTimer: "25:00",
         status: "start",
       },
     });
+  } else {
+    //playend 初始化
+    chrome.storage.sync.set({
+      pomoData: {
+        minutes: 24,
+        seconds: 60,
+        countdownTimer: "25:00",
+        status: "playend",
+      },
+    });
   }
+
+    //创建结束通知：待完成
+    
   chrome.storage.sync.set({
     status,
   });
+  //后台播放完成提示音乐
+  if (message.action === "play") {
+    // audio.play();
+  }
   sendResponse();
 });
 
 // 番茄钟倒计时功能
 function countdown({ minutes, seconds, status }) {
-  
   // 设置分钟和秒数
   // let currentMins = minutes - 1;
   seconds--;
@@ -83,7 +94,7 @@ function countdown({ minutes, seconds, status }) {
     seconds;
   // countdownTimer.innerHTML = currentTimer; 拿到
   console.log("分秒=============", minutes, seconds);
-  
+
   chrome.storage.sync.set(
     {
       pomoData: {
@@ -99,6 +110,11 @@ function countdown({ minutes, seconds, status }) {
       }
     }
   );
+
+  //设置badge文本用来显示剩余分钟数
+  chrome.storage.sync.get("pomoData", ({ pomoData }) => {
+    chrome.action.setBadgeText({ text: pomoData.minutes.toString() });
+  });
 
   console.log(currentTimer);
   // count down every second, when a minute is up, countdown one minute
@@ -125,6 +141,9 @@ function countdown({ minutes, seconds, status }) {
         }
       }
     );
-    countdown({ minutes, seconds,status });
-  } 
+    countdown({ minutes, seconds, status });
+  }
 }
+
+//设置badge文本背景颜色
+chrome.action.setBadgeBackgroundColor({ color: "#DD4A48" });
