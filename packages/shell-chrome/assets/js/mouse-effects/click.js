@@ -7,14 +7,15 @@ $(function() {
 
     // 每次改变开关状态时刷新页面使功能及时生效
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        console.log('click');
         location.reload();
         sendResponse('Reload page');
     })
 
     // 控制功能是否开启
-    chrome.storage.sync.get('clickState', function(budget) {
+    chrome.storage.sync.get('clickState3', function(budget) {
         // 得到按钮开关状态
-        if (budget.clickState == false || budget.clickState == undefined) {
+        if (budget.clickState3 == false || budget.clickState3 == undefined) {
             // console.log('click功能启动');
             var hearts = [];
 
