@@ -7,9 +7,10 @@ $(function() {
 
     // 每次改变开关状态时刷新页面使功能及时生效
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-        console.log('click');
-        location.reload();
-        sendResponse('Reload page');
+      // TODO: 这里不能这么写，否则会导致其他模块发送消息时触发页面刷新
+        // console.log('click');
+        // location.reload();
+        // sendResponse('Reload page');
     })
 
     // 控制功能是否开启

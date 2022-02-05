@@ -16,7 +16,8 @@
       "assets/js/lib/jquery.min.js",
       "assets/js/background.js",
       "assets/html/pomodoro/background.js",
-      "assets/js/advanced-search/background.js"
+      "assets/js/advanced-search/background.js",
+      "assets/html/screenshot/background.js"
     ]
   },
   "content_scripts": [
@@ -91,7 +92,7 @@
   "browser_action": {
     "default_icon": "assets/image/logo.png",
     "default_popup": "popup.html",
-    "default_title": "学生助手"
+    "default_title": "召唤“学生助手” (Alt+,)"
   },
   "commands": {
     "_execute_browser_action": {
@@ -103,17 +104,15 @@
     }
   },
   "web_accessible_resources": [
-    "/assets/image/*"
+    "/assets/image/*",
+    "/assets/html/screenshot/images/*"
   ],
   "permissions": [
     "background",
     "contextMenus",
     "storage",
-    "unlimitedStorage",
     "webRequest",
-    "webRequestBlocking",
     "tabs",
-    "storage",
     "activeTab",
     "notifications"
   ]

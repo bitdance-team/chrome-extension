@@ -24,8 +24,6 @@ let timer = null;
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const { status, content } = message;
 
-  console.log(message);
-
   if (status === "start") {
     // sendResponse({
     //   status:message.status

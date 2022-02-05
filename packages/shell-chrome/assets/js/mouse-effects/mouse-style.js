@@ -6,9 +6,10 @@ $(function() {
     console.log("[BitDance extension] 学生助手插件 - 鼠标样式模块加载成功");
     // 每次改变开关状态时刷新页面使功能及时生效
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-        console.log('mouse');
-        location.reload();
-        sendResponse('Reload page');
+      // TODO: 这里不能这么写，否则会导致其他模块发送消息时触发页面刷新
+        // console.log('mouse');
+        // location.reload();
+        // sendResponse('Reload page');
     })
 
     // 控制功能是否开启

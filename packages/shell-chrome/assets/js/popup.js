@@ -71,4 +71,11 @@ $(function() {
     btnDirectUrl.addEventListener("change", () => {
         chrome.storage.sync.set({ linkOpen: !btnDirectUrl.checked });
     });
+
+    // 截图
+    document.getElementById("btnScreenshot").addEventListener("click", () => {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.extension.getBackgroundPage().takeScreenshot(tabs[0]);
+        })
+    });
 })
