@@ -338,11 +338,11 @@ var omniboxSearchModes = [
     showText: "图片",
     // 搜索模式匹配
     match: function (text) {
-      return /^img( |:|\uff1a)?/.test(text)
+      return /^img( |:|\uff1a)?/i.test(text)
     },
     // 获取输入文字
     getInputText: function (text, encodeText = true) {
-      let returnText = /^img(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
+      let returnText = /^img(:| |\uff1a)?(.*)$/i.exec(text)[2].trim()
       return encodeText ? encodeXML(returnText) : returnText
     },
     // 搜索建议
@@ -405,11 +405,11 @@ var omniboxSearchModes = [
     showText: "视频",
     // 搜索模式匹配
     match: function (text) {
-      return /^video( |:|\uff1a)?/.test(text)
+      return /^video( |:|\uff1a)?/i.test(text)
     },
     // 获取输入文字
     getInputText: function (text, encodeText = true) {
-      let returnText = /^video(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
+      let returnText = /^video(:| |\uff1a)?(.*)$/i.exec(text)[2].trim()
       return encodeText ? encodeXML(returnText) : returnText
     },
     // 搜索建议
@@ -423,10 +423,11 @@ var omniboxSearchModes = [
         { content: "video: [优酷] " + text, description: "使用 <url>[优酷]</url> 搜索 <match>" + text + "</match>", deletable: false },
         { content: "video: [百度] " + text, description: "使用 <url>[百度视频]</url> 搜索 <match>" + text + "</match>", deletable: false },
         { content: "video: [搜狗] " + text, description: "使用 <url>[搜狗视频]</url> 搜索 <match>" + text + "</match>", deletable: false },
-        { content: "video: [360] " + text, description: "使用 <url>[360视频]</url> 搜索 <match>" + text + "</match>", deletable: false },
         { content: "video: [微博] " + text, description: "使用 <url>[微博视频]</url> 搜索 <match>" + text + "</match>", deletable: false },
         { content: "video: [抖音] " + text, description: "使用 <url>[抖音]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "video: [必应] " + text, description: "使用 <url>[必应视频]</url> 搜索 <match>" + text + "</match>", deletable: false },
         // 以下内容超出9个不被显示
+        { content: "video: [360] " + text, description: "使用 <url>[360视频]</url> 搜索 <match>" + text + "</match>", deletable: false },
         { content: "video: [今日头条] " + text, description: "使用 <url>[今日头条]</url> 搜索 <match>" + text + "</match>", deletable: false },
         { content: "video: [快手] " + text, description: "使用 <url>[快手]</url> 搜索 <match>" + text + "</match>", deletable: false },
         { content: "video: [知乎] " + text, description: "使用 <url>[知乎]</url> 搜索 <match>" + text + "</match>", deletable: false },
@@ -475,6 +476,9 @@ var omniboxSearchModes = [
         case "[抖音]":
           navigate("https://www.douyin.com/search/" + encodeURIComponent(searchText) + "?type=video", true);
           break;
+        case "[必应]":
+          navigate("https://cn.bing.com/videos/search?q=" + encodeURIComponent(searchText), true);
+          break;
         case "[今日头条]":
           navigate("https://so.toutiao.com/search?pd=video&dvpf=pc&keyword=" + encodeURIComponent(searchText), true);
           break;
@@ -504,11 +508,11 @@ var omniboxSearchModes = [
     showText: "新闻",
     // 搜索模式匹配
     match: function (text) {
-      return /^news( |:|\uff1a)?/.test(text)
+      return /^news( |:|\uff1a)?/i.test(text)
     },
     // 获取输入文字
     getInputText: function (text, encodeText = true) {
-      let returnText = /^news(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
+      let returnText = /^news(:| |\uff1a)?(.*)$/i.exec(text)[2].trim()
       return encodeText ? encodeXML(returnText) : returnText
     },
     // 搜索建议
@@ -570,11 +574,11 @@ var omniboxSearchModes = [
     showText: "翻译",
     // 搜索模式匹配
     match: function (text) {
-      return /^fanyi( |:|\uff1a)?/.test(text)
+      return /^fanyi( |:|\uff1a)?/i.test(text)
     },
     // 获取输入文字
     getInputText: function (text, encodeText = true) {
-      let returnText = /^fanyi(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
+      let returnText = /^fanyi(:| |\uff1a)?(.*)$/i.exec(text)[2].trim()
       return encodeText ? encodeXML(returnText) : returnText
     },
     // 搜索建议
@@ -584,12 +588,14 @@ var omniboxSearchModes = [
       suggest([
         { content: "fanyi: [百度] " + text, description: "使用 <url>[百度翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
         { content: "fanyi: [有道翻译] " + text, description: "使用 <url>[有道翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [有道] " + text, description: "使用 <url>[有道]</url> 查词 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [金山词霸] " + text, description: "使用 <url>[金山词霸]</url> 查词 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [360] " + text, description: "使用 <url>[360翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [DeepL] " + text, description: "使用 <url>[DeepL翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [必应] " + text, description: "使用 <url>[必应词典]</url> 查词 <match>" + text + "</match>", deletable: false },
         { content: "fanyi: [腾讯] " + text, description: "使用 <url>[腾讯翻译君]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [DeepL] " + text, description: "使用 <url>[DeepL翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [金山词霸] " + text, description: "使用 <url>[金山词霸]</url> 查词 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [有道] " + text, description: "使用 <url>[有道]</url> 查词 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [360] " + text, description: "使用 <url>[360翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
         { content: "fanyi: [翻译狗] " + text, description: "使用 <url>[翻译狗]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        // 以下内容超出9个不被显示
         { content: "fanyi: [Google] " + text, description: "使用 <url>[Google翻译]</url> 翻译 <match>" + text + "</match> （Google翻译在中国大陆无法使用）", deletable: false },
       ]);
       return;
@@ -611,25 +617,28 @@ var omniboxSearchModes = [
           navigate("https://fanyi.baidu.com/#en/zh/" + encodeURIComponent(searchText), true);
           break;
         case "[有道翻译]":
-          // 后面参数通过注入的js代码获取并在网页加载完后填入到翻译框中，点击搜索按钮
+          // 后面参数通过注入的js代码获取并在网页加载完后填入到翻译框中，点击翻译按钮
           navigate("https://fanyi.youdao.com/?__bitdance_extension__=" + encodeURIComponent(searchText), true);
           break;
-        case "[有道]":
-          navigate("https://www.youdao.com/w/" + encodeURIComponent(searchText), true);
+        case "[必应]":
+          navigate("https://cn.bing.com/dict/search?q=" + encodeURIComponent(searchText), true);
           break;
-        case "[金山词霸]":
-          navigate("https://www.iciba.com/word?w=" + encodeURIComponent(searchText), true);
-          break;
-        case "[360]":
-          navigate("https://fanyi.so.com/#" + encodeURIComponent(searchText), true);
+        case "[腾讯]":
+          // 网页加载好后自动点击翻译按钮
+          navigate("https://fanyi.qq.com/?text=" + encodeURIComponent(searchText), true);
           break;
         case "[DeepL]":
           let hasChineseChar = /.*[\u4e00-\u9fa5]+.*$/.test(searchText)
           navigate("https://www.deepl.com/translator#" + (hasChineseChar ? "zh/en/" : "en/zh/") + encodeURIComponent(searchText), true);
           break;
-        case "[腾讯]":
-          // 网页加载好后自动点击翻译按钮
-          navigate("https://fanyi.qq.com/?text=" + encodeURIComponent(searchText), true);
+        case "[金山词霸]":
+          navigate("https://www.iciba.com/word?w=" + encodeURIComponent(searchText), true);
+          break;
+        case "[有道]":
+          navigate("https://www.youdao.com/w/" + encodeURIComponent(searchText), true);
+          break;
+        case "[360]":
+          navigate("https://fanyi.so.com/#" + encodeURIComponent(searchText), true);
           break;
         case "[翻译狗]":
           navigate("https://www.fanyigou.com/trans/totran/tranText.html?text=" + encodeURIComponent(searchText), true);
@@ -642,17 +651,85 @@ var omniboxSearchModes = [
     }
   },
   // #############################################################################################################
+  {
+    key: "paper",
+    // 显示文字
+    showText: "学术论文",
+    // 搜索模式匹配
+    match: function (text) {
+      return /^paper( |:|\uff1a)?/i.test(text)
+    },
+    // 获取输入文字
+    getInputText: function (text, encodeText = true) {
+      let returnText = /^paper(:| |\uff1a)?(.*)$/i.exec(text)[2].trim()
+      return encodeText ? encodeXML(returnText) : returnText
+    },
+    // 搜索建议
+    getSuggestions: async function (text, suggest) {
+      // 如果前面已经有了 【[xx] 】，则先去掉
+      text = text.replace(/^\[.*?\]\s*/, "");
+      suggest([
+        { content: "paper: [知网] " + text, description: "使用 <url>[中国知网]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "paper: [万方] " + text, description: "使用 <url>[万方数据]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "paper: [维普] " + text, description: "使用 <url>[维普期刊]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "paper: [百度] " + text, description: "使用 <url>[百度学术]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "paper: [必应] " + text, description: "使用 <url>[必应学术]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "paper: [搜狗] " + text, description: "使用 <url>[搜狗学术]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "paper: [谷歌] " + text, description: "使用 <url>[谷歌学术]</url> 搜索 <match>" + text + "</match> （谷歌学术在中国大陆无法使用）", deletable: false },
+      ]);
+      return;
+    },
+    // 执行搜索
+    search: function (text) {
+      let searchInput = /^(\[.*?\])?( )?(.*)$/.exec(text)
+      let searchType = /^\[(.*?)\]$/.exec((searchInput[1] ?? "[今日头条]"/* 默认今日头条搜索 */).trim())[0].trim()
+      let searchText = searchInput[3].trim()
+      console.log("[学术论文搜索开始]");
+      console.log("    传入参数为：", text);
+      console.log("    searchInput为：", searchInput);
+      console.log("    searchType为：", searchType);
+      console.log("    searchText为：", searchText);
+      switch (searchType) {
+        default:
+        case "[知网]":
+          // 后面参数通过注入的js代码获取并在网页加载完后填入到搜索框中，点击搜索按钮
+          navigate("https://www.cnki.net/?__bitdance_extension__=" + encodeURIComponent(searchText), true);
+          break;
+        case "[万方]":
+          navigate("https://s.wanfangdata.com.cn/paper?q=" + encodeURIComponent(searchText), true);
+          break;
+        case "[维普]":
+          // 后面参数通过注入的js代码获取并在网页加载完后填入到搜索框中，点击搜索按钮
+          navigate("http://qikan.cqvip.com/?__bitdance_extension__=" + encodeURIComponent(searchText), true);
+          break;
+        case "[百度]":
+          navigate("https://xueshu.baidu.com/s?wd=" + encodeURIComponent(searchText), true);
+          break;
+        case "[必应]":
+          navigate("https://cn.bing.com/academic/search?q=" + encodeURIComponent(searchText), true);
+          break;
+        case "[搜狗]":
+          navigate("https://scholar.sogou.com/xueshu?query=" + encodeURIComponent(searchText), true);
+          break;
+        case "[Google]":
+          navigate("https://scholar.google.com/scholar?q=" + encodeURIComponent(searchText), true);
+          break;
+      }
+      console.log("[学术论文搜索结束]");
+    }
+  },
+  // #############################################################################################################
   // {
   //   key: "yn",
   //   // 显示文字
   //   showText: "网页内搜索(Todo)",
   //   // 搜索模式匹配
   //   match: function (text) {
-  //     return /^yn( |:|\uff1a)?/.test(text)
+  //     return /^yn( |:|\uff1a)?/i.test(text)
   //   },
   //   // 获取输入文字
   //   getInputText: function (text, encodeText = true) {
-  //     let returnText = /^yn(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
+  //     let returnText = /^yn(:| |\uff1a)?(.*)$/i.exec(text)[2].trim()
   //     return encodeText ? encodeXML(returnText) : returnText
   //   },
   //   // 搜索建议
@@ -671,11 +748,11 @@ var omniboxSearchModes = [
   //   showText: "网页内正则表达式搜索(Todo)",
   //   // 搜索模式匹配
   //   match: function (text) {
-  //     return /^re( |:|\uff1a)?/.test(text)
+  //     return /^re( |:|\uff1a)?/i.test(text)
   //   },
   //   // 获取输入文字
   //   getInputText: function (text, encodeText = true) {
-  //     let returnText = /^re(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
+  //     let returnText = /^re(:| |\uff1a)?(.*)$/i.exec(text)[2].trim()
   //     return encodeText ? encodeXML(returnText) : returnText
   //   },
   //   // 搜索建议
@@ -694,11 +771,11 @@ var omniboxSearchModes = [
   //   showText: "历史记录(Todo)",
   //   // 搜索模式匹配
   //   match: function (text) {
-  //     return /^ls( |:|\uff1a)?/.test(text)
+  //     return /^ls( |:|\uff1a)?/i.test(text)
   //   },
   //   // 获取输入文字
   //   getInputText: function (text, encodeText = true) {
-  //     let returnText = /^ls(:| |\uff1a)?(.*)$/.exec(text)[2].trim()
+  //     let returnText = /^ls(:| |\uff1a)?(.*)$/i.exec(text)[2].trim()
   //     return encodeText ? encodeXML(returnText) : returnText
   //   },
   //   // 搜索建议
@@ -727,7 +804,7 @@ var omniboxSearchModes = [
   //   // 搜索模式匹配
   //   match: function (text) {
   //     // return text.trim() == "boss"
-  //     return /^boss( |:|\uff1a)?$/.test(text)
+  //     return /^boss( |:|\uff1a)?$/i.test(text)
   //   },
   //   // 获取输入文字
   //   getInputText: (text) => "回车执行",

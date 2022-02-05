@@ -1,4 +1,4 @@
-console.log("[BitDance extension] 学生助手插件 - 有道翻译自动填入模块加载成功");
+console.log("[BitDance extension] 学生助手插件 - 中国知网自动搜索模块加载成功");
 
 // refer: https://www.cnblogs.com/chen-lhx/p/5198612.html
 $.extend({
@@ -20,12 +20,8 @@ $.extend({
 window.onload = () => {
   let transText = $.getUrlVar('__bitdance_extension__');
   if (!transText || transText.trim() == "") return
-  console.log("[BitDance extension] 学生助手插件 - 有道翻译自动填入模块 - 翻译文本为：", transText);
+  console.log("[BitDance extension] 学生助手插件 - 中国知网自动搜索模块 - 模块文本为：", transText);
 
-  document.getElementsByTagName("textarea")[0].value = decodeURIComponent(transText)
-  document.getElementById("transMachine").click()
-
-  // 参数获取完成后，清除掉页面参数
-  // History.replaceState()  refer: https://developer.mozilla.org/zh-CN/docs/Web/API/History/replaceState
-  history.replaceState({}, "", "/");
+  document.getElementById("txt_SearchText").value = decodeURIComponent(transText)
+  document.querySelector(".search-btn").click()
 }
