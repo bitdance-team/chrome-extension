@@ -588,7 +588,8 @@ var omniboxSearchModes = [
         { content: "fanyi: [金山词霸] " + text, description: "使用 <url>[金山词霸]</url> 查词 <match>" + text + "</match>", deletable: false },
         { content: "fanyi: [360] " + text, description: "使用 <url>[360翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
         { content: "fanyi: [DeepL] " + text, description: "使用 <url>[DeepL翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [腾讯] " + text, description: "使用 <url>[腾讯翻译君]</url>", deletable: false },
+        { content: "fanyi: [腾讯] " + text, description: "使用 <url>[腾讯翻译君]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [翻译狗] " + text, description: "使用 <url>[翻译狗]</url> 翻译 <match>" + text + "</match>", deletable: false },
         { content: "fanyi: [Google] " + text, description: "使用 <url>[Google翻译]</url> 翻译 <match>" + text + "</match> （Google翻译在中国大陆无法使用）", deletable: false },
       ]);
       return;
@@ -629,6 +630,9 @@ var omniboxSearchModes = [
         case "[腾讯]":
           // 网页加载好后自动点击翻译按钮
           navigate("https://fanyi.qq.com/?text=" + encodeURIComponent(searchText), true);
+          break;
+        case "[翻译狗]":
+          navigate("https://www.fanyigou.com/trans/totran/tranText.html?text=" + encodeURIComponent(searchText), true);
           break;
         case "[Google]":
           navigate("https://translate.google.cn/?text=" + encodeURIComponent(searchText), true);
