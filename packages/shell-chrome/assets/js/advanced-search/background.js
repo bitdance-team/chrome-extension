@@ -583,11 +583,12 @@ var omniboxSearchModes = [
       text = text.replace(/^\[.*?\]\s*/, "");
       suggest([
         { content: "fanyi: [百度] " + text, description: "使用 <url>[百度翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [有道] " + text, description: "使用 <url>[有道翻译]</url> 查词 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [有道翻译] " + text, description: "使用 <url>[有道翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [有道] " + text, description: "使用 <url>[有道]</url> 查词 <match>" + text + "</match>", deletable: false },
         { content: "fanyi: [金山词霸] " + text, description: "使用 <url>[金山词霸]</url> 查词 <match>" + text + "</match>", deletable: false },
         { content: "fanyi: [360] " + text, description: "使用 <url>[360翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
         { content: "fanyi: [DeepL] " + text, description: "使用 <url>[DeepL翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [腾讯] " + text, description: "使用 <url>[腾讯翻译君]</url> （无法填入翻译文字，请打开页面后输入）", deletable: false },
+        { content: "fanyi: [腾讯] " + text, description: "使用 <url>[腾讯翻译君]</url>", deletable: false },
         { content: "fanyi: [Google] " + text, description: "使用 <url>[Google翻译]</url> 翻译 <match>" + text + "</match> （Google翻译在中国大陆无法使用）", deletable: false },
       ]);
       return;
@@ -608,6 +609,10 @@ var omniboxSearchModes = [
           // 百度翻译中英文会自动识别，所以不需要手动判断
           navigate("https://fanyi.baidu.com/#en/zh/" + encodeURIComponent(searchText), true);
           break;
+        case "[有道翻译]":
+          // 后面参数通过注入的js代码获取并在网页加载完后填入到翻译框中，点击搜索按钮
+          navigate("https://fanyi.youdao.com/?__bitdance_extension__=" + encodeURIComponent(searchText), true);
+          break;
         case "[有道]":
           navigate("https://www.youdao.com/w/" + encodeURIComponent(searchText), true);
           break;
@@ -622,8 +627,8 @@ var omniboxSearchModes = [
           navigate("https://www.deepl.com/translator#" + (hasChineseChar ? "zh/en/" : "en/zh/") + encodeURIComponent(searchText), true);
           break;
         case "[腾讯]":
-          navigate("https://fanyi.qq.com/?__bitdance_extension__=" + encodeURIComponent(searchText), true);
-          // 参数后面通过注入的js问价获取到，然后填入到页面中
+          // 网页加载好后自动点击翻译按钮
+          navigate("https://fanyi.qq.com/?text=" + encodeURIComponent(searchText), true);
           break;
         case "[Google]":
           navigate("https://translate.google.cn/?text=" + encodeURIComponent(searchText), true);

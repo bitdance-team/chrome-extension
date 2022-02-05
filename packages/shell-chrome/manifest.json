@@ -36,8 +36,7 @@
     },
     {
       "matches": [
-        "http://blog.csdn.net/*",
-        "https://blog.csdn.net/*"
+        "*://blog.csdn.net/*"
       ],
       "js": [
         "assets/js/lib/jquery.min.js",
@@ -52,6 +51,16 @@
       "js": [
         "assets/js/lib/jquery.min.js",
         "assets/js/advanced-search/content-helper/fanyi.qq.com.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://fanyi.youdao.com/*"
+      ],
+      "js": [
+        "assets/js/lib/jquery.min.js",
+        "assets/js/advanced-search/content-helper/fanyi.youdao.com.js"
       ],
       "run_at": "document_start"
     }
