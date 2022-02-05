@@ -37,7 +37,13 @@ function inject(tab) {
 var takeScreenshot = inject
 
 chrome.runtime.onMessage.addListener((req, sender, res) => {
+  console.log(`进入 assets\html\screenshot\background.js 中的onMessage Listener`)
+  if (req.senderId !== "screenshot") {
+    // 抛给下一个Listener
+    res();
+  }
   if (req.message === 'capture') {
+    console.log("capture开始")
     chrome.storage.sync.get((config) => {
       chrome.tabs.getSelected(null, (tab) => {
         chrome.tabs.captureVisibleTab(tab.windowId, { format: config.format }, (image) => {
@@ -46,7 +52,10 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
           crop(image, req.area, req.dpr, config.dpr, config.format, (cropped) => {
             // 裁剪后
             // console.log("cropped", cropped)
+            console.log("capture结束")
             res({ message: 'image', image: cropped })
+            // 回调有问题，参数么有传回去，使用以下变通方式直接转换为可下载的文件
+            var link = document.createElement('a'); link.download = "学生助手 屏幕截图 " + Date.now(); link.href = cropped; link.click();
           })
         })
       })
@@ -62,6 +71,7 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
       // chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: ''})
     }
   }
+  console.log(`离开 assets\html\screenshot\background.js 中的onMessage Listener`)
   return true
 })
 

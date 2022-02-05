@@ -1,11 +1,11 @@
 
-var jcrop,selection
+var jcrop, selection
 var relativePath = 'assets/html/screenshot'
 
 var overlay = ((active) => (state) => {
   active = typeof state === 'boolean' ? state : state === null ? active : !active
   $('.jcrop-holder')[active ? 'show' : 'hide']()
-  chrome.runtime.sendMessage({message: 'active', active})
+  chrome.runtime.sendMessage({ message: 'active', senderId: "screenshot", active })
 })(false)
 
 var image = (done) => {
@@ -33,7 +33,7 @@ var init = (done) => {
         selection = null
       }, 100)
     }
-  }, function ready () {
+  }, function ready() {
     jcrop = this
 
     $('.jcrop-hline, .jcrop-vline').css({
@@ -53,13 +53,15 @@ var init = (done) => {
 
 var capture = (force) => {
   chrome.storage.sync.get((config) => {
+    console.log(config)
     if (selection && (config.method === 'crop' || (config.method === 'wait' && force))) {
       jcrop.release()
       setTimeout(() => {
+        console.log("准备capture")
         chrome.runtime.sendMessage({
-          message: 'capture', area: selection, dpr: devicePixelRatio
+          message: 'capture', senderId: "screenshot", area: selection, dpr: devicePixelRatio
         }, (res) => {
-          console.log("res: ", res)
+          console.log("capture回调结果：", res)
           overlay(false)
           selection = null
           save(res.image, config.format, config.save)
@@ -68,8 +70,8 @@ var capture = (force) => {
     }
     else if (config.method === 'view') {
       chrome.runtime.sendMessage({
-        message: 'capture',
-        area: {x: 0, y: 0, w: innerWidth, h: innerHeight}, dpr: devicePixelRatio
+        message: 'capture', senderId: "screenshot",
+        area: { x: 0, y: 0, w: innerWidth, h: innerHeight }, dpr: devicePixelRatio
       }, (res) => {
         overlay(false)
         save(res.image, config.format, config.save)
@@ -89,10 +91,10 @@ var filename = (format) => {
 }
 
 var save = (image, format, save) => {
-    var link = document.createElement('a')
-    link.download = filename(format)
-    link.href = image
-    link.click()
+  var link = document.createElement('a')
+  link.download = filename(format)
+  link.href = image
+  link.click()
 
 }
 
@@ -105,6 +107,11 @@ window.addEventListener('resize', ((timeout) => () => {
 })())
 
 chrome.runtime.onMessage.addListener((req, sender, res) => {
+  console.log(`进入 assets\html\screenshot\js\content.js 中的onMessage Listener`)
+  if (req.senderId !== "screenshot") {
+    // 抛给下一个Listener
+    res();
+  }
   if (req.message === 'init') {
     res({}) // prevent re-injecting
 
@@ -119,5 +126,6 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
       capture(true)
     }
   }
+  console.log(`离开 assets\html\screenshot\js\content.js 中的onMessage Listener`)
   return true
 })

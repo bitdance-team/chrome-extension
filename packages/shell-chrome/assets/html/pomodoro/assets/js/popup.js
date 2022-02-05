@@ -84,6 +84,7 @@ function start() {
     chrome.runtime.sendMessage(
       {
         status: "start",
+        senderId: "pomo",
         content: {
           minutes,
           seconds,
@@ -108,6 +109,7 @@ function end() {
   chrome.runtime.sendMessage(
     {
       status: "paused",
+      senderId: "pomo",
     },
     (response) => {
       console.log(response);
@@ -130,16 +132,17 @@ function getTimer() {
       //更新后倒计时判断，如果结束则重新初始化界面
       if(pomoData.countdownTimer == "00:00"){
 
-        audio.play();  
+        audio.play();
         //不能放在页面上，要在后台进行
         chrome.runtime.sendMessage(
           {
             status: "playend",
+            senderId: "pomo",
           },
           (response) => {
             console.log(response,"**************下面");
             countdownTimer.innerHTML = "25:00";
-            
+
             startBtn.style.display = "block";
             endBtn.style.display = "none";
             clearTimer();
@@ -178,6 +181,7 @@ resetBtn.addEventListener("click", () => {
     chrome.runtime.sendMessage(
       {
         status: "reset",
+        senderId: "pomo",
       },
       (response) => {
         // console.log(response);
@@ -209,6 +213,7 @@ chrome.storage.sync.get("pomoData", ({ pomoData }) => {
   } else if (status === "init") {
     chrome.runtime.sendMessage({
       status: "init",
+      senderId: "pomo",
     });
     countdownTimer.innerHTML = "25:00";
   }else if(status === 'playend'){

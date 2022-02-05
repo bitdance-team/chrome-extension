@@ -22,6 +22,12 @@ let array = ["minutes", "seconds", "pause", "countdownTimer", "pbutton"];
 let timer = null;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  console.log(`进入 assets\html\pomodoro\background.js 中的onMessage Listener`)
+  if (message.senderId !== "pomo") {
+    // 抛给下一个Listener
+    sendResponse();
+  }
+
   const { status, content } = message;
 
   if (status === "start") {
@@ -78,6 +84,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // audio.play();
   }
   sendResponse();
+  console.log(`离开 assets\html\pomodoro\background.js 中的onMessage Listener`)
+  return true;
 });
 
 // 番茄钟倒计时功能

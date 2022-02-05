@@ -10,6 +10,22 @@ chrome.contextMenus.create({
 // 打印消息日志
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log("request", request, "path", sender.url.replace(sender.origin, ""), "sender", sender, "sendResponse", sendResponse);
+
+  console.log(`进入 assets\js\background.js 中的onMessage Listener`)
+
+  // 抛给下一个Listener
+  sendResponse();
+
+  console.log(`离开 assets\js\background.js 中的onMessage Listener`)
+
+  return true;
+
+  /**
+   * refer:
+   * https://stackoverflow.com/questions/4924125/can-chrome-extension-background-pages-have-multiple-listeners
+   * https://developer.chrome.com/extensions/runtime#event-onMessage
+   * https://blog.csdn.net/lamp_yang_3533/article/details/100174074
+   */
 })
 
 
