@@ -44,6 +44,16 @@
         "assets/js/expand-full-text/expand.js"
       ],
       "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://fanyi.qq.com/*"
+      ],
+      "js": [
+        "assets/js/lib/jquery.min.js",
+        "assets/js/advanced-search/content-helper/fanyi.qq.com.js"
+      ],
+      "run_at": "document_start"
     }
   ],
   "browser_action": {
