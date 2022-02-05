@@ -62,6 +62,7 @@ var capture = (force) => {
           message: 'capture', senderId: "screenshot", area: selection, dpr: devicePixelRatio
         }, (res) => {
           console.log("capture回调结果：", res)
+          return // 变通
           overlay(false)
           selection = null
           save(res.image, config.format, config.save)

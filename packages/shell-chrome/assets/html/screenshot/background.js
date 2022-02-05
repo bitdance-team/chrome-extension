@@ -55,7 +55,7 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
             console.log("capture结束")
             res({ message: 'image', image: cropped })
             // 回调有问题，参数么有传回去，使用以下变通方式直接转换为可下载的文件
-            var link = document.createElement('a'); link.download = "学生助手 屏幕截图 " + Date.now(); link.href = cropped; link.click();
+            var link = document.createElement('a'); link.download = "学生助手截图-" + Date.now(); link.href = cropped; link.click();
           })
         })
       })
