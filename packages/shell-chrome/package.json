@@ -1,7 +1,0 @@
-{
-  "name": "@bitdance/shell-chrome",
-  "version": "0.0.0",
-  "scripts": {
-    "test": "node index.js"
-  }
-}
