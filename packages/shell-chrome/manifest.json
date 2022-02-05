@@ -1,81 +1,78 @@
 {
-  "name": "学生助手",
-  "version": "0.1.0",
-  "description": "BitDance Chrome Extension",
-  "manifest_version": 2,
-  "omnibox": {
-    "keyword": "ss"
-  },
-  "icons": {
-    "16": "assets/image/logo.png",
-    "48": "assets/image/logo.png",
-    "128": "assets/image/logo.png"
-  },
-  "background": {
-    "scripts": [
-      "assets/js/lib/jquery.min.js",
-      "assets/js/background.js",
-      "assets/js/advanced-search/background.js"
-    ]
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "<all_urls>",
-        "*://*/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/content.js",
-        "assets/js/advanced-search/content.js",
-        "assets/js/mouse-effects/click.js",
-        "assets/js/mouse-effects/mouse-style.js"
-      ],
-      "css": [],
-      "run_at": "document_start"
+    "name": "学生助手",
+    "version": "0.1.0",
+    "description": "BitDance Chrome Extension",
+    "manifest_version": 2,
+    "omnibox": {
+        "keyword": "ss"
     },
-    {
-      "matches": [
-        "http://blog.csdn.net/*",
-        "https://blog.csdn.net/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/expand-full-text/expand.js" //,
-        // "assets/js/content-scripts/click.js",
-        // "assets/js/content-scripts/mouse-style.js"
-      ],
-      "run_at": "document_start"
-    }
-  ],
-  "browser_action": {
-    "default_icon": "assets/image/logo.png",
-    "default_popup": "popup.html",
-    "default_title": "学生助手"
-  },
-  "commands": {
-    "_execute_browser_action": {
-      "suggested_key": {
-        "default": "Alt+Comma",
-        "mac": "Alt+Comma"
-      },
-      "description": "打开 [学生助手] 插件"
-    }
-  },
-  "web_accessible_resources": [
-    "/assets/image/*"
-  ],
-  // "default_locale": "zh_CN",
-  "permissions": [
-    "background",
-    "contextMenus",
-    "storage",
-    "unlimitedStorage",
-    "webRequest",
-    "webRequestBlocking",
-    "tabs",
-    "storage",
-    "activeTab",
-    "notifications"
-  ]
+    "icons": {
+        "16": "assets/image/logo.png",
+        "48": "assets/image/logo.png",
+        "128": "assets/image/logo.png"
+    },
+    "background": {
+        "scripts": [
+            "assets/js/lib/jquery.min.js",
+            "assets/js/background.js",
+            "assets/js/advanced-search/background.js"
+        ]
+    },
+    "content_scripts": [{
+            "matches": [
+                "<all_urls>",
+                "*://*/*"
+            ],
+            "js": [
+                "assets/js/lib/jquery.min.js",
+                "assets/js/content.js",
+                "assets/js/advanced-search/content.js",
+                "assets/js/mouse-effects/click.js",
+                "assets/js/mouse-effects/mouse-style.js"
+            ],
+            "css": [],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "http://blog.csdn.net/*",
+                "https://blog.csdn.net/*"
+            ],
+            "js": [
+                "assets/js/lib/jquery.min.js",
+                "assets/js/expand-full-text/expand.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "browser_action": {
+        "default_icon": "assets/image/logo.png",
+        "default_popup": "popup.html",
+        "default_title": "学生助手"
+    },
+    "commands": {
+        "_execute_browser_action": {
+            "suggested_key": {
+                "default": "Alt+Comma",
+                "mac": "Alt+Comma"
+            },
+            "description": "打开 [学生助手] 插件"
+        }
+    },
+    "web_accessible_resources": [
+        "/assets/image/*"
+    ],
+    // "default_locale": "zh_CN",
+    "permissions": [
+        "background",
+        "contextMenus",
+        "storage",
+        "unlimitedStorage",
+        "webRequest",
+        "webRequestBlocking",
+        "tabs",
+        "storage",
+        "activeTab",
+        "notifications"
+    ]
 }
