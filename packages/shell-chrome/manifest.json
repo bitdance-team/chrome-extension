@@ -27,9 +27,10 @@
       "js": [
         "assets/js/lib/jquery.min.js",
         "assets/js/content.js",
-        "assets/js/advanced-search/content.js",
+        "assets/js/direct-url/url.js",
         "assets/js/mouse-effects/click.js",
-        "assets/js/mouse-effects/mouse-style.js"
+        "assets/js/mouse-effects/mouse-style.js",
+        "assets/js/advanced-search/content.js"
       ],
       "css": [],
       "run_at": "document_start"

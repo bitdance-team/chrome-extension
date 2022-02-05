@@ -61,4 +61,21 @@ $(function() {
             })
         })
     })
+
+    // Direct Url
+    const btnDirectUrl = document.querySelector("#btnDirectUrl");
+    chrome.storage.sync.get("linkOpen", ({ linkOpen }) => {
+      btnDirectUrl.checked = !linkOpen;
+    });
+
+    btnDirectUrl.addEventListener("change", () => {
+        chrome.storage.sync.set({ linkOpen: !btnDirectUrl.checked });
+        // 获取当前tab窗口
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                func: () => { window.location.reload() },
+            });
+        });
+    });
 })
