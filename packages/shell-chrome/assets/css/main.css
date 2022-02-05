@@ -8,10 +8,12 @@ li {
 a {
   text-decoration: none;
 }
-#popup {
-  height: 250px;
-  width: 200px;
+body {
   background: linear-gradient(to right bottom, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+}
+#popup {
+  min-height: 450px;
+  width: 300px;
 }
 #popup header {
   width: inherit;
