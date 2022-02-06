@@ -86,13 +86,24 @@ window.onload = function(){
             }
         }
 
-        locHref = locHref.split(RedirectPage.sites[locHost].include);
-        if(locHref){
-            location.replace(decodeURIComponent(locHref[1]));
-        }else{
-            //改进
-            let target = document.querySelector(RedirectPage.sites[locHost].selector);
-            location.replace(target.href || target.innerText)
+        setTimeout(url(),200);
+
+        function url(){
+            let flag = false;
+            if(locHref.includes(RedirectPage.sites[locHost].include)){
+                locHref = locHref.split(RedirectPage.sites[locHost].include);
+                flag = true;
+            }
+        
+            if(flag){
+                location.replace(decodeURIComponent(locHref[1]));
+            }else{
+                //改进
+                if(RedirectPage.sites[locHost].selector){
+                    let target = document.querySelector(RedirectPage.sites[locHost].selector);
+                location.replace(target.href || target.innerText)
+                } 
+            }
         }
 
         //两种方案 默认不阻止重定向 阻止重定向直接跳转
