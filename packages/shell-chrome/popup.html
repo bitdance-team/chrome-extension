@@ -1,59 +1,77 @@
-<!doctype html>
-<html lang="zh">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>学生助手</title>
-    <link href="assets/css/main.css" type="text/css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello world</title>
+   
+    <style>
+      body{
+        width: 400px;
+        height: 500px;
+        background: url(./img/yun.webp);
+        background-size: 400px 500px;
+      }
+      #boby1{
+      width: 400px;
+      height: 500px;
+      background-color: rgb(255, 255, 255);
+      opacity:0.85;
+      }
+      #svg_w{
+
+      }
+      #weatherText{
+        display: inline-block
+      }
+      #weatherTemp{
+        display: inline-block
+      }
+      #inputLang{
+      width: 250px;
+      height: 150px;
+      }
+      #outPutRes{
+      width: 250px;
+      height: 150px;
+      background-color: rgb(243, 243, 243);
+      }
+      #LangType{
+        display: inline-block
+      }
+      #tranbtn{
+        display: inline-block
+      }
+    </style>
 </head>
-
-<body>
-    <div id="popup">
-        <header>
-            <img src="assets/image/logo.png" alt="Logo">
-        </header>
-        <div class="article">
-            <ul>
-                <li>
-                    <div id="expand">
-                    </div>
-                </li>
-                <li>
-                    <div id="mouse-style">
-                        <span>鼠标样式</span>
-                        <div class="button">
-                            <input type="checkbox" id="button-2" class="checkbox" />
-                            <div class="knobs"></div>
-                            <div class="layer"></div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div id="click-per">
-                        <span>点击特效</span>
-                        <div class="button">
-                            <input type="checkbox" id="button-3" class="checkbox" />
-                            <div class="knobs"></div>
-                            <div class="layer"></div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div id="click-per">
-                        <span>确认访问页自动跳转</span>
-                        <div class="button">
-                            <input type="checkbox" id="btnDirectUrl" class="checkbox" />
-                            <div class="knobs"></div>
-                            <div class="layer"></div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+<body> 
+    <div id = 'boby1'>
+        <div id='weather'>
+          <img id = "svg_w" src="./img/icons/100.svg">
+          <p id='weatherText'></p>
+          <p id="weatherTemp"></p>
         </div>
-        <iframe src="assets/html/pomodoro/popup.html" id="pomodoro" style="border: 0; height: 400px;"></iframe>
-    </div>
-    <script src="assets/js/lib/jquery.min.js"></script>
-    <script src="assets/js/popup.js"></script>
+        <div id = 'trans'>
+          <select id="inputLangSelect">
+            <option value="auto">自动检测语言</option>
+            <option value="zh">简体中文</option>
+            <option value="en">English</option>
+            </select>
+          <select id="outLangSelect">
+            <option value="zh">简体中文</option>
+            <option value="en">English</option>
+            </select>
+          <input type="text" id="inputLang" value="" placeholder="请输入翻译内容"  >
+          <br>
+            自动检测语言：<p id="LangType"></p><button id="tranbtn">翻译</button>
+          <hr>
+          <p id="outPutRes"></p>
+        </div>
+        
+      </div>
+    
 </body>
-
+<script src="./js/MD5.js"></script>
+<script src="./js/popup.js"></script>
 </html>

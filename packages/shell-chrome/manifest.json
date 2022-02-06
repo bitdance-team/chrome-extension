@@ -1,120 +1,32 @@
 {
-  "name": "学生助手",
-  "version": "0.1.0",
-  "description": "BitDance Chrome Extension",
-  "manifest_version": 2,
-  "omnibox": {
-    "keyword": "ss"
-  },
-  "icons": {
-    "16": "assets/image/logo.png",
-    "48": "assets/image/logo.png",
-    "128": "assets/image/logo.png"
-  },
-  "background": {
-    "scripts": [
-      "assets/js/lib/jquery.min.js",
-      "assets/js/background.js",
-      "assets/html/pomodoro/background.js",
-      "assets/js/advanced-search/background.js"
-    ]
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "<all_urls>",
-        "*://*/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/content.js",
-        "assets/js/direct-url/url.js",
-        "assets/js/mouse-effects/click.js",
-        "assets/js/mouse-effects/mouse-style.js",
-        "assets/js/advanced-search/content.js"
-      ],
-      "css": [],
-      "run_at": "document_start"
+    "manifest_version":2,
+    "name":"hello js",
+    "version":"1.0",
+    "description":"hello js 插件",
+    "icons":{
+        "128":"img/1.png",
+        "48":"img/1.png",
+        "16":"img/1.png"
     },
-    {
-      "matches": [
-        "*://blog.csdn.net/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/expand-full-text/expand.js"
-      ],
-      "run_at": "document_start"
+  
+    "browser_action":{
+        "default_icon":"img/1.png",
+        "default_popup":"popup.html"
     },
-    {
-      "matches": [
-        "*://fanyi.qq.com/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/advanced-search/content-helper/fanyi.qq.com.js"
-      ],
-      "run_at": "document_start"
+    "background":{
+        "scripts":[
+            "./js/popup.js",
+            "./js/MD5.js"
+        ],
+        "persistent":false
     },
-    {
-      "matches": [
-        "*://fanyi.youdao.com/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/advanced-search/content-helper/fanyi.youdao.com.js"
-      ],
-      "run_at": "document_start"
-    },
-    {
-      "matches": [
-        "*://www.cnki.net/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/advanced-search/content-helper/www.cnki.net.js"
-      ],
-      "run_at": "document_start"
-    },
-    {
-      "matches": [
-        "*://qikan.cqvip.com/*",
-        "*://lib.cqvip.com/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/advanced-search/content-helper/qikan.cqvip.com.js"
-      ],
-      "run_at": "document_start"
-    }
-  ],
-  "browser_action": {
-    "default_icon": "assets/image/logo.png",
-    "default_popup": "popup.html",
-    "default_title": "学生助手"
-  },
-  "commands": {
-    "_execute_browser_action": {
-      "suggested_key": {
-        "default": "Alt+Comma",
-        "mac": "Alt+Comma"
-      },
-      "description": "打开 [学生助手] 插件"
-    }
-  },
-  "web_accessible_resources": [
-    "/assets/image/*"
-  ],
-  "permissions": [
-    "background",
-    "contextMenus",
-    "storage",
-    "unlimitedStorage",
-    "webRequest",
-    "webRequestBlocking",
-    "tabs",
-    "storage",
-    "activeTab",
-    "notifications"
-  ]
+    "content_security_policy": "style-src 'self' 'unsafe-inline';script-src 'self' 'unsafe-eval' https://cdn.bootcss.com; object-src 'self' ;"
+    ,"content_scripts": 
+	[
+		{
+			"matches": ["<all_urls>"],
+			"js": ["./js/MD5.js","./js/popup.js"]
+		}
+	]
+       
 }
