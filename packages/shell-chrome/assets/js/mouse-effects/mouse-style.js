@@ -7,14 +7,11 @@ $(function() {
     // 每次改变开关状态时刷新页面使功能及时生效
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         console.log(`进入 assets\js\mouse-effects\mouse-style.js 中的onMessage Listener`)
-        if (request.senderId !== "mouse-effects") {
-          // 抛给下一个Listener
-          sendResponse();
+
+        if (request.info === 'mouse') {
+            location.reload();
+            sendResponse('Reload page');
         }
-        // TODO: 这里不能这么写，否则会导致其他模块发送消息时触发页面刷新
-        // console.log('mouse');
-        // location.reload();
-        // sendResponse('Reload page');
 
         console.log(`离开 assets\js\mouse-effects\mouse-style.js 中的onMessage Listener`)
         return true;
