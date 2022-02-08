@@ -285,7 +285,7 @@ var omniboxSearchModes = [
           navigate("https://v.baidu.com/v?word=" + encodeURIComponent(searchText), true);
           break;
         case "[搜狗]":
-          navigate("https://v.so.com/s?q=" + encodeURIComponent(searchText), true);
+          navigate("https://v.sogou.com/v?query=" + encodeURIComponent(searchText), true);
           break;
         case "[360]":
           navigate("https://tv.360kan.com/s?q=" + encodeURIComponent(searchText), true);
@@ -502,7 +502,7 @@ var omniboxSearchModes = [
     // 执行搜索
     search: function (text) {
       let searchInput = /^(\[.*?\])?( )?(.*)$/.exec(text)
-      let searchType = /^\[(.*?)\]$/.exec((searchInput[1] ?? "[今日头条]"/* 默认今日头条搜索 */).trim())[0].trim()
+      let searchType = /^\[(.*?)\]$/.exec((searchInput[1] ?? "[知网]"/* 默认中国知网搜索 */).trim())[0].trim()
       let searchText = searchInput[3].trim()
       console.log("[学术论文搜索开始]");
       console.log("    传入参数为：", text);
@@ -533,6 +533,70 @@ var omniboxSearchModes = [
           break;
         case "[Google]":
           navigate("https://scholar.google.com/scholar?q=" + encodeURIComponent(searchText), true);
+          break;
+      }
+      console.log("[学术论文搜索结束]");
+    }
+  },
+  // #############################################################################################################
+  {
+    key: "jk",
+    // 显示文字
+    showText: "健康",
+    // 搜索模式匹配
+    match: function (text) {
+      return /^jk( |:|\uff1a)?/i.test(text)
+    },
+    // 获取输入文字
+    getInputText: function (text, encodeText = true) {
+      let returnText = /^jk(:| |\uff1a)?(.*)$/i.exec(text)[2].trim()
+      return encodeText ? encodeXML(returnText) : returnText
+    },
+    // 搜索建议
+    getSuggestions: async function (text, suggest) {
+      // 如果前面已经有了 【[xx] 】，则先去掉
+      text = text.replace(/^\[.*?\]\s*/, "");
+      suggest([
+        { content: "jk: [免责声明] " + text, description: "<match>[免责声明] <url>学生助手仅提供快捷搜索功能，不对搜索结果承担责任。搜索结果仅供参考，请自行甄别，以免上当受骗。继续搜索代表您已知晓此声明。</url></match>", deletable: false },
+        { content: "jk: [丁香医生] " + text, description: "使用 <url>[丁香医生]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "jk: [360] " + text, description: "使用 <url>[360良医]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "jk: [好大夫] " + text, description: "使用 <url>[好大夫在线]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "jk: [寻医问药] " + text, description: "使用 <url>[寻医问药网]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "jk: [新华健康] " + text, description: "使用 <url>[新华健康]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        // 腾讯医典没有网页版；中华网健康没有搜索功能：https://health.china.com/；搜狐健康搜索为全站搜索：https://health.sohu.com/
+      ]);
+      return;
+    },
+    // 执行搜索
+    search: function (text) {
+      let searchInput = /^(\[.*?\])?( )?(.*)$/.exec(text)
+      let searchType = /^\[(.*?)\]$/.exec((searchInput[1] ?? "[免责声明]"/* 默认弹出免责声明 */).trim())[0].trim()
+      let searchText = searchInput[3].trim()
+      console.log("[学术论文搜索开始]");
+      console.log("    传入参数为：", text);
+      console.log("    searchInput为：", searchInput);
+      console.log("    searchType为：", searchType);
+      console.log("    searchText为：", searchText);
+      alert("[免责声明] 学生助手仅提供快捷搜索功能，不对搜索结果承担责任。搜索结果仅供参考，请自行甄别，以免上当受骗。继续搜索代表您已知晓此声明。");
+      switch (searchType) {
+        default:
+        case "[免责声明]":
+          // Silence is gold.
+          break;
+        case "[丁香医生]":
+          navigate("https://dxy.com/search/result?query=" + encodeURIComponent(searchText), true);
+          break;
+        case "[360]":
+          navigate("https://ly.so.com/s?q=" + encodeURIComponent(searchText), true);
+          break;
+        case "[好大夫]":
+          navigate("https://so.haodf.com/index/search?kw=" + encodeURIComponent(searchText), true);
+          break;
+        case "[寻医问药]":
+          navigate("https://so.xywy.com/comse.php?keyword=" + encodeURIComponent(searchText), true);
+          break;
+        case "[新华健康]":
+          navigate("http://so.xinhuanet.com/#search/0/" + encodeURIComponent(searchText) + "/1/", true);
           break;
       }
       console.log("[学术论文搜索结束]");
