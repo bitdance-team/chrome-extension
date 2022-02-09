@@ -114,6 +114,8 @@
     "webRequest",
     "tabs",
     "activeTab",
-    "notifications"
+    "notifications",
+    "geolocation"
+
   ]
 }
