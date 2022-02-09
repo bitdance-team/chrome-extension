@@ -1,5 +1,33 @@
 {
   "name": "@bitdance/services",
   "version": "0.0.1",
-  "type": "commonjs"
+  "type": "commonjs",
+  "scripts": {
+    "dev": "gulp serve",
+    "deploy": "gulp deploy",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@byteinspire/api": "^1.0.12",
+    "@byteinspire/cli": "^2.2.23",
+    "@koa/router": "^10.1.1",
+    "koa": "^2.13.4",
+    "koa-body": "^4.2.0",
+    "koa-bunyan-logger": "^2.1.0",
+    "koa-helmet": "^6.1.0",
+    "koa-static": "^5.0.0",
+    "koa-swagger-decorator": "^1.8.2",
+    "koa2-cors": "^2.0.6",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/koa-bunyan-logger": "^2.1.4",
+    "@types/koa2-cors": "^2.0.2",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.3.0",
+    "gulp-nodemon": "^2.5.0",
+    "gulp-shell": "^0.8.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "nodemon": "^2.0.15"
+  }
 }
