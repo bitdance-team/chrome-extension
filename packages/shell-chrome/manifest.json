@@ -15,6 +15,7 @@
     "scripts": [
       "assets/js/lib/jquery.min.js",
       "assets/js/background.js",
+      "assets/js/remove-google-ads/background_preventAdsScript.js",
       "assets/html/pomodoro/background.js",
       "assets/js/advanced-search/background.js",
       "assets/html/screenshot/background.js"
@@ -38,6 +39,17 @@
       "run_at": "document_start"
     },
     {
+      "_______commit": "屏蔽Google广告模块",
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "assets/js/remove-google-ads/removeAds.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "_______commit": "自动展开模块",
       "matches": [
         "*://blog.csdn.net/*"
       ],
@@ -48,43 +60,27 @@
       "run_at": "document_start"
     },
     {
+      "_______commit": "自动展开模块",
       "matches": [
-        "*://fanyi.qq.com/*"
+        "*://www.it1352.com/*"
       ],
       "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/advanced-search/content-helper/fanyi.qq.com.js"
+        "assets/js/expand-full-text/www.it1352.com.js"
       ],
       "run_at": "document_start"
     },
     {
+      "_______commit": "自动搜索模块",
       "matches": [
-        "*://fanyi.youdao.com/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/advanced-search/content-helper/fanyi.youdao.com.js"
-      ],
-      "run_at": "document_start"
-    },
-    {
-      "matches": [
-        "*://www.cnki.net/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/advanced-search/content-helper/www.cnki.net.js"
-      ],
-      "run_at": "document_start"
-    },
-    {
-      "matches": [
+        "*://fanyi.qq.com/*",
+        "*://baike.baidu.com/*",
+        "*://fanyi.youdao.com/*",
+        "*://www.cnki.net/*",
         "*://qikan.cqvip.com/*",
         "*://lib.cqvip.com/*"
       ],
       "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/advanced-search/content-helper/qikan.cqvip.com.js"
+        "assets/js/advanced-search/content-helper.js"
       ],
       "run_at": "document_start"
     }
@@ -112,8 +108,11 @@
     "contextMenus",
     "storage",
     "webRequest",
+    "webRequestBlocking",
     "tabs",
     "activeTab",
-    "notifications"
+    "notifications",
+    "geolocation",
+    "<all_urls>"
   ]
 }
