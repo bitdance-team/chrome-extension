@@ -159,3 +159,8 @@ body {
 #popup .article ul li #mouse-style .button .layer {
   transition: 0.3s ease all;
 }
+#popup #btnScreenshot {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
