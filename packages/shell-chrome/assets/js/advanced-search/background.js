@@ -406,17 +406,19 @@ var omniboxSearchModes = [
       // 如果前面已经有了 【[xx] 】，则先去掉
       text = text.replace(/^\[.*?\]\s*/, "");
       suggest([
-        { content: "fanyi: [百度] " + text, description: "使用 <url>[百度翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [有道翻译] " + text, description: "使用 <url>[有道翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [必应] " + text, description: "使用 <url>[必应词典]</url> 查词 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [腾讯] " + text, description: "使用 <url>[腾讯翻译君]</url> 翻译 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [DeepL] " + text, description: "使用 <url>[DeepL翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [金山词霸] " + text, description: "使用 <url>[金山词霸]</url> 查词 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [有道] " + text, description: "使用 <url>[有道]</url> 查词 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [360] " + text, description: "使用 <url>[360翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
-        { content: "fanyi: [翻译狗] " + text, description: "使用 <url>[翻译狗]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [百度] " + text, description: "<url>翻译</url> | 使用 <url>[百度翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [有道翻译] " + text, description: "<url>翻译</url> | 使用 <url>[有道翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [腾讯] " + text, description: "<url>翻译</url> | 使用 <url>[腾讯翻译君]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [DeepL] " + text, description: "<url>翻译</url> | 使用 <url>[DeepL翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        // 【需要注入自动翻译】 { content: "fanyi: [海词翻译] " + text, description: "<url>翻译</url> | 使用 <url>[海词翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [必应] " + text, description: "<url>查词</url> | 使用 <url>[必应词典]</url> 查词 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [有道] " + text, description: "<url>查词</url> | 使用 <url>[有道]</url> 查词 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [海词] " + text, description: "<url>查词</url> | 使用 <url>[海词]</url> 查词 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [金山词霸] " + text, description: "<url>查词</url> | 使用 <url>[金山词霸]</url> 查词 <match>" + text + "</match>", deletable: false },
         // 以下内容超出9个不被显示
-        { content: "fanyi: [Google] " + text, description: "使用 <url>[Google翻译]</url> 翻译 <match>" + text + "</match> （Google翻译在中国大陆无法使用）", deletable: false },
+        { content: "fanyi: [360] " + text, description: "<url>翻译</url> | 使用 <url>[360翻译]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [翻译狗] " + text, description: "<url>翻译</url> | 使用 <url>[翻译狗]</url> 翻译 <match>" + text + "</match>", deletable: false },
+        { content: "fanyi: [Google] " + text, description: "<url>翻译</url> | 使用 <url>[Google翻译]</url> 翻译 <match>" + text + "</match> （Google翻译在中国大陆无法使用）", deletable: false },
       ]);
       return;
     },
@@ -451,8 +453,14 @@ var omniboxSearchModes = [
           let hasChineseChar = /.*[\u4e00-\u9fa5]+.*$/.test(searchText)
           navigate("https://www.deepl.com/translator#" + (hasChineseChar ? "zh/en/" : "en/zh/") + encodeURIComponent(searchText), true);
           break;
+        // case "[海词翻译]":
+        //   navigate("http://fanyi.dict.cn/" + encodeURIComponent(searchText), true);
+        //   break;
         case "[金山词霸]":
           navigate("https://www.iciba.com/word?w=" + encodeURIComponent(searchText), true);
+          break;
+        case "[海词]":
+          navigate("https://dict.cn/" + encodeURIComponent(searchText), true);
           break;
         case "[有道]":
           navigate("https://www.youdao.com/w/" + encodeURIComponent(searchText), true);
