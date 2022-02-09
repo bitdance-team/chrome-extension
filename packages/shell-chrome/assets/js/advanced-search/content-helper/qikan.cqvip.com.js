@@ -20,8 +20,9 @@ $.extend({
 window.onload = () => {
   let transText = $.getUrlVar('__bitdance_extension__');
   if (!transText || transText.trim() == "") return
+  transText = decodeURIComponent(transText)
   console.log("[BitDance extension] 学生助手插件 - 维普期刊自动搜索模块 - 模块文本为：", transText);
 
-  document.getElementById("searchKeywords").value = decodeURIComponent(transText)
+  document.getElementById("searchKeywords").value = transText
   document.getElementById("btnSearch").click()
 }

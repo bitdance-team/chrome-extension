@@ -20,9 +20,10 @@ $.extend({
 window.onload = () => {
   let transText = $.getUrlVar('__bitdance_extension__');
   if (!transText || transText.trim() == "") return
+  transText = decodeURIComponent(transText)
   console.log("[BitDance extension] 学生助手插件 - 有道翻译自动填入模块 - 翻译文本为：", transText);
 
-  document.getElementsByTagName("textarea")[0].value = decodeURIComponent(transText)
+  document.getElementsByTagName("textarea")[0].value = transText
   document.getElementById("transMachine").click()
 
   // 参数获取完成后，清除掉页面参数

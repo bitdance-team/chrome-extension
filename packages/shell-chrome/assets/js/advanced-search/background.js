@@ -559,6 +559,7 @@ var omniboxSearchModes = [
       suggest([
         { content: "baike: [百度] " + text, description: "使用 <url>[百度百科]</url> 搜索 <match>" + text + "</match>", deletable: false },
         { content: "baike: [搜狗] " + text, description: "使用 <url>[搜狗百科]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "baike: [360] " + text, description: "使用 <url>[360百科]</url> 搜索 <match>" + text + "</match>", deletable: false },
       ]);
       return;
     },
@@ -600,10 +601,72 @@ var omniboxSearchModes = [
             }
           }
           break;
+        case "[360]":
+          navigate("https://baike.so.com/doc/search?word=" + encodeURIComponent(searchText), true);
+          break;
       }
       console.log("[百科搜索结束]");
     }
   },
+  // #############################################################################################################
+  {
+    key: "map",
+    // 显示文字
+    showText: "地图",
+    // 搜索模式匹配
+    match: function (text) {
+      return /^map( |:|\uff1a)?/i.test(text)
+    },
+    // 获取输入文字
+    getInputText: function (text, encodeText = true) {
+      let returnText = /^map(:| |\uff1a)?(.*)$/i.exec(text)[2].trim()
+      return encodeText ? encodeXML(returnText) : returnText
+    },
+    // 搜索建议
+    getSuggestions: async function (text, suggest) {
+      // 如果前面已经有了 【[xx] 】，则先去掉
+      text = text.replace(/^\[.*?\]\s*/, "");
+      suggest([
+        { content: "map: [百度] " + text, description: "使用 <url>[百度地图]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "map: [高德] " + text, description: "使用 <url>[高德地图]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "map: [必应] " + text, description: "使用 <url>[必应地图]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "map: [360] " + text, description: "使用 <url>[360地图]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "map: [搜狗] " + text, description: "使用 <url>[搜狗地图]</url> 搜索 <match>" + text + "</match>", deletable: false },
+      ]);
+      return;
+    },
+    // 执行搜索
+    search: function (text) {
+      let searchInput = /^(\[.*?\])?( )?(.*)$/.exec(text)
+      let searchType = /^\[(.*?)\]$/.exec((searchInput[1] ?? "[百度]"/* 默认百度图片搜索 */).trim())[0].trim()
+      let searchText = searchInput[3].trim()
+      console.log("[地图搜索开始]");
+      console.log("    传入参数为：", text);
+      console.log("    searchInput为：", searchInput);
+      console.log("    searchType为：", searchType);
+      console.log("    searchText为：", searchText);
+      switch (searchType) {
+        default:
+        case "[百度]":
+          navigate("https://map.baidu.com/search?querytype=s&wd=" + encodeURIComponent(searchText), true);
+          break;
+        case "[高德]":
+          navigate("https://www.amap.com/search?query=" + encodeURIComponent(searchText), true);
+          break;
+        case "[必应]":
+          navigate("https://cn.bing.com/maps?q=" + encodeURIComponent(searchText), true);
+          break;
+        case "[360]":
+          navigate("https://ditu.so.com/?k=" + encodeURIComponent(searchText), true);
+          break;
+        case "[搜狗]":
+          navigate("http://map.sogou.com/#lq=" + encodeURIComponent(searchText), true);
+          break;
+      }
+      console.log("[地图搜索结束]");
+    }
+  },
+  // 购物：https://s.taobao.com/search?q=搜索关键词
   // #############################################################################################################
   // {
   //   key: "jk",
