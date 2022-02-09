@@ -87,6 +87,7 @@ $(function() {
         })
     });
 
+    // 番茄钟
     $('#clock').click(function() {
         $('#pomodoro').fadeIn(500);
         $('#article').fadeOut(0);
