@@ -59,7 +59,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         minutes: 24,
         seconds: 60,
         countdownTimer: "25:00",
-        status: "start",
+        status:"init"
       },
     });
   } else {
