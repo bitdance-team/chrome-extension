@@ -285,7 +285,7 @@ var omniboxSearchModes = [
           navigate("https://v.baidu.com/v?word=" + encodeURIComponent(searchText), true);
           break;
         case "[搜狗]":
-          navigate("https://v.so.com/s?q=" + encodeURIComponent(searchText), true);
+          navigate("https://v.sogou.com/v?query=" + encodeURIComponent(searchText), true);
           break;
         case "[360]":
           navigate("https://tv.360kan.com/s?q=" + encodeURIComponent(searchText), true);
@@ -502,7 +502,7 @@ var omniboxSearchModes = [
     // 执行搜索
     search: function (text) {
       let searchInput = /^(\[.*?\])?( )?(.*)$/.exec(text)
-      let searchType = /^\[(.*?)\]$/.exec((searchInput[1] ?? "[今日头条]"/* 默认今日头条搜索 */).trim())[0].trim()
+      let searchType = /^\[(.*?)\]$/.exec((searchInput[1] ?? "[知网]"/* 默认中国知网搜索 */).trim())[0].trim()
       let searchText = searchInput[3].trim()
       console.log("[学术论文搜索开始]");
       console.log("    传入参数为：", text);
@@ -538,6 +538,136 @@ var omniboxSearchModes = [
       console.log("[学术论文搜索结束]");
     }
   },
+  // #############################################################################################################
+  {
+    key: "baike",
+    // 显示文字
+    showText: "百科",
+    // 搜索模式匹配
+    match: function (text) {
+      return /^baike( |:|\uff1a)?/i.test(text)
+    },
+    // 获取输入文字
+    getInputText: function (text, encodeText = true) {
+      let returnText = /^baike(:| |\uff1a)?(.*)$/i.exec(text)[2].trim()
+      return encodeText ? encodeXML(returnText) : returnText
+    },
+    // 搜索建议
+    getSuggestions: async function (text, suggest) {
+      // 如果前面已经有了 【[xx] 】，则先去掉
+      text = text.replace(/^\[.*?\]\s*/, "");
+      suggest([
+        { content: "baike: [百度] " + text, description: "使用 <url>[百度百科]</url> 搜索 <match>" + text + "</match>", deletable: false },
+        { content: "baike: [搜狗] " + text, description: "使用 <url>[搜狗百科]</url> 搜索 <match>" + text + "</match>", deletable: false },
+      ]);
+      return;
+    },
+    // 执行搜索
+    search: function (text) {
+      let searchInput = /^(\[.*?\])?( )?(.*)$/.exec(text)
+      let searchType = /^\[(.*?)\]$/.exec((searchInput[1] ?? "[百度]"/* 默认百度百科搜索 */).trim())[0].trim()
+      let searchText = searchInput[3].trim()
+      console.log("[百科搜索开始]");
+      console.log("    传入参数为：", text);
+      console.log("    searchInput为：", searchInput);
+      console.log("    searchType为：", searchType);
+      console.log("    searchText为：", searchText);
+      switch (searchType) {
+        default:
+        case "[百度]":
+          // 后面参数通过注入的js代码获取并在网页加载完后填入到搜索框中，点击搜索按钮
+          navigate("https://baike.baidu.com/?__bitdance_extension__=" + encodeURIComponent(searchText), true);
+          break;
+        case "[搜狗]":
+          //步骤一:创建异步对象
+          var ajax = new XMLHttpRequest();
+          //步骤二:设置请求的url参数,参数一是请求的类型,参数二是请求的url,可以带参数,动态的传递参数starName到服务端
+          ajax.open('get', 'https://baike.sogou.com/bapi/searchBarEnter?searchText=' + encodeURIComponent(searchText));
+          //步骤三:发送请求
+          ajax.send();
+          //步骤四:注册事件 onreadystatechange 状态改变就会调用
+          ajax.onreadystatechange = function () {
+            console.log("ajax result", ajax)
+            if (ajax.readyState == 4) {
+              if (ajax.status == 200) {
+                //步骤五 如果能够进到这个判断 说明 数据 完美的回来了,并且请求的页面是存在的
+                console.log(ajax.responseText);//输入相应的内容
+                navigate("https://baike.sogou.com" + ajax.responseText, true);
+              } else {
+                alert("搜索失败，可能是搜狗官网搜索相关api已变更，你的输入已经复制到剪切板，请手动粘贴搜索");
+                navigate("https://baike.sogou.com/", true);
+              }
+            }
+          }
+          break;
+      }
+      console.log("[百科搜索结束]");
+    }
+  },
+  // #############################################################################################################
+  // {
+  //   key: "jk",
+  //   // 显示文字
+  //   showText: "健康",
+  //   // 搜索模式匹配
+  //   match: function (text) {
+  //     return /^jk( |:|\uff1a)?/i.test(text)
+  //   },
+  //   // 获取输入文字
+  //   getInputText: function (text, encodeText = true) {
+  //     let returnText = /^jk(:| |\uff1a)?(.*)$/i.exec(text)[2].trim()
+  //     return encodeText ? encodeXML(returnText) : returnText
+  //   },
+  //   // 搜索建议
+  //   getSuggestions: async function (text, suggest) {
+  //     // 如果前面已经有了 【[xx] 】，则先去掉
+  //     text = text.replace(/^\[.*?\]\s*/, "");
+  //     suggest([
+  //       { content: "jk: [免责声明] " + text, description: "<match>[免责声明] <url>学生助手仅提供快捷搜索功能，不对搜索结果承担责任。搜索结果仅供参考，请自行甄别，以免上当受骗。继续搜索代表您已知晓此声明。</url></match>", deletable: false },
+  //       { content: "jk: [丁香医生] " + text, description: "使用 <url>[丁香医生]</url> 搜索 <match>" + text + "</match>", deletable: false },
+  //       { content: "jk: [360] " + text, description: "使用 <url>[360良医]</url> 搜索 <match>" + text + "</match>", deletable: false },
+  //       { content: "jk: [好大夫] " + text, description: "使用 <url>[好大夫在线]</url> 搜索 <match>" + text + "</match>", deletable: false },
+  //       { content: "jk: [寻医问药] " + text, description: "使用 <url>[寻医问药网]</url> 搜索 <match>" + text + "</match>", deletable: false },
+  //       { content: "jk: [新华健康] " + text, description: "使用 <url>[新华健康]</url> 搜索 <match>" + text + "</match>", deletable: false },
+  //       // 腾讯医典没有网页版；中华网健康没有搜索功能：https://health.china.com/；搜狐健康搜索为全站搜索：https://health.sohu.com/
+  //     ]);
+  //     return;
+  //   },
+  //   // 执行搜索
+  //   search: function (text) {
+  //     let searchInput = /^(\[.*?\])?( )?(.*)$/.exec(text)
+  //     let searchType = /^\[(.*?)\]$/.exec((searchInput[1] ?? "[免责声明]"/* 默认弹出免责声明 */).trim())[0].trim()
+  //     let searchText = searchInput[3].trim()
+  //     console.log("[学术论文搜索开始]");
+  //     console.log("    传入参数为：", text);
+  //     console.log("    searchInput为：", searchInput);
+  //     console.log("    searchType为：", searchType);
+  //     console.log("    searchText为：", searchText);
+  //     alert("[免责声明] 学生助手仅提供快捷搜索功能，不对搜索结果承担责任。搜索结果仅供参考，请自行甄别，以免上当受骗。继续搜索代表您已知晓此声明。");
+  //     switch (searchType) {
+  //       default:
+  //       case "[免责声明]":
+  //         // Silence is gold.
+  //         break;
+  //       case "[丁香医生]":
+  //         navigate("https://dxy.com/search/result?query=" + encodeURIComponent(searchText), true);
+  //         break;
+  //       case "[360]":
+  //         navigate("https://ly.so.com/s?q=" + encodeURIComponent(searchText), true);
+  //         break;
+  //       case "[好大夫]":
+  //         navigate("https://so.haodf.com/index/search?kw=" + encodeURIComponent(searchText), true);
+  //         break;
+  //       case "[寻医问药]":
+  //         navigate("https://so.xywy.com/comse.php?keyword=" + encodeURIComponent(searchText), true);
+  //         break;
+  //       case "[新华健康]":
+  //         navigate("http://so.xinhuanet.com/#search/0/" + encodeURIComponent(searchText) + "/1/", true);
+  //         break;
+  //     }
+  //     console.log("[学术论文搜索结束]");
+  //   }
+  // },
   // #############################################################################################################
   // {
   //   key: "yn",
@@ -755,11 +885,11 @@ function encodeXML(str) {
  * 将当前标签页导航到指定Url / 或者新建标签页
  *
  * @param String url 要导航到的url
- * @param bool openInNewTab 是否打开新标签页
+ * @param bool openInNewTab 是否打开新标签页  false - 当前标签页， true - 新标签页（当前标签页为newtab时使用当前标签页）
  */
 function navigate(url, openInNewTab = false) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    if (!openInNewTab || isCurrentNewTab()) {
+    if (!openInNewTab || isCurrentNewTab(tabs)) {
       // 如果不在新标签页打开，或者当前标签页是新标签页
       chrome.tabs.update(tabs[0].id, { url: url });
     } else {
@@ -773,18 +903,15 @@ function navigate(url, openInNewTab = false) {
 
 /**
  * 获取当前是否是新标签页
+ * 需要先使用以下代码获取当前所有标签页
+ * chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) { });
+ *
+ * @param {*} tabs
  */
-function isCurrentNewTab() {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    if (tabs && tabs.length > 0 && !!tabs[0].url && /^(.*?):\/\/newtab\/$/.test(tabs[0].url)) {
-      console.log("当前标签页是新标签页");
-      return true;
-    }
-    else {
-      console.log("当前标签页不是新标签页");
-      return false;
-    }
-  });
+function isCurrentNewTab(tabs) {
+  let isNewTab = (tabs && tabs.length > 0 && !!tabs[0].url && /^(.*?):\/\/newtab\/$/.test(tabs[0].url));
+  console.log("当前标签页" + (isNewTab ? "是" : "不是") + "新标签页");
+  return isNewTab;
 }
 
 

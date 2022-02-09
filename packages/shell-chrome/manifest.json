@@ -87,6 +87,16 @@
         "assets/js/advanced-search/content-helper/qikan.cqvip.com.js"
       ],
       "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://baike.baidu.com/*"
+      ],
+      "js": [
+        "assets/js/lib/jquery.min.js",
+        "assets/js/advanced-search/content-helper/baike.baidu.com.js"
+      ],
+      "run_at": "document_start"
     }
   ],
   "browser_action": {
