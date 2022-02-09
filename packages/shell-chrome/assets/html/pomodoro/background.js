@@ -100,7 +100,6 @@ function countdown({ minutes, seconds, status }) {
       (seconds < 10 ? "0" : "") +
       seconds;
   // countdownTimer.innerHTML = currentTimer; 拿到
-  console.log("分秒=============", minutes, seconds);
 
   chrome.storage.sync.set({
           pomoData: {
@@ -112,7 +111,7 @@ function countdown({ minutes, seconds, status }) {
       },
       function() {
           if (!chrome.runtime.error) {
-              console.log("started");
+              // console.log("started");
           }
       }
   );
@@ -125,11 +124,11 @@ function countdown({ minutes, seconds, status }) {
         chrome.browserAction.setBadgeText({ text: "" });
       }, 2000)
     } else {
-      chrome.browserAction.setBadgeText({ text: pomoData.minutes.toString() + ":" + pomoData.seconds.toString() });
+      chrome.browserAction.setBadgeText({ text: currentTimer });
     }
   });
 
-  console.log(currentTimer);
+  // console.log(currentTimer);
   // count down every second, when a minute is up, countdown one minute
   // when time reaches 0:00, reset
   if (seconds > 0) {
@@ -149,7 +148,7 @@ function countdown({ minutes, seconds, status }) {
           },
           function() {
               if (!chrome.runtime.error) {
-                  console.log("started");
+                  // console.log("started");
               }
           }
       );
