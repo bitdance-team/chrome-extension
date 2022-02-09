@@ -6,6 +6,7 @@
   "omnibox": {
     "keyword": "ss"
   },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "icons": {
     "16": "assets/image/logo.png",
     "48": "assets/image/logo.png",
@@ -21,8 +22,7 @@
       "assets/html/screenshot/background.js"
     ]
   },
-  "content_scripts": [
-    {
+  "content_scripts": [{
       "matches": [
         "<all_urls>",
         "*://*/*"
@@ -103,6 +103,7 @@
     "/assets/image/*",
     "/assets/html/screenshot/images/*"
   ],
+
   "permissions": [
     "background",
     "contextMenus",

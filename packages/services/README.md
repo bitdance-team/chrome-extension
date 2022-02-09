@@ -1,11 +1,19 @@
-# services
+轻服务后台
 
-This library was generated with [Nx](https://nx.dev).
+## 部署到轻服务
 
-## Building
+项目根目录下运行：
 
-Run `nx build services` to build the library.
+```shell
+yarn nx deploy services
+```
 
-## Running unit tests
+## 本地开发
 
-Run `nx test services` to execute the unit tests via [Jest](https://jestjs.io).
+项目根目录下运行：
+
+```shell
+yarn nx dev services
+```
+
+> 开发环境下，修改文件内容后，服务器会自动重启
