@@ -46,6 +46,22 @@ $(function() {
 
 
     /**
+     * Expand Fulltext
+     */
+    const btnExpandFulltext = document.querySelector("#btnExpandFulltext");
+    // 页面加载时，更新界面开关状态
+    chrome.storage.sync.get("State_ExpandFulltext", ({ State_ExpandFulltext }) => {
+      btnExpandFulltext.checked = !State_ExpandFulltext;
+    });
+
+    // 点击开关时存储按钮状态并刷新页面
+    btnExpandFulltext.addEventListener("change", () => {
+        chrome.storage.sync.set({ State_ExpandFulltext: !btnExpandFulltext.checked });
+        refreshPage('Expand Fulltext');
+    });
+
+
+    /**
      * Google广告拦截
      */
     const btnGoogleAds = document.querySelector("#btnAdsBlock");

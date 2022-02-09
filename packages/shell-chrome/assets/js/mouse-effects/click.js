@@ -1,14 +1,14 @@
 /**
- * TODO: 鼠标点击效果
+ * 鼠标点击效果
  */
 
 $(function() {
-    console.log("[BitDance extension] 学生助手插件 - 点击特效模块加载成功");
     // 控制功能是否开启
     chrome.storage.sync.get('State_MouseEffect', function(budget) {
         // 得到按钮开关状态
         if (budget.State_MouseEffect == false || budget.State_MouseEffect == undefined) {
-            // console.log('click功能启动');
+            console.log("[BitDance extension] 学生助手插件 - 点击特效模块加载成功");
+
             var hearts = [];
 
             walk();
