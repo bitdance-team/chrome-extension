@@ -42,7 +42,7 @@ GitHub仓库：https://github.com/bitdance-team/chrome-extension
 
 郑丽：天气展示功能，翻译功能（使用轻服务云函数构建Api）
 
-张君秋：网页截图功能
+张君秋：网页截图功能，PPT制作
 
 张松：确认页直接跳转功能，番茄钟
 
