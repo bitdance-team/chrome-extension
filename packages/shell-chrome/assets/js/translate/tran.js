@@ -81,7 +81,8 @@ var onInputChange = async function () {
         to = 'en';
         postMsg()
     } else {
-        document.getElementById("LangType").innerHTML = res
+        document.getElementById("LangType").innerHTML = res2
+        to = 'zh';
         postMsg()
     }
     
