@@ -74,14 +74,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     });
   }
 
-  //创建结束通知：待完成
-
-  chrome.storage.sync.set({
-    status,
-  });
   //后台播放完成提示音乐
-  if (message.action === "play") {
+  if (status === "playend") {
     // audio.play();
+    console.log("playend***")
   }
   sendResponse();
   console.log(`离开 assets\html\pomodoro\background.js 中的onMessage Listener`)
@@ -101,6 +97,11 @@ function countdown({ minutes, seconds, status }) {
     seconds;
   // countdownTimer.innerHTML = currentTimer; 拿到
   console.log("分秒=============", minutes, seconds);
+
+  //番茄钟结束桌面提醒
+  if(currentTimer === "00:00"){
+    showPomoNotification();
+  }
 
   chrome.storage.sync.set(
     {
@@ -161,3 +162,14 @@ function countdown({ minutes, seconds, status }) {
 
 //设置badge文本背景颜色
 chrome.browserAction.setBadgeBackgroundColor({ color: "#DD4A48" });
+
+//桌面通知
+function showPomoNotification(){
+
+    new Notification("番茄钟🍅",{
+      //图标暂时未设置
+      icon:'48.png',
+      body:'你已经完成一个番茄钟！'
+    })
+}
+
