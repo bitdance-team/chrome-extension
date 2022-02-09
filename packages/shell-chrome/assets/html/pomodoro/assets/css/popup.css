@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
-
 body {
     /* background-color: rgb(51, 11, 116); */
     background: url(../../images/pomo_green.jpeg) no-repeat;
-    background-image: "../../";
+    background-size: cover;
+    /* background-image: "../../"; */
     /* color: white; */
-    font-family: 'Source Sans Pro','Fira Sans', sans-serif;
+    font-family: 'Source Sans Pro', 'Fira Sans', sans-serif;
     margin: 0;
     padding: 0;
     /* width: 280px; */
@@ -19,6 +19,63 @@ body {
     padding: 10px 0 20px;
 }
 
+#left {
+    position: absolute;
+    width: 25px;
+    height: 45px;
+    top: 180px;
+    left: 0;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+#left:hover {
+    background-color: #b4b2b2;
+}
+
+#left::before {
+    position: absolute;
+    content: "";
+    top: 12px;
+    left: 5px;
+    width: 15px;
+    height: 15px;
+    border-top: 2px solid #bbb9b7;
+    border-left: 2px solid #bbb9b7;
+    transform: rotate(-45deg);
+}
+
+#right {
+    position: absolute;
+    width: 25px;
+    height: 45px;
+    top: 180px;
+    right: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+#right:hover {
+    background-color: #b4b2b2;
+}
+
+#right::after {
+    z-index: 9999;
+    position: absolute;
+    content: "";
+    top: 12px;
+    right: 5px;
+    width: 15px;
+    height: 15px;
+    border-top: 2px solid #585551;
+    border-right: 2px solid #585551;
+    transform: rotate(45deg);
+}
+
 .buttons {
     width: fit-content;
     margin: auto;
@@ -26,7 +83,7 @@ body {
     color: rgb(169, 172, 172);
 }
 
-.buttons .slider{
+.buttons .slider {
     color: rgb(247, 226, 230);
 }
 
@@ -37,7 +94,9 @@ body {
     padding: 8px;
 }
 
+
 /*计数部分*/
+
 #countdown {
     clear: both;
     width: fit-content;
@@ -48,12 +107,13 @@ body {
     color: aliceblue;
 }
 
-#countdown span{
+#countdown span {
     opacity: 0;
 }
 
-
-#start-btn,#end-btn,#reset-btn {
+#start-btn,
+#end-btn,
+#reset-btn {
     /* 文字颜色 */
     color: #f5e4b9;
     /* 清除背景色 */
@@ -71,24 +131,26 @@ body {
     /* width: 40px; */
     font-size: 16px;
     margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; /* Safari */
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
     transition-duration: 0.4s;
     cursor: pointer;
     text-decoration: none;
     text-transform: uppercase;
-
-    text-shadow: 1px 1px 1px rgba(255,255,255, .1);
-     border-radius: 25px;
-     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, .1);
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
 #start-btn {
     background-color: white;
     color: black;
     border: 1px solid #f5e4b9;
 }
+
+
 /* 悬停样式 */
+
 #start-btn:hover {
     background-color: #f5e4b9;
     color: white;
@@ -100,11 +162,15 @@ body {
     border: 1px solid #ECB390;
     display: none;
 }
+
+
 /* 悬停样式 */
+
 #end-btn:hover {
     background-color: #ECB390;
     color: white;
 }
+
 
 /* #end-btn{
     width: 40px;
@@ -114,6 +180,7 @@ body {
     background-color: #F5EEDC;
     cursor: pointer;
 } */
+
 
 /* #reset-btn {
     width: 40px;
@@ -129,7 +196,10 @@ body {
     color: black;
     border: 1px solid #DD4A48;
 }
+
+
 /* 悬停样式 */
+
 #reset-btn:hover {
     background-color: #DD4A48;
     color: white;
@@ -141,12 +211,12 @@ body {
     display: none;
 } */
 
+
 /*选中的按钮*/
+
 .selected {
     background-color: rgb(244, 242, 248);
 }
-
-
 
 ul {
     padding: 0;
@@ -164,12 +234,11 @@ li {
     float: right;
 }
 
-
 .hide {
     display: none;
 }
 
-footer .settings{
+footer .settings {
     position: absolute;
     bottom: 5px;
     right: 5px;

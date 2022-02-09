@@ -10,56 +10,68 @@
 <body>
     <div id="popup">
         <header>
-            <img src="assets/image/logo.png" alt="Logo">
-               <!-- 天气模块 -->
-             <div id='weather'>
-                <p id="weatherSite">北京</p>
-                <img id = "svg_w" src="./assets/image/weather/icons/100.svg">
-                <p id='weatherText'></p>
-                <p id="weatherTemp"></p>
+            <img src="assets/image/logo.png" alt="Logo" id="logo">
+            <div id="weather">
+                <span id="weatherSite">北京</span>
+                <img id="svg_w" src="./assets/image/weather/icons/100.svg">
+                <span id='weatherText'></span>
+                <span id="weatherTemp"></span>
             </div>
         </header>
-        <div class="article">
-            <ul>
-                <li>
-                    <div id="expand">
-                    </div>
-                </li>
-                <li>
-                    <div id="mouse-style">
-                        <span>鼠标样式</span>
-                        <div class="button">
-                            <input type="checkbox" id="button-2" class="checkbox" />
-                            <div class="knobs"></div>
-                            <div class="layer"></div>
+        <div id="back"></div>
+        <div id="article">
+            <div id="buttons">
+                <button id="transform">翻译</button>
+                <div id="clock">番茄钟</div>
+                <button id="btnScreenshot">截图</button>
+            </div>
+            <div class="setting">
+                <ul>
+                    <li>
+                        <div class="setting-item">
+                            <span>广告屏蔽</span>
+                            <div class="button">
+                                <input type="checkbox" id="button-1" class="checkbox" />
+                                <div class="knobs"></div>
+                                <div class="layer"></div>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div id="click-per">
-                        <span>点击特效</span>
-                        <div class="button">
-                            <input type="checkbox" id="button-3" class="checkbox" />
-                            <div class="knobs"></div>
-                            <div class="layer"></div>
+                    </li>
+                    <li>
+                        <div class="setting-item">
+                            <span>鼠标样式</span>
+                            <div class="button">
+                                <input type="checkbox" id="button-2" class="checkbox" />
+                                <div class="knobs"></div>
+                                <div class="layer"></div>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div id="click-per">
-                        <span>确认访问页自动跳转</span>
-                        <div class="button">
-                            <input type="checkbox" id="btnDirectUrl" class="checkbox" />
-                            <div class="knobs"></div>
-                            <div class="layer"></div>
+                    </li>
+                    <li>
+                        <div class="setting-item">
+                            <span>点击特效</span>
+                            <div class="button">
+                                <input type="checkbox" id="button-3" class="checkbox" />
+                                <div class="knobs"></div>
+                                <div class="layer"></div>
+                            </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                    <li>
+                        <div class="setting-item">
+                            <span>访问页自动跳转</span>
+                            <div class="button">
+                                <input type="checkbox" id="btnDirectUrl" class="checkbox" />
+                                <div class="knobs"></div>
+                                <div class="layer"></div>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
         </div>
-        <button id="btnScreenshot">截图</button>
-        <button id="ToTans">翻译</button>
-        <iframe src="assets/html/pomodoro/popup.html" id="pomodoro" style="border: 0; height: 400px;"></iframe>
+        <iframe src="assets/html/pomodoro/popup.html" id="pomodoro" style="border: 0; height: 450px; display: none;"></iframe>
     </div>
     <script src="assets/js/lib/jquery.min.js"></script>
     <script src="assets/js/popup.js"></script>

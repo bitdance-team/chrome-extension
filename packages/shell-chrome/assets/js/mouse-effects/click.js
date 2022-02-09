@@ -7,14 +7,14 @@ $(function() {
 
     // 每次改变开关状态时刷新页面使功能及时生效
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      console.log(`进入 assets\js\mouse-effects\click.js 中的onMessage Listener`)
+        // console.log(`进入 assets\js\mouse-effects\click.js 中的onMessage Listener`)
 
         if (request.info === 'click') {
             location.reload();
-            sendResponse('Reload page');
+            sendResponse('Reload page because of click');
         }
 
-        console.log(`离开 assets\js\mouse-effects\click.js 中的onMessage Listener`)
+        // console.log(`离开 assets\js\mouse-effects\click.js 中的onMessage Listener`)
         return true;
     })
 
