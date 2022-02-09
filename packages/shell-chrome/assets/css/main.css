@@ -18,7 +18,7 @@ body {
 #popup header {
   width: inherit;
   height: 40px;
-  background: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);
+  background: #ffd13fcf;
 }
 #popup header #logo {
   height: inherit;
@@ -29,16 +29,11 @@ body {
   line-height: 40px;
   margin-right: 10px;
 }
-
-#popup header #weather #weatherSiteSelet{
+#popup header #weather #weatherSiteSelet {
   border: none;
-  appearance:none;
-  background: transparent
+  appearance: none;
+  background: transparent;
 }
-/* #popup header #weather #weatherSite {
-  font-size: 13px;
-  margin-right: 5px;
-} */
 #popup header #weather #svg_w {
   height: 15px;
   vertical-align: text-bottom;
