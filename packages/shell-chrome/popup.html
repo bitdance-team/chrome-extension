@@ -10,13 +10,33 @@
 <body>
     <div id="popup">
         <header>
-            <img src="assets/image/logo.png" alt="Logo">
+            <img src="assets/image/logo.png" alt="Logo" id="logo">
+            <div id="weather">
+                <span id="weatherSite">北京</span>
+                <img id="svg_w" src="./assets/image/weather/icons/100.svg">
+                <span id='weatherText'></span>
+                <span id="weatherTemp"></span>
+            </div>
         </header>
         <div id="back"></div>
         <div id="article">
-            <div id="weather">天气</div>
-            <div class="left">
+            <div id="buttons">
+                <button id="transform">翻译</button>
+                <div id="clock">番茄钟</div>
+                <button id="btnScreenshot">截图</button>
+            </div>
+            <div class="setting">
                 <ul>
+                    <li>
+                        <div id="advertising">
+                            <span>广告屏蔽</span>
+                            <div class="button">
+                                <input type="checkbox" id="button-1" class="checkbox" />
+                                <div class="knobs"></div>
+                                <div class="layer"></div>
+                            </div>
+                        </div>
+                    </li>
                     <li>
                         <div id="mouse-style">
                             <span>鼠标样式</span>
@@ -47,19 +67,15 @@
                             </div>
                         </div>
                     </li>
+
                 </ul>
             </div>
-            <div class="right">
-                <div id="clock">
-                    番茄钟
-                </div>
-            </div>
         </div>
-        <button id="btnScreenshot">截图</button>
         <iframe src="assets/html/pomodoro/popup.html" id="pomodoro" style="border: 0; height: 450px; display: none;"></iframe>
     </div>
     <script src="assets/js/lib/jquery.min.js"></script>
     <script src="assets/js/popup.js"></script>
+    <script src="assets/js/popup2.js"></script>
 </body>
 
 </html>

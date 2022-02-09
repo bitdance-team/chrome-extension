@@ -21,8 +21,27 @@ body {
         width: inherit;
         height: 40px;
         background: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);;
-        img {
+        #logo {
             height: inherit;
+        }
+        #weather{
+            float: right;
+            height: 100%;
+            line-height: 40px;
+            margin-right: 12px;
+            #weatherSite{
+                font-size: 16px;
+                margin-right: 5px;
+            }
+            #svg_w{
+                height: 20px;
+            }
+            #weatherText{
+                font-size: 18px;
+            }
+            #weatherTemp{
+                font-size: 18px;
+            }
         }
     }
     #back {
@@ -39,91 +58,78 @@ body {
         cursor: pointer;
     }
     #article{
-        #weather{
-            width: 100%;
-            height: 150px;
-            margin-top: 3px;
-            background-color: #fff;
+        #buttons{
+            position: relative;
+            margin-top: 12px;
+            #btnScreenshot,
+            #transform{
+                float: left;
+                top: 1px;
+                right: 5px;     
+                width: 90px;
+                height: 40px;
+                color: #fff;
+                font-weight: 500;
+                cursor: pointer;
+                background-color: #71b0f3;
+                border: none;
+                border-radius: 4px;
+            }
+            #btnScreenshot:hover{
+                background-color: #6FC6FF;
+            }
+            #btnScreenshot:active{
+                transform: translate(0px, 1px);
+                box-shadow: 0px 1px 0px 0px;
+            }
+            #transform{
+                margin-left: 10px;
+                background-color: #71b0f3;
+            }
+            #transform:hover{
+                background-color: #6FC6FF;
+             }
+             #transform:active{
+                transform: translate(0px, 1px);
+                box-shadow: 0px 1px 0px 0px;
+             }
+            #clock{
+                float: left;
+                margin-left: 30px;
+                margin-right: 30px;
+                width: 42px;
+                height: 42px;
+                background-color: #F7BAEF;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 40px;
+                cursor: pointer;
+                font-size: 12px;
+            }
+            #clock:active{
+                transform: translate(0px, 1px);
+                box-shadow: 0px 1px 0px 0px;
+            }
         }
-        .left{
+        .setting{
             float: left;
-            width: 200px;
+            width: 100%;
+            margin-top: 12px;
+            // opacity: 0.5;
             ul{
                 li{
-                    margin: 5px 0;
+                    margin: 7px 0;
                     height: 45px;
+                    border-radius: 50px;
                     background: linear-gradient(to right, #84fab0 0%, #8fd3f4 51%, #84fab0 100%);
                     span{
                         font-size: 16px;
                         line-height: 45px;
                         margin-left: 5px;
                     }
+                    #advertising,
+                    #mouse-style,
                     #click-per{
-                        .button {
-                            position: relative;
-                            float: right;
-                            top: 6px;
-                            right: 6px;
-                            width: 66px;
-                            height: 32px;
-                            border-radius: 100px;
-                            .checkbox {
-                                position: relative;
-                                width: 100%;
-                                height: 100%;
-                                opacity: 0;
-                                cursor: pointer;
-                                z-index: 3;
-                            }
-                            .knobs,
-                            .layer {
-                                position: absolute;
-                                top: 0;
-                                right: 0;
-                                bottom: 0;
-                                left: 0;
-                            }
-                            .knobs {
-                                z-index: 2;
-                            }
-                            .layer{
-                                border-radius: 100px;
-                                width: 100%;
-                                background-color: #ebf7fc;
-                                z-index: 1;
-                            }
-                            .knobs::before {
-                                content: "YES";
-                                position: absolute;
-                                top: 2px;
-                                left: 34px;
-                                width: 20px;
-                                height: 10px;
-                                color: #fff;
-                                font-size: 10px;
-                                font-weight: bold;
-                                text-align: center;
-                                line-height: 1;
-                                padding: 9px 4px;
-                                background-color: #03a9f4;
-                                border-radius: 50%;
-                            }
-                            .checkbox:checked+.knobs:before {
-                                content: "NO";
-                                left: 3px;
-                                background-color: #f44336;
-                            }
-                            .checkbox:checked~.layer {
-                                background-color: #fcebeb;
-                            }
-                            .knobs,
-                            .knobs:before,
-                            .layer{
-                                transition: 0.3s ease all;
-                            }
-                        }
-                    }
-                    #mouse-style{
                         .button {
                             position: relative;
                             float: right;
@@ -191,47 +197,5 @@ body {
                 }
             }
         }
-        .right{
-            float: right;
-            width: 100px;
-            #clock{
-                width: 80px;
-                height: 80px;
-                margin: 30px auto;
-                background-color: #fff;
-                border-radius: 50%;
-                text-align: center;
-                line-height: 80px;
-                cursor: pointer;
-                font-size: 20px;
-            }
-            #clock:active{
-                transform: translate(0px, 1px);
-                box-shadow: 0px 1px 0px 0px;
-            }
-        }
-        
     }
-    #btnScreenshot{
-        position: absolute;
-        top: 1px;
-        right: 5px;
-        width: 81px;
-        height: 37px;
-        color: #fff;
-        font-weight: 500;
-        cursor: pointer;
-        background-color: #71b0f3;
-        border: none;
-        border-radius: 4px;
-    }
-    #btnScreenshot:hover{
-        background-color: #6FC6FF;
-    }
-    #btnScreenshot:active{
-        transform: translate(0px, 1px);
-        box-shadow: 0px 1px 0px 0px;
-    }
-   
-
 }
