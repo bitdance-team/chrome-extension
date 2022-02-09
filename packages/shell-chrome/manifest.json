@@ -49,52 +49,15 @@
     },
     {
       "matches": [
-        "*://fanyi.qq.com/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/advanced-search/content-helper/fanyi.qq.com.js"
-      ],
-      "run_at": "document_start"
-    },
-    {
-      "matches": [
-        "*://fanyi.youdao.com/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/advanced-search/content-helper/fanyi.youdao.com.js"
-      ],
-      "run_at": "document_start"
-    },
-    {
-      "matches": [
-        "*://www.cnki.net/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/advanced-search/content-helper/www.cnki.net.js"
-      ],
-      "run_at": "document_start"
-    },
-    {
-      "matches": [
+        "*://fanyi.qq.com/*",
+        "*://baike.baidu.com/*",
+        "*://fanyi.youdao.com/*",
+        "*://www.cnki.net/*",
         "*://qikan.cqvip.com/*",
         "*://lib.cqvip.com/*"
       ],
       "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/advanced-search/content-helper/qikan.cqvip.com.js"
-      ],
-      "run_at": "document_start"
-    },
-    {
-      "matches": [
-        "*://baike.baidu.com/*"
-      ],
-      "js": [
-        "assets/js/lib/jquery.min.js",
-        "assets/js/advanced-search/content-helper/baike.baidu.com.js"
+        "assets/js/advanced-search/content-helper.js"
       ],
       "run_at": "document_start"
     }
