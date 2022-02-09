@@ -4,6 +4,18 @@
 
 本项目名为学生助手，是一个Chrome浏览器扩展插件。主要针对学生群体，提高资料检索以及日常使用的便捷性、高效性及可定制性。
 
+# 链接汇总 Link Summary
+
+Gitee仓库：https://gitee.com/bitdance-team/chrome-extension
+
+GitHub仓库：https://github.com/bitdance-team/chrome-extension
+
+后台Api接口（轻服务）：https://qcmma8.app.cloudendpoint.cn/api/swagger-html
+
+项目文档：https://qca566.api.cloudendpoint.cn/getFile?file=doc
+
+项目展示PPT：https://qca566.api.cloudendpoint.cn/getFile?file=ppt
+
 ## 快速上手 Quick Start
 
 第一步 下载扩展包并解压：[码云下载](https://gitee.com/bitdance-team/chrome-extension/repository/archive/master.zip) [GitHub下载](https://codeload.github.com/bitdance-team/chrome-extension/zip/refs/heads/master)
@@ -25,7 +37,3 @@
 ## 许可证 License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for the full license text.
-
-## 链接 link
-
-Chrome扩展页: `chrome://extensions/`
