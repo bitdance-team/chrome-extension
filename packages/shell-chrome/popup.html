@@ -11,6 +11,13 @@
     <div id="popup">
         <header>
             <img src="assets/image/logo.png" alt="Logo">
+               <!-- 天气模块 -->
+             <div id='weather'>
+                <p id="weatherSite">北京</p>
+                <img id = "svg_w" src="./assets/image/weather/icons/100.svg">
+                <p id='weatherText'></p>
+                <p id="weatherTemp"></p>
+            </div>
         </header>
         <div class="article">
             <ul>
@@ -51,10 +58,12 @@
             </ul>
         </div>
         <button id="btnScreenshot">截图</button>
+        <button id="ToTans">翻译</button>
         <iframe src="assets/html/pomodoro/popup.html" id="pomodoro" style="border: 0; height: 400px;"></iframe>
     </div>
     <script src="assets/js/lib/jquery.min.js"></script>
     <script src="assets/js/popup.js"></script>
+    <script src="assets/js/popup2.js"></script>
 </body>
 
 </html>

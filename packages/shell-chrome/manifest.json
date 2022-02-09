@@ -112,6 +112,7 @@
     "tabs",
     "activeTab",
     "notifications",
+    "geolocation",
     "<all_urls>"
   ]
 }
