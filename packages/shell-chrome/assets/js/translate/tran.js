@@ -50,9 +50,6 @@ var from = 'auto';
 var to = 'auto';
 
 var postMsg = async function () {
-    console.log('开始翻译')
-    from = document.getElementById("inputLangSelect").value
-    to = document.getElementById("outLangSelect").value
     var msgq = document.getElementById("inputLang").value
     // 翻译api
     msgq = encodeURIComponent(msgq)
@@ -62,7 +59,6 @@ var postMsg = async function () {
     let res1 = await fetch(httpUrl1)
     let result1 = await res1.json()
     let res2 = result1.trans_result[0].dst
-    console.log(result1)
     document.getElementById("outPutRes").innerHTML = res2
 }
 
@@ -97,6 +93,8 @@ document.getElementById("inputLang").onchange = function () {
 }
 //直接翻译
 document.getElementById("tranbtn").onclick = function () {
+    from = document.getElementById("inputLangSelect").value
+    to = document.getElementById("outLangSelect").value
     postMsg()
 }
 //关闭翻译模块
