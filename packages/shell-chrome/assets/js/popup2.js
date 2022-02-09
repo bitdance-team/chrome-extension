@@ -89,12 +89,3 @@ document.getElementById("weatherSite").onclick = function() {
 }
 
 //天气end
-
-//翻译
-//默认参数
-document.getElementById("transform").onclick = function () {
-  console.log(chrome.extension.getBackgroundPage())
-  chrome.extension.getBackgroundPage().tranBit()
-  window.close();
-}
-//翻译end

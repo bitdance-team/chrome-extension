@@ -15,6 +15,7 @@
     "scripts": [
       "assets/js/lib/jquery.min.js",
       "assets/js/background.js",
+      "assets/js/translate/background.js",
       "assets/js/remove-google-ads/background_preventAdsScript.js",
       "assets/html/pomodoro/background.js",
       "assets/js/advanced-search/background.js",
