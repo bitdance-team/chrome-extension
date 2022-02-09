@@ -4,24 +4,10 @@
 
 $(function() {
     console.log("[BitDance extension] 学生助手插件 - 点击特效模块加载成功");
-
-    // 每次改变开关状态时刷新页面使功能及时生效
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-        // console.log(`进入 assets\js\mouse-effects\click.js 中的onMessage Listener`)
-
-        if (request.info === 'click') {
-            location.reload();
-            sendResponse('Reload page because of click');
-        }
-
-        // console.log(`离开 assets\js\mouse-effects\click.js 中的onMessage Listener`)
-        return true;
-    })
-
     // 控制功能是否开启
-    chrome.storage.sync.get('clickState3', function(budget) {
+    chrome.storage.sync.get('State_MouseEffect', function(budget) {
         // 得到按钮开关状态
-        if (budget.clickState3 == false || budget.clickState3 == undefined) {
+        if (budget.State_MouseEffect == false || budget.State_MouseEffect == undefined) {
             // console.log('click功能启动');
             var hearts = [];
 
