@@ -52,7 +52,6 @@ $(function() {
     // 页面加载时，更新界面开关状态
     chrome.storage.sync.get('State_AdsBlock', function(budget) {
         btnGoogleAds.checked = !budget.State_AdsBlock;
-        chrome.extension.getBackgroundPage().updateAdsBlockStatus(!btnGoogleAds.checked);
     });
 
     // 点击开关时存储按钮状态并刷新页面

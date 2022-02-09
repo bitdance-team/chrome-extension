@@ -2,7 +2,6 @@ var AdsBlockStatus = true;
 // refer: https://www.it1352.com/1996113.html
 chrome.webRequest.onBeforeRequest.addListener(
   function (details) {
-    console.log("AdsBlock Status: ", AdsBlockStatus);
 
     if (!AdsBlockStatus)
       return { cancel: false }; // 如果没有开启此功能，不处理
@@ -33,6 +32,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 // 由于上方拦截函数不可以是异步函数，所以设置变更后需要及时调用此函数
 var updateAdsBlockStatus = (status) => {
   AdsBlockStatus = !!status;
+  console.log("AdsBlock Status: ", AdsBlockStatus);
 }
 
 // 插件刚开始加载时，先读取一次状态
