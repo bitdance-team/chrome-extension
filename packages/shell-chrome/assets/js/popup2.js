@@ -1,29 +1,20 @@
 //天气
 let key_w = "314285a761da4025bd4c09339dca5f0f"
-var longitude = 116.40
-var latitude = 39.90
+var BitDanceSite = '北京'
 
 var searchWeatherfn = async function() {
-    // 用经纬度获取
-    let url_jw = longitude + ',' + latitude;
-    console.log("url_jw: " + url_jw);
+    // 用位置获取
+    let url_jw = BitDanceSite
     let httpUrl = `https://geoapi.qweather.com/v2/city/lookup?location=${url_jw}&key=${key_w}`;
     //获取城市的ID
     // let httpUrl = `https://geoapi.qweather.com/v2/city/lookup?location=黔江区&adm=重庆&key=${key}`
     let res1 = await fetch(httpUrl); // 不能res，会冲突
     let result = await res1.json();
-    console.log("下面是result");
-    console.log(result);
-    document.getElementById("weatherSite").innerHTML = result.location[0].adm1;
     let id = result.location[0].id;
-    console.log(id);
     //根据城市id获取具体的天气
     let httpUrl1 = `https://devapi.qweather.com/v7/weather/now?location=${id}&key=${key_w}`
     let res2 = await fetch(httpUrl1);
     let result1 = await res2.json();
-
-    console.log(result1)
-    console.log(result1.now);
     //显示天气情况
     let now = result1.now.text;
     document.getElementById("weatherText").innerHTML = now;
@@ -54,38 +45,18 @@ var searchWeatherfn = async function() {
     }
 }
 
-function find_site() { //获取浏览器的经纬度
-    console.log("开始定位浏览器位置")
-    localStorage.removeItem('BitD_longitude')
-    localStorage.removeItem('BitD_latitude')
-    navigator.geolocation.getCurrentPosition(onSuccess); // 获取经纬度
-    function onSuccess(position) {
-        //经度
-        longitude = position.coords.longitude;
-        localStorage.setItem('BitD_longitude', longitude)
-        console.log("longitude:" + longitude)
-
-        //纬度
-        latitude = position.coords.latitude;
-        localStorage.setItem('BitD_latitude', latitude)
-        console.log("latitude:" + latitude)
-        console.log("获得浏览器经纬度而且写入localstorage end")
-    }
-}
-
-if (localStorage.getItem('BitD_longitude')) { //没有缓存
-    longitude = localStorage.getItem('BitD_longitude')
-    latitude = localStorage.getItem('BitD_latitude')
+if(localStorage.getItem('weatherSiteSelet_Local')){//有缓存的时候
+    document.getElementById("weatherSiteSelet").value = localStorage.getItem('weatherSiteSelet_Local')
+    BitDanceSite = localStorage.getItem('weatherSiteSelet_Local')
     searchWeatherfn()
-} else { // 没有缓存的时候 或者 需要更新的时候
-    console.log("没有找到")
-    find_site()
-    searchWeatherfn()
-}
-
-document.getElementById("weatherSite").onclick = function() {
-    find_site()
-    searchWeatherfn()
-}
-
+  }
+  
+  document.getElementById("weatherSiteSelet").onchange = function(){
+      localStorage.removeItem('weatherSiteSelet_Local')
+      let res3 = document.getElementById("weatherSiteSelet").value
+      localStorage.setItem('weatherSiteSelet_Local',res3)
+      BitDanceSite = res3
+      searchWeatherfn()
+  }
+  
 //天气end

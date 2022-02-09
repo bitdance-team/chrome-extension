@@ -29,10 +29,16 @@ body {
   line-height: 40px;
   margin-right: 10px;
 }
-#popup header #weather #weatherSite {
+
+#popup header #weather #weatherSiteSelet{
+  border: none;
+  appearance:none;
+  background: transparent
+}
+/* #popup header #weather #weatherSite {
   font-size: 13px;
   margin-right: 5px;
-}
+} */
 #popup header #weather #svg_w {
   height: 15px;
   vertical-align: text-bottom;
