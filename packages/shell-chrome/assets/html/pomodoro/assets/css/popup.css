@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+html {
+  height: 100%;
+}
 body {
     /* background-color: rgb(51, 11, 116); */
     background: url(../../images/pomo_green.jpeg) no-repeat;

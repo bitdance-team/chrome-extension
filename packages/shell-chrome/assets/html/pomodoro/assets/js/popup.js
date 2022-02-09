@@ -230,7 +230,7 @@ function change_r() {
 }
 
 function change(n) {
-    document.body.style = "background: url(" + photos[n] + ") no-repeat; background-size: cover;";
+    document.body.style = "background: url(" + photos[n] + ") no-repeat; background-size: cover; background-position: center;";
 }
 
 let t = setInterval(function() {
