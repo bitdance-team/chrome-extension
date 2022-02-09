@@ -12,46 +12,51 @@
         <header>
             <img src="assets/image/logo.png" alt="Logo">
         </header>
-        <div class="article">
-            <ul>
-                <li>
-                    <div id="expand">
-                    </div>
-                </li>
-                <li>
-                    <div id="mouse-style">
-                        <span>鼠标样式</span>
-                        <div class="button">
-                            <input type="checkbox" id="button-2" class="checkbox" />
-                            <div class="knobs"></div>
-                            <div class="layer"></div>
+        <div id="back"></div>
+        <div id="article">
+            <div id="weather">天气</div>
+            <div class="left">
+                <ul>
+                    <li>
+                        <div id="mouse-style">
+                            <span>鼠标样式</span>
+                            <div class="button">
+                                <input type="checkbox" id="button-2" class="checkbox" />
+                                <div class="knobs"></div>
+                                <div class="layer"></div>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div id="click-per">
-                        <span>点击特效</span>
-                        <div class="button">
-                            <input type="checkbox" id="button-3" class="checkbox" />
-                            <div class="knobs"></div>
-                            <div class="layer"></div>
+                    </li>
+                    <li>
+                        <div id="click-per">
+                            <span>点击特效</span>
+                            <div class="button">
+                                <input type="checkbox" id="button-3" class="checkbox" />
+                                <div class="knobs"></div>
+                                <div class="layer"></div>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div id="click-per">
-                        <span>确认访问页自动跳转</span>
-                        <div class="button">
-                            <input type="checkbox" id="btnDirectUrl" class="checkbox" />
-                            <div class="knobs"></div>
-                            <div class="layer"></div>
+                    </li>
+                    <li>
+                        <div id="click-per">
+                            <span>访问页自动跳转</span>
+                            <div class="button">
+                                <input type="checkbox" id="btnDirectUrl" class="checkbox" />
+                                <div class="knobs"></div>
+                                <div class="layer"></div>
+                            </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="right">
+                <div id="clock">
+                    番茄钟
+                </div>
+            </div>
         </div>
         <button id="btnScreenshot">截图</button>
-        <iframe src="assets/html/pomodoro/popup.html" id="pomodoro" style="border: 0; height: 400px;"></iframe>
+        <iframe src="assets/html/pomodoro/popup.html" id="pomodoro" style="border: 0; height: 450px; display: none;"></iframe>
     </div>
     <script src="assets/js/lib/jquery.min.js"></script>
     <script src="assets/js/popup.js"></script>

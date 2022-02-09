@@ -13,6 +13,18 @@ $(function() {
         // 改变开关状态（保持与上次设置时一致）
         input.checked = budget.clickState3;
     });
+    // 获取番茄钟页面状态
+    chrome.storage.sync.get('clockState', function(budget) {
+        console.log(budget.clockState);
+        if (budget.clockState === "block") {
+            $('#back').css("display", "block");
+            $('#article').css("display", "none");
+            $('#pomodoro').css("display", "block");
+        } else if (budget.clockState === "none") {
+            $('#article').css("display", "block");
+            $('#pomodoro').css("display", "none");
+        }
+    });
 
     // 点击开关时改变按钮状态
     $("#button-2").click(function() {
@@ -74,4 +86,18 @@ $(function() {
             chrome.extension.getBackgroundPage().takeScreenshot(tabs[0]);
         })
     });
+
+    $('#clock').click(function() {
+        $('#pomodoro').fadeIn(500);
+        $('#article').fadeOut(0);
+        $('#back').css("display", "block");
+        chrome.storage.sync.set({ "clockState": "block" });
+    });
+
+    $('#back').click(function() {
+        $('#pomodoro').fadeOut(0);
+        $('#article').fadeIn(200);
+        $('#back').css("display", "none");
+        chrome.storage.sync.set({ "clockState": "none" });
+    })
 })

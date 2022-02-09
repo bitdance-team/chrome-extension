@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,34 +11,35 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <audio id="audio">
         <source src="./src/alarm.mp3" type="audio/mp3">
     </audio>
-    
+
     <!-- 计时部分 -->
     <div id="timer">
 
-      <!-- 切换背景图片 -->
-      <div class="slider">
-        <span class="left">&lt;</span>
-        <span class="right">&gt;</span>
-      </div>
+        <!-- 切换背景图片 -->
+        <div class="slider">
+            <div id="left"></div>
+            <div id="right"></div>
+        </div>
 
-      
+
         <!-- <div class="button" id="pomodoro-btn"></div> -->
-      
-      <div id="countdown">
-          <span>00:00</span>
-      </div>
-      <div class="buttons">
-          <!-- 计时开始、重置 -->
-      <button id="start-btn">开始</button>
-      <button id="end-btn">暂停</button>
-      <button id="reset-btn">重置</button>
-      </div>
+
+        <div id="countdown">
+            <span>00:00</span>
+        </div>
+        <div class="buttons">
+            <!-- 计时开始、重置 -->
+            <button id="start-btn">开始</button>
+            <button id="end-btn">暂停</button>
+            <button id="reset-btn">重置</button>
+        </div>
     </div>
-    
+
     <!-- 后续——添加任务清单
     <div id="worklist">
       <div id="current-task-display">
@@ -58,14 +60,15 @@
         </form>
       </div>
     </div> -->
-    
+
     <!-- 页脚--设置 -->
     <footer>
-      <div class="settings">
-        <!-- <a href="./assets/html/options.html">settings</a> -->
-      </div>
+        <div class="settings">
+            <!-- <a href="./assets/html/options.html">settings</a> -->
+        </div>
     </footer>
 
     <script src="./assets/js/popup.js"></script>
 </body>
+
 </html>

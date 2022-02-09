@@ -17,23 +17,46 @@ body {
 }
 #popup header {
   width: inherit;
-  height: 30px;
+  height: 40px;
   background: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);
 }
 #popup header img {
   height: inherit;
 }
-#popup .article ul li {
+#popup #back {
+  display: none;
+  position: absolute;
+  top: 54px;
+  left: 10px;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  transform: rotate(-45deg);
+  cursor: pointer;
+}
+#popup #article #weather {
+  width: 100%;
+  height: 150px;
+  margin-top: 3px;
+  background-color: #fff;
+}
+#popup #article .left {
+  float: left;
+  width: 200px;
+}
+#popup #article .left ul li {
   margin: 5px 0;
   height: 45px;
   background: linear-gradient(to right, #84fab0 0%, #8fd3f4 51%, #84fab0 100%);
 }
-#popup .article ul li span {
+#popup #article .left ul li span {
   font-size: 16px;
   line-height: 45px;
   margin-left: 5px;
 }
-#popup .article ul li #click-per .button {
+#popup #article .left ul li #click-per .button {
   position: relative;
   float: right;
   top: 6px;
@@ -42,7 +65,7 @@ body {
   height: 32px;
   border-radius: 100px;
 }
-#popup .article ul li #click-per .button .checkbox {
+#popup #article .left ul li #click-per .button .checkbox {
   position: relative;
   width: 100%;
   height: 100%;
@@ -50,24 +73,24 @@ body {
   cursor: pointer;
   z-index: 3;
 }
-#popup .article ul li #click-per .button .knobs,
-#popup .article ul li #click-per .button .layer {
+#popup #article .left ul li #click-per .button .knobs,
+#popup #article .left ul li #click-per .button .layer {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
-#popup .article ul li #click-per .button .knobs {
+#popup #article .left ul li #click-per .button .knobs {
   z-index: 2;
 }
-#popup .article ul li #click-per .button .layer {
+#popup #article .left ul li #click-per .button .layer {
   border-radius: 100px;
   width: 100%;
   background-color: #ebf7fc;
   z-index: 1;
 }
-#popup .article ul li #click-per .button .knobs::before {
+#popup #article .left ul li #click-per .button .knobs::before {
   content: "YES";
   position: absolute;
   top: 2px;
@@ -83,20 +106,20 @@ body {
   background-color: #03a9f4;
   border-radius: 50%;
 }
-#popup .article ul li #click-per .button .checkbox:checked + .knobs:before {
+#popup #article .left ul li #click-per .button .checkbox:checked + .knobs:before {
   content: "NO";
   left: 3px;
   background-color: #f44336;
 }
-#popup .article ul li #click-per .button .checkbox:checked ~ .layer {
+#popup #article .left ul li #click-per .button .checkbox:checked ~ .layer {
   background-color: #fcebeb;
 }
-#popup .article ul li #click-per .button .knobs,
-#popup .article ul li #click-per .button .knobs:before,
-#popup .article ul li #click-per .button .layer {
+#popup #article .left ul li #click-per .button .knobs,
+#popup #article .left ul li #click-per .button .knobs:before,
+#popup #article .left ul li #click-per .button .layer {
   transition: 0.3s ease all;
 }
-#popup .article ul li #mouse-style .button {
+#popup #article .left ul li #mouse-style .button {
   position: relative;
   float: right;
   top: 6px;
@@ -105,7 +128,7 @@ body {
   height: 32px;
   border-radius: 100px;
 }
-#popup .article ul li #mouse-style .button .checkbox {
+#popup #article .left ul li #mouse-style .button .checkbox {
   position: relative;
   width: 100%;
   height: 100%;
@@ -113,24 +136,24 @@ body {
   cursor: pointer;
   z-index: 3;
 }
-#popup .article ul li #mouse-style .button .knobs,
-#popup .article ul li #mouse-style .button .layer {
+#popup #article .left ul li #mouse-style .button .knobs,
+#popup #article .left ul li #mouse-style .button .layer {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
-#popup .article ul li #mouse-style .button .knobs {
+#popup #article .left ul li #mouse-style .button .knobs {
   z-index: 2;
 }
-#popup .article ul li #mouse-style .button .layer {
+#popup #article .left ul li #mouse-style .button .layer {
   border-radius: 100px;
   width: 100%;
   background-color: #ebf7fc;
   z-index: 1;
 }
-#popup .article ul li #mouse-style .button .knobs::before {
+#popup #article .left ul li #mouse-style .button .knobs::before {
   content: "YES";
   position: absolute;
   top: 2px;
@@ -146,25 +169,44 @@ body {
   background-color: #03a9f4;
   border-radius: 50%;
 }
-#popup .article ul li #mouse-style .button .checkbox:checked + .knobs:before {
+#popup #article .left ul li #mouse-style .button .checkbox:checked + .knobs:before {
   content: "NO";
   left: 3px;
   background-color: #f44336;
 }
-#popup .article ul li #mouse-style .button .checkbox:checked ~ .layer {
+#popup #article .left ul li #mouse-style .button .checkbox:checked ~ .layer {
   background-color: #fcebeb;
 }
-#popup .article ul li #mouse-style .button .knobs,
-#popup .article ul li #mouse-style .button .knobs:before,
-#popup .article ul li #mouse-style .button .layer {
+#popup #article .left ul li #mouse-style .button .knobs,
+#popup #article .left ul li #mouse-style .button .knobs:before,
+#popup #article .left ul li #mouse-style .button .layer {
   transition: 0.3s ease all;
+}
+#popup #article .right {
+  float: right;
+  width: 100px;
+}
+#popup #article .right #clock {
+  width: 80px;
+  height: 80px;
+  margin: 30px auto;
+  background-color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 80px;
+  cursor: pointer;
+  font-size: 20px;
+}
+#popup #article .right #clock:active {
+  transform: translate(0px, 1px);
+  box-shadow: 0px 1px 0px 0px;
 }
 #popup #btnScreenshot {
   position: absolute;
   top: 1px;
   right: 5px;
-  width: 64px;
-  height: 27px;
+  width: 81px;
+  height: 37px;
   color: #fff;
   font-weight: 500;
   cursor: pointer;
