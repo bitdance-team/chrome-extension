@@ -1,15 +1,75 @@
-#inputLang{
-    width: 250px;
-    height: 150px;
+*{
+    margin: 0;
+    padding: 0;
+  }
+#trans{
+  width: 280px;
+  height: 490px;
+  float: left;
+  margin-left: 10px;
+  background-color: rgb(251, 252, 250);
 }
-#outPutRes{
-    width: 250px;
-    height: 150px;
-    background-color: rgb(243, 243, 243);
+#trans_header{
+  width: 300px;
+  height: 40px;
+  background-color:#06abf8;
+  margin-left: -11px;
+  border:2px solid #06abf8;
+  border-radius:25px 25px 0px 0px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 20px;
+  color: azure;
+  font-weight:bold
+}
+#deleteTrans{
+  width: 25px;
+  height: 25px;
+  background-color: azure;
+  font-size: 15px;
+  color: rgb(161, 165, 165);
+  border:2px solid #06abf8;
+  border-radius:25px;
+  float: right;
+  margin-top: 8px;
+  margin-right: 10px;
+}
+.LangSelectCss{
+width: 120px;
+height: 30px;
+text-align: center;
+line-height: 40px;
+border:none
+}
+.LangSelectCssOption{
+  border: none;
+}
+#inputLang{
+  margin-top:3px;
+  width: 275px;
+  height: 170px;
+  margin-bottom: 10px;
+}
+#middleTans{
+  font-size: 15px;
+  margin-bottom: 5px;
 }
 #LangType{
-    display: inline-block
+    display: inline-block;
+    line-height: 30px;
 }
 #tranbtn{
-    display: inline-block
+    width: 70px;
+    height: 30px;
+    display: inline-block;
+    float: right;
+    margin-right:15px;
+    background-color: #06abf8;
+    font-size: 18px;
+    border:2px solid #06abf8;
+    border-radius:10px;
+    color: azure;
+}
+#outPutRes{
+   
 }

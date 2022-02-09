@@ -5,33 +5,43 @@ if (typeof (BitTarnsDiv) !== "undefined") {
 var BitTarnsDiv = document.createElement("div")
 BitTarnsDiv.id = "BitTarnsDivId"
 document.body.appendChild(BitTarnsDiv)
-BitTarnsDiv.style.backgroundColor = "red"
-BitTarnsDiv.style.height = "450px"
+BitTarnsDiv.style.backgroundColor = "RGB(238,237,237)"
+BitTarnsDiv.style.height = "500px"
 BitTarnsDiv.style.width = "300px"
 BitTarnsDiv.style.zIndex = 99999
 BitTarnsDiv.style.position = "fixed"
 BitTarnsDiv.style.right = '10px'
 BitTarnsDiv.style.top = '50px'
 BitTarnsDiv.style.float = 'right'
+BitTarnsDiv.style.border = '2px solid RGB(238,237,237)'
+BitTarnsDiv.style.borderRadius = '25px'
 
 
 BitTarnsDiv.innerHTML = `
- <div id = 'trans'>
-            <select id="inputLangSelect">
-            <option value="auto">自动检测语言</option>
-            <option value="zh">简体中文</option>
-            <option value="en">English</option>
-            </select>
-          <select id="outLangSelect">
-            <option value="zh">简体中文</option>
-            <option value="en">English</option>
-            </select>
-            <button id="deleteTrans">关闭</button>
-          <input type="text" id="inputLang" value="" placeholder="请输入翻译内容"  >
-          <br>
-            自动检测语言：<p id="LangType"></p><button id="tranbtn">翻译</button>
-          <hr>
-        <p id="outPutRes"></p>
+<div id='trans'>
+<div id="trans_header">
+  学生助手--翻译小帮手
+  <button id="deleteTrans">X</button>
+</div>
+<select id="inputLangSelect" class="LangSelectCss"> 
+  <option class="LangSelectCssOption" value="auto">自动检测语言</option>
+  <option class="LangSelectCssOption" value="zh">简体中文</option>
+  <option class="LangSelectCssOption" value="en">English</option>
+</select>
+=>
+<select id="outLangSelect" class="LangSelectCss">
+  <option class="LangSelectCssOption" value="zh">简体中文</option>
+  <option class="LangSelectCssOption" value="en">English</option>
+</select>
+
+<input type="text" id="inputLang" value="" placeholder="请输入翻译内容">
+<br>
+<div id="middleTans">
+  自动检测语言：<p id="LangType">English</p><button id="tranbtn">翻译</button>
+  
+</div>
+<hr>
+<p id="outPutRes"></p>
 </div>
  `
 
