@@ -18,13 +18,6 @@
 
 第五步 选择刚刚下载的压缩包的 `packages/shell-chrome` 目录即可完成安装
 
-
-
-
-
-
-
-
 ## 作者 Authors
 
 [张博凯](https://github.com/coder-xiaomo)、[xxx](xxx)、[xxx](xxx)、[xxx](xxx)、[xxx](xxx)、[xxx](xxx)、[xxx](xxx)
