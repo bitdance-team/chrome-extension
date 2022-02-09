@@ -27,20 +27,21 @@ body {
   float: right;
   height: 100%;
   line-height: 40px;
-  margin-right: 12px;
+  margin-right: 10px;
 }
 #popup header #weather #weatherSite {
-  font-size: 16px;
+  font-size: 13px;
   margin-right: 5px;
 }
 #popup header #weather #svg_w {
-  height: 20px;
+  height: 15px;
+  vertical-align: text-bottom;
 }
 #popup header #weather #weatherText {
-  font-size: 18px;
+  font-size: 13px;
 }
 #popup header #weather #weatherTemp {
-  font-size: 18px;
+  font-size: 13px;
 }
 #popup #back {
   display: none;
@@ -114,19 +115,18 @@ body {
   margin-top: 12px;
 }
 #popup #article .setting ul li {
-  margin: 7px 0;
+  margin: 7px 5px;
   height: 45px;
-  border-radius: 50px;
-  background: linear-gradient(to right, #84fab0 0%, #8fd3f4 51%, #84fab0 100%);
+  border-radius: 25px;
+  background: #ffffffc9;
+  padding: 0 1px 0 12px;
 }
 #popup #article .setting ul li span {
   font-size: 16px;
   line-height: 45px;
   margin-left: 5px;
 }
-#popup #article .setting ul li #advertising .button,
-#popup #article .setting ul li #mouse-style .button,
-#popup #article .setting ul li #click-per .button {
+#popup #article .setting ul li .setting-item .button {
   position: relative;
   float: right;
   top: 6px;
@@ -135,9 +135,7 @@ body {
   height: 32px;
   border-radius: 100px;
 }
-#popup #article .setting ul li #advertising .button .checkbox,
-#popup #article .setting ul li #mouse-style .button .checkbox,
-#popup #article .setting ul li #click-per .button .checkbox {
+#popup #article .setting ul li .setting-item .button .checkbox {
   position: relative;
   width: 100%;
   height: 100%;
@@ -145,34 +143,24 @@ body {
   cursor: pointer;
   z-index: 3;
 }
-#popup #article .setting ul li #advertising .button .knobs,
-#popup #article .setting ul li #mouse-style .button .knobs,
-#popup #article .setting ul li #click-per .button .knobs,
-#popup #article .setting ul li #advertising .button .layer,
-#popup #article .setting ul li #mouse-style .button .layer,
-#popup #article .setting ul li #click-per .button .layer {
+#popup #article .setting ul li .setting-item .button .knobs,
+#popup #article .setting ul li .setting-item .button .layer {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
-#popup #article .setting ul li #advertising .button .knobs,
-#popup #article .setting ul li #mouse-style .button .knobs,
-#popup #article .setting ul li #click-per .button .knobs {
+#popup #article .setting ul li .setting-item .button .knobs {
   z-index: 2;
 }
-#popup #article .setting ul li #advertising .button .layer,
-#popup #article .setting ul li #mouse-style .button .layer,
-#popup #article .setting ul li #click-per .button .layer {
+#popup #article .setting ul li .setting-item .button .layer {
   border-radius: 100px;
   width: 100%;
   background-color: #ebf7fc;
   z-index: 1;
 }
-#popup #article .setting ul li #advertising .button .knobs::before,
-#popup #article .setting ul li #mouse-style .button .knobs::before,
-#popup #article .setting ul li #click-per .button .knobs::before {
+#popup #article .setting ul li .setting-item .button .knobs::before {
   content: "YES";
   position: absolute;
   top: 2px;
@@ -188,26 +176,16 @@ body {
   background-color: #03a9f4;
   border-radius: 50%;
 }
-#popup #article .setting ul li #advertising .button .checkbox:checked + .knobs:before,
-#popup #article .setting ul li #mouse-style .button .checkbox:checked + .knobs:before,
-#popup #article .setting ul li #click-per .button .checkbox:checked + .knobs:before {
+#popup #article .setting ul li .setting-item .button .checkbox:checked + .knobs:before {
   content: "NO";
   left: 3px;
   background-color: #f44336;
 }
-#popup #article .setting ul li #advertising .button .checkbox:checked ~ .layer,
-#popup #article .setting ul li #mouse-style .button .checkbox:checked ~ .layer,
-#popup #article .setting ul li #click-per .button .checkbox:checked ~ .layer {
+#popup #article .setting ul li .setting-item .button .checkbox:checked ~ .layer {
   background-color: #fcebeb;
 }
-#popup #article .setting ul li #advertising .button .knobs,
-#popup #article .setting ul li #mouse-style .button .knobs,
-#popup #article .setting ul li #click-per .button .knobs,
-#popup #article .setting ul li #advertising .button .knobs:before,
-#popup #article .setting ul li #mouse-style .button .knobs:before,
-#popup #article .setting ul li #click-per .button .knobs:before,
-#popup #article .setting ul li #advertising .button .layer,
-#popup #article .setting ul li #mouse-style .button .layer,
-#popup #article .setting ul li #click-per .button .layer {
+#popup #article .setting ul li .setting-item .button .knobs,
+#popup #article .setting ul li .setting-item .button .knobs:before,
+#popup #article .setting ul li .setting-item .button .layer {
   transition: 0.3s ease all;
 }
