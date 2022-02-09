@@ -59,7 +59,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         minutes: 24,
         seconds: 60,
         countdownTimer: "25:00",
-        status:"init"
+        status: "init"
       },
     });
   } else {
@@ -120,7 +120,14 @@ function countdown({ minutes, seconds, status }) {
 
   //设置badge文本用来显示剩余分钟数
   chrome.storage.sync.get("pomoData", ({ pomoData }) => {
-    chrome.browserAction.setBadgeText({ text: pomoData.minutes.toString() + ":" + pomoData.seconds.toString() });
+    if (pomoData.minutes == 0 && pomoData.seconds == 0) {
+      chrome.browserAction.setBadgeText({ text: "√" });
+      setTimeout(() => {
+        chrome.browserAction.setBadgeText({ text: "" });
+      }, 2000)
+    } else {
+      chrome.browserAction.setBadgeText({ text: pomoData.minutes.toString() + ":" + pomoData.seconds.toString() });
+    }
   });
 
   console.log(currentTimer);
