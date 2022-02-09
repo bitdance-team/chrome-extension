@@ -4,10 +4,12 @@
   }
 #trans{
   width: 280px;
-  height: 490px;
+  height: 540px;
   float: left;
   margin-left: 10px;
   background-color: rgb(251, 252, 250);
+  border:2px solid rgb(251, 252, 250);
+  border-radius:25px ;
 }
 #trans_header{
   width: 300px;
@@ -50,6 +52,7 @@ border:none
   height: 170px;
   margin-bottom: 10px;
 }
+
 #middleTans{
   font-size: 15px;
   margin-bottom: 5px;
@@ -71,5 +74,7 @@ border:none
     color: azure;
 }
 #outPutRes{
-   
-}
+    width: 280px;
+    height: 230px;
+    overflow:auto;
+ }

@@ -6,7 +6,7 @@ var BitTarnsDiv = document.createElement("div")
 BitTarnsDiv.id = "BitTarnsDivId"
 document.body.appendChild(BitTarnsDiv)
 BitTarnsDiv.style.backgroundColor = "RGB(238,237,237)"
-BitTarnsDiv.style.height = "500px"
+BitTarnsDiv.style.height = "550px"
 BitTarnsDiv.style.width = "300px"
 BitTarnsDiv.style.zIndex = 99999
 BitTarnsDiv.style.position = "fixed"
@@ -34,14 +34,15 @@ BitTarnsDiv.innerHTML = `
   <option class="LangSelectCssOption" value="en">English</option>
 </select>
 
-<input type="text" id="inputLang" value="" placeholder="请输入翻译内容">
+<textarea cols="39" rows="15" id="inputLang" placeholder="请输入翻译内容"></textarea>
+
 <br>
 <div id="middleTans">
   自动检测语言：<p id="LangType">English</p><button id="tranbtn">翻译</button>
   
 </div>
 <hr>
-<p id="outPutRes"></p>
+<div id="outPutRes"></div>
 </div>
  `
 
@@ -49,8 +50,6 @@ var from = 'auto';
 var to = 'auto';
 
 var postMsg = async function () {
-    from = document.getElementById("inputLangSelect").value
-    to = document.getElementById("outLangSelect").value
     var msgq = document.getElementById("inputLang").value
     // 翻译api
     msgq = encodeURIComponent(msgq)
@@ -60,7 +59,6 @@ var postMsg = async function () {
     let res1 = await fetch(httpUrl1)
     let result1 = await res1.json()
     let res2 = result1.trans_result[0].dst
-
     document.getElementById("outPutRes").innerHTML = res2
 }
 
@@ -73,13 +71,20 @@ var onInputChange = async function () {
     let result1 = await res1.json()
     let res2 = result1.data.src
     if (res2 == 'en') {
-        document.getElementById("LangType").innerHTML = '英文'
+        document.getElementById("LangType").innerHTML = 'English'
+        from = 'en';
+        to = 'zh';
+        postMsg()
     } else if (res2 == 'zh') {
         document.getElementById("LangType").innerHTML = '简体中文'
+        from = 'zh';
+        to = 'en';
+        postMsg()
     } else {
         document.getElementById("LangType").innerHTML = res
+        postMsg()
     }
-    postMsg()
+    
 }
 
 //触发识别语言，再翻译
@@ -88,6 +93,8 @@ document.getElementById("inputLang").onchange = function () {
 }
 //直接翻译
 document.getElementById("tranbtn").onclick = function () {
+    from = document.getElementById("inputLangSelect").value
+    to = document.getElementById("outLangSelect").value
     postMsg()
 }
 //关闭翻译模块
