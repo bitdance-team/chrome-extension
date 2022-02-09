@@ -89,10 +89,9 @@ document.getElementById("weatherSite").onclick = function () {
 
 // //天气end
 //翻译
-//默认参数
-// document.getElementById("TOtans").onclick = function () {
-//   console.log(chrome.extension.getBackgroundPage())
-//   chrome.extension.getBackgroundPage().tranBit()
-// }
+document.getElementById("ToTans").onclick = function () {
+  console.log(chrome.extension.getBackgroundPage())
+  chrome.extension.getBackgroundPage().tranBit()
+}
 
 //翻译end   

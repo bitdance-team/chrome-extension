@@ -1,0 +1,15 @@
+#inputLang{
+    width: 250px;
+    height: 150px;
+}
+#outPutRes{
+    width: 250px;
+    height: 150px;
+    background-color: rgb(243, 243, 243);
+}
+#LangType{
+    display: inline-block
+}
+#tranbtn{
+    display: inline-block
+}

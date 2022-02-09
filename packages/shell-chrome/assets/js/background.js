@@ -48,3 +48,13 @@ chrome.contextMenus.create({
     showNotification()
   }
 })
+
+function tranBit(){
+  console.log("开始插入翻译页面")
+    
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+  console.log(tabs)
+  chrome.tabs.executeScript(tabs[0].id, { file:'./assets/js/translate/tran.js', runAt: 'document_start' })
+  chrome.tabs.insertCSS(tabs[0].id, { file:'./assets/css/tran.css', runAt: 'document_start' })
+  })
+}
