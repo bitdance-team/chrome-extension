@@ -73,7 +73,7 @@ $(function() {
                 hearts.push({
                     el: d,
                     x: event.clientX,
-                    y: event.clientY,
+                    y: event.clientY - 12,
                     scale: 1,
                     alpha: 1,
                     color: randomColor()
