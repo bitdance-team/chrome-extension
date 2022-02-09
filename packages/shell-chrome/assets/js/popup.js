@@ -1,7 +1,6 @@
 $(function() {
     // 获取开关状态
     chrome.storage.sync.get('clickState2', function(budget) {
-        // console.log(budget.clickState);
         // 获取页面节点
         let input = document.querySelector("#button-2");
         // 改变开关状态（保持与上次设置时一致）
@@ -9,7 +8,6 @@ $(function() {
     });
     // 获取开关状态
     chrome.storage.sync.get('clickState3', function(budget) {
-        // console.log(budget.clickState);
         // 获取页面节点
         let input = document.querySelector("#button-3");
         // 改变开关状态（保持与上次设置时一致）
@@ -22,7 +20,6 @@ $(function() {
         let checked = $("#button-2");
         // 持久化存储开关状态
         chrome.storage.sync.set({ 'clickState2': checked[0].checked });
-        console.log('mouse success');
 
         // 自动刷新页面
         chrome.tabs.query({
@@ -31,7 +28,7 @@ $(function() {
         }, (tabs) => {
             console.log(tabs);
             let message = {
-                info: 'reload'
+                info: 'mouse'
             }
             chrome.tabs.sendMessage(tabs[0].id, message, res => {
                 console.log(res);
@@ -45,7 +42,6 @@ $(function() {
         let checked = $("#button-3");
         // 持久化存储开关状态
         chrome.storage.sync.set({ 'clickState3': checked[0].checked });
-        console.log('click success');
 
         // 自动刷新页面
         chrome.tabs.query({
@@ -54,7 +50,7 @@ $(function() {
         }, (tabs) => {
             console.log(tabs);
             let message = {
-                info: 'reload'
+                info: 'click'
             }
             chrome.tabs.sendMessage(tabs[0].id, message, res => {
                 console.log(res);
@@ -65,7 +61,7 @@ $(function() {
     // Direct Url
     const btnDirectUrl = document.querySelector("#btnDirectUrl");
     chrome.storage.sync.get("linkOpen", ({ linkOpen }) => {
-      btnDirectUrl.checked = !linkOpen;
+        btnDirectUrl.checked = !linkOpen;
     });
 
     btnDirectUrl.addEventListener("change", () => {
