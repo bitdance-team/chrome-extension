@@ -85,6 +85,7 @@ $(function() {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.extension.getBackgroundPage().takeScreenshot(tabs[0]);
         })
+        window.close();
     });
 
     // 番茄钟

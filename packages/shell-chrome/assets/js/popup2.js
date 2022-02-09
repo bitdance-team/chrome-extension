@@ -95,6 +95,6 @@ document.getElementById("weatherSite").onclick = function() {
 document.getElementById("transform").onclick = function () {
   console.log(chrome.extension.getBackgroundPage())
   chrome.extension.getBackgroundPage().tranBit()
+  window.close();
 }
-
 //翻译end
