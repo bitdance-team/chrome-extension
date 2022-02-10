@@ -871,7 +871,9 @@ var ajaxUrl = "https://www.baidu.com/s?wd=";
 /**
  * 用户开始输入文本
  */
-chrome.omnibox.onInputStarted.addListener(function () {
+chrome.omnibox.onInputStarted.addListener(async function () {
+  if (!await checkIsActived()) return;
+
   console.log("chrome.omnibox.onInputStarted");
   updateDefaultSuggestion('');
 });
@@ -879,7 +881,9 @@ chrome.omnibox.onInputStarted.addListener(function () {
 /**
  * 搜索框失去焦点
  */
-chrome.omnibox.onInputCancelled.addListener(function () {
+chrome.omnibox.onInputCancelled.addListener(async function () {
+  if (!await checkIsActived()) return;
+
   console.log("chrome.omnibox.onInputCancelled");
   updateDefaultSuggestion('');
 });
@@ -887,7 +891,9 @@ chrome.omnibox.onInputCancelled.addListener(function () {
 /**
  * 输入框文本改变事件
  */
-chrome.omnibox.onInputChanged.addListener(function (text, suggest) {
+chrome.omnibox.onInputChanged.addListener(async function (text, suggest) {
+  if (!await checkIsActived()) return;
+
   console.log("chrome.omnibox.onInputChanged", text);
 
   // 停止上一次搜索行为
@@ -912,7 +918,9 @@ chrome.omnibox.onInputChanged.addListener(function (text, suggest) {
 /**
  * 用户输入完成，按下回车键
  */
-chrome.omnibox.onInputEntered.addListener(function (text) {
+chrome.omnibox.onInputEntered.addListener(async function (text) {
+  if (!await checkIsActived()) return;
+
   console.log("chrome.omnibox.onInputEntered");
 
   // 更新输入框回显提示信息
@@ -935,6 +943,26 @@ chrome.omnibox.onInputEntered.addListener(function (text) {
  *
  * ****************************************************************************************
  */
+
+/**
+ * 读取功能开启状态，如果没有开启，则显示一个提示信息
+ * @returns
+ */
+async function checkIsActived() {
+  var isActived = await new Promise((resolve) => {
+    chrome.storage.sync.get('State_SSSearch', function (State) {
+      resolve(State.State_SSSearch);
+    });
+  });
+  console.log("SS快捷搜索功能开启状态：" + isActived);
+  if (!isActived) {
+    chrome.omnibox.setDefaultSuggestion({
+      description: "SS快捷搜索功能未开启，请在学生助手扩展设置中开启后再试"
+    });
+  }
+  return isActived;
+}
+
 
 /**
  * 将 & < > 等特殊字符转义，但保留中文不进行转义

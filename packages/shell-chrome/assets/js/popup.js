@@ -79,6 +79,22 @@ $(function() {
 
 
     /**
+     * SS 快捷搜索
+     */
+    const btnSSSearch = document.querySelector("#btnSSSearch");
+    // 页面加载时，更新界面开关状态
+    chrome.storage.sync.get('State_SSSearch', function(budget) {
+      btnSSSearch.checked = !budget.State_SSSearch;
+    });
+
+    // 点击开关时存储按钮状态并刷新页面
+    $("#btnSSSearch").click(function() {
+        chrome.storage.sync.set({ 'State_SSSearch': !btnSSSearch.checked });
+        // refreshPage('SS Search');
+    })
+
+
+    /**
      * 截图
      */
     document.getElementById("btnScreenshot").addEventListener("click", () => {
