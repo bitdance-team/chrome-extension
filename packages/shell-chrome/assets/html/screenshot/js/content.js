@@ -61,10 +61,10 @@ var capture = (force) => {
         chrome.runtime.sendMessage({
           message: 'capture', senderId: "screenshot", area: selection, dpr: devicePixelRatio
         }, (res) => {
-          console.log("capture回调结果：", res)
-          return // 变通
           overlay(false)
           selection = null
+          console.log("capture回调结果：", res)
+          return // 变通
           save(res.image, config.format, config.save)
         })
       }, 50)

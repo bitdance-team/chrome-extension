@@ -1,28 +1,14 @@
 /**
- * TODO: 鼠标点击效果
+ * 鼠标点击效果
  */
 
 $(function() {
-    console.log("[BitDance extension] 学生助手插件 - 点击特效模块加载成功");
-
-    // 每次改变开关状态时刷新页面使功能及时生效
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      console.log(`进入 assets\js\mouse-effects\click.js 中的onMessage Listener`)
-
-        if (request.info === 'click') {
-            location.reload();
-            sendResponse('Reload page');
-        }
-
-        console.log(`离开 assets\js\mouse-effects\click.js 中的onMessage Listener`)
-        return true;
-    })
-
     // 控制功能是否开启
-    chrome.storage.sync.get('clickState3', function(budget) {
+    chrome.storage.sync.get('State_MouseEffect', function(budget) {
         // 得到按钮开关状态
-        if (budget.clickState3 == false || budget.clickState3 == undefined) {
-            // console.log('click功能启动');
+        if (budget.State_MouseEffect == false || budget.State_MouseEffect == undefined) {
+            console.log("[BitDance extension] 学生助手插件 - 点击特效模块加载成功");
+
             var hearts = [];
 
             walk();
@@ -30,7 +16,7 @@ $(function() {
             // 走起（初始化）
             function walk() {
                 // 灵魂 css
-                css(".heart{width: 10px;height: 10px;position: fixed;background: pink;transform: rotate(45deg);}.heart::after,.heart::before{position: absolute;content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;}.heart::after{top: -5px;}.heart::before{left: -5px;}");
+                css("#heart{width: 10px;height: 10px;position: fixed;background: pink;transform: rotate(45deg);}#heart::after,#heart::before{position: absolute;content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;}#heart::after{top: -5px;}#heart::before{left: -5px;}");
                 attachEvent();
                 gameloop();
             }
@@ -62,7 +48,7 @@ $(function() {
             function createHeart(event) {
                 // 创建一个 div 并指定类名为 heart
                 var d = document.createElement("div");
-                d.className = "heart";
+                d.id = "heart";
                 /**
                  * @param el: 每个 div 的标识
                  * @param x,y: 当前鼠标位置信息
@@ -73,7 +59,7 @@ $(function() {
                 hearts.push({
                     el: d,
                     x: event.clientX,
-                    y: event.clientY,
+                    y: event.clientY - 12,
                     scale: 1,
                     alpha: 1,
                     color: randomColor()

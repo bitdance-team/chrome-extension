@@ -1,8 +1,8 @@
 window.onload = function(){
   console.log("[BitDance extension] 学生助手插件 - 确认跳转页直接跳转模块加载成功");
 
-    chrome.storage.sync.get("linkOpen", ({ linkOpen })=>{
-        if(linkOpen){
+    chrome.storage.sync.get("State_DirectUrl", ({ State_DirectUrl })=>{
+        if(State_DirectUrl){
             let locHost = location.host,locHref = location.href;
 
         let methods = {
@@ -88,21 +88,21 @@ window.onload = function(){
 
         setTimeout(url(),200);
 
-        function url(){
+        function url() {
             let flag = false;
-            if(locHref.includes(RedirectPage.sites[locHost].include)){
+            if(locHref.includes(RedirectPage.sites[locHost].include)) {
                 locHref = locHref.split(RedirectPage.sites[locHost].include);
                 flag = true;
             }
-        
-            if(flag){
+
+            if(flag) {
                 location.replace(decodeURIComponent(locHref[1]));
-            }else{
+            } else {
                 //改进
-                if(RedirectPage.sites[locHost].selector){
+                if(RedirectPage.sites[locHost].selector) {
                     let target = document.querySelector(RedirectPage.sites[locHost].selector);
-                location.replace(target.href || target.innerText)
-                } 
+                    location.replace(target.href || target.innerText)
+                }
             }
         }
 
