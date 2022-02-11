@@ -162,6 +162,8 @@ $(function() {
       var protocol, isSettingPage = true;
       if(/^chrome:\/\/.*$/.test(url)) {
           protocol = "chrome://"
+      } else if(/^chrome-extension:\/\/.*$/.test(url)) {
+          protocol = "chrome-extension://"
       } else if(/^edge:\/\/.*$/.test(url)) {
           protocol = "edge://"
       } else {
