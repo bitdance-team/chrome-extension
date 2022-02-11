@@ -99,9 +99,7 @@ $(function() {
      */
     document.getElementById("btnScreenshot").addEventListener("click", () => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            if(isChromeSettingPage(tabs[0].url)) {
-                alert("抱歉，由于浏览器限制，“chrome://”开头的网页不支持截图");
-            } else {
+            if(!isBrowserSettingPage({ url: tabs[0].url, action: "截图", showSorryInfo: true })) {
                 chrome.extension.getBackgroundPage().takeScreenshot(tabs[0]);
                 window.close();
             }
@@ -114,9 +112,7 @@ $(function() {
      */
     document.getElementById("transform").onclick = function () {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            if(isChromeSettingPage(tabs[0].url)) {
-                alert("抱歉，由于浏览器限制，“chrome://”开头的网页不支持翻译");
-            } else {
+            if(!isBrowserSettingPage({ url: tabs[0].url, action: "翻译", showSorryInfo: true })) {
                 chrome.extension.getBackgroundPage().showTranslationWindow()
                 window.close();
             }
@@ -157,12 +153,24 @@ $(function() {
     // ****************************************************************************************************************
 
     /**
-     * 判断是否是 chrome:// 开头的链接
+     * 判断是否是浏览器设置页面
+     * 即是否是 chrome:// 或 edge:// 开头的链接
      * @param {} url
      * @returns
      */
-    function isChromeSettingPage(url) {
-        return /^chrome:\/\/.*$/.test(url);
+    function isBrowserSettingPage({url, action, showSorryInfo = true }) {
+      var protocol, isSettingPage = true;
+      if(/^chrome:\/\/.*$/.test(url)) {
+          protocol = "chrome://"
+      } else if(/^edge:\/\/.*$/.test(url)) {
+          protocol = "edge://"
+      } else {
+          isSettingPage = false;
+      }
+      if(showSorryInfo && isSettingPage) {
+          alert(`十分抱歉，由于浏览器限制，“${protocol}”开头的网站不支持${action}`);
+      }
+      return isSettingPage;
     }
 
     /**
