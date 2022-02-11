@@ -1,7 +1,8 @@
 {
   "name": "学生助手",
   "version": "0.1.0",
-  "description": "BitDance Chrome Extension",
+  "default_locale": "zh",
+  "description": "便捷，易用，专为学生设计",
   "manifest_version": 2,
   "omnibox": {
     "keyword": "ss"
