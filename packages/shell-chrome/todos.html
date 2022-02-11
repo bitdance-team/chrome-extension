@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h3>备忘录</h3>
+    <div v-for="todo in todos" :key="todo._id">
+      <div>
+        <a @click="removeTodo(todo._id)">删除</a> &nbsp;
+        {{content}}
+      </div>
+
+    </div>
+    <div v-if="todos.length === 0">暂无数据</div>
+    <div>添加一个 Todo</div>
+    <div>
+      <textarea v-model="todoForm"></textarea>
+      <button @click="createTodo">创建</button>
+    </div>
+  </div>
+  <script src="./assets/js/lib/vue.js"></script>
+  <script src="./assets/js/lib/axios.min.js"></script>
+  <script src="./assets/js/lib/uuid.min.js"></script>
+  <script src="./assets/js/session.js"></script>
+  <script src="./assets/js/todos.js"></script>
+
+</body>
+
+</html>

@@ -1,10 +1,7 @@
 {
   "version": 2,
   "projects": {
-    "plugin-ui": "packages/plugin-ui",
     "services": "packages/services",
-    "services-api": "packages/services-api",
-    "shared": "packages/shared",
-    "shell-chrome": "packages\\shell-chrome"
+    "shell-chrome": "packages/shell-chrome"
   }
 }
