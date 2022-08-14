@@ -9,7 +9,8 @@ a {
   text-decoration: none;
 }
 body {
-  background: linear-gradient(to right bottom, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+  background-image: linear-gradient(to right bottom, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+  user-select:none;
 }
 #popup {
   min-height: 450px;
@@ -18,7 +19,7 @@ body {
 #popup header {
   width: inherit;
   height: 40px;
-  background: #ffd13fcf;
+  background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
 }
 #popup header #logo {
   height: inherit;
@@ -58,14 +59,14 @@ body {
   cursor: pointer;
 }
 #popup #article #buttons {
-  position: relative;
+  display: flex;
+  flex-direction: row;
   margin-top: 12px;
 }
 #popup #article #buttons #btnScreenshot,
 #popup #article #buttons #transform {
-  float: left;
-  top: 1px;
-  right: 5px;
+  font-size: 14px;
+  letter-spacing: 2px;
   width: 90px;
   height: 40px;
   color: #fff;
@@ -74,6 +75,9 @@ body {
   background-color: #71b0f3;
   border: none;
   border-radius: 4px;
+}
+#popup #article #buttons #btnScreenshot {
+  margin-right: 10px;
 }
 #popup #article #buttons #btnScreenshot:hover {
   background-color: #6FC6FF;
@@ -94,17 +98,19 @@ body {
   box-shadow: 0px 1px 0px 0px;
 }
 #popup #article #buttons #clock {
-  float: left;
-  margin-left: 30px;
-  margin-right: 30px;
-  width: 42px;
+  margin-left: 20px;
+  margin-right: 20px;
+  letter-spacing: 2px;
+  width: 90px;
   height: 42px;
-  background-color: #F7BAEF;
-  border-radius: 50%;
+  color: #fff;
+  background-color: #71b0f3;
+  border-radius: 4px;
   text-align: center;
   line-height: 40px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 500;
 }
 #popup #article #buttons #clock:active {
   transform: translate(0px, 1px);

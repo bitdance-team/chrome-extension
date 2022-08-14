@@ -1,136 +1,132 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh">
-
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>学生助手</title>
-    <link href="assets/css/main.css" type="text/css" rel="stylesheet">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>学生助手</title>
+  <link href="assets/css/main.css" type="text/css" rel="stylesheet">
 </head>
-
 <body>
-    <div id="popup">
-        <header>
-            <img src="assets/image/logo.png" alt="Logo" id="logo">
-            <div id="weather">
-                <select id="weatherSiteSelet">
-                    <option value="北京" selected >北京</option>
-                    <option value="浙江">浙江</option>
-                    <option value="天津">天津</option>
-                    <option value="安徽">安徽</option>
-                    <option value="上海">上海</option>
-                    <option value="福建">福建</option>
-                    <option value="重庆">重庆</option>
-                    <option value="江西">江西</option>
-                    <option value="山东">山东</option>
-                    <option value="河南">河南</option>
-                    <option value="湖北">湖北</option>
-                    <option value="湖南">湖南</option>
-                    <option value="广东">广东</option>
-                    <option value="海南">海南</option>
-                    <option value="山西">山西</option>
-                    <option value="青海">青海</option>
-                    <option value="江苏">江苏</option>
-                    <option value="辽宁">辽宁</option>
-                    <option value="吉林">吉林</option>
-                    <option value="台湾">台湾</option>
-                    <option value="河北">河北</option>
-                    <option value="贵州">贵州</option>
-                    <option value="四川">四川</option>
-                    <option value="云南">云南</option>
-                    <option value="陕西">陕西</option>
-                    <option value="甘肃">甘肃</option>
-                    <option value="黑龙江">黑龙江</option>
-                    <option value="香港">香港</option>
-                    <option value="澳门">澳门</option>
-                    <option value="广西">广西</option>
-                    <option value="宁夏">宁夏</option>
-                    <option value="新疆">新疆</option>
-                    <option value="内蒙">内蒙</option>
-                    <option value="西藏">西藏</option>
-                  </select>
-                <img id="svg_w" src="./assets/image/weather/icons/100.svg">
-                <span id='weatherText'></span>
-                <span id="weatherTemp"></span>
+  <div id="popup">
+    <header>
+      <img src="assets/image/logo.png" alt="Logo" id="logo">
+      <div id="weather">
+        <select id="weatherSiteSelet">
+          <option value="北京" selected>北京</option>
+          <option value="浙江">浙江</option>
+          <option value="天津">天津</option>
+          <option value="安徽">安徽</option>
+          <option value="上海">上海</option>
+          <option value="福建">福建</option>
+          <option value="重庆">重庆</option>
+          <option value="江西">江西</option>
+          <option value="山东">山东</option>
+          <option value="河南">河南</option>
+          <option value="湖北">湖北</option>
+          <option value="湖南">湖南</option>
+          <option value="广东">广东</option>
+          <option value="海南">海南</option>
+          <option value="山西">山西</option>
+          <option value="青海">青海</option>
+          <option value="江苏">江苏</option>
+          <option value="辽宁">辽宁</option>
+          <option value="吉林">吉林</option>
+          <option value="台湾">台湾</option>
+          <option value="河北">河北</option>
+          <option value="贵州">贵州</option>
+          <option value="四川">四川</option>
+          <option value="云南">云南</option>
+          <option value="陕西">陕西</option>
+          <option value="甘肃">甘肃</option>
+          <option value="黑龙江">黑龙江</option>
+          <option value="香港">香港</option>
+          <option value="澳门">澳门</option>
+          <option value="广西">广西</option>
+          <option value="宁夏">宁夏</option>
+          <option value="新疆">新疆</option>
+          <option value="内蒙">内蒙</option>
+          <option value="西藏">西藏</option>
+        </select>
+        <img id="svg_w" src="./assets/image/weather/icons/100.svg">
+        <span id='weatherText'></span>
+        <span id="weatherTemp"></span>
+      </div>
+    </header>
+    <div id="back"></div>
+    <div id="article">
+      <div id="buttons">
+        <button id="transform">翻译</button>
+        <div id="clock">番茄钟</div>
+        <button id="btnScreenshot">截图</button>
+      </div>
+      <div class="setting">
+        <ul>
+          <li>
+            <div class="setting-item">
+              <span>SS快捷搜索</span>
+              <div class="button">
+                <input type="checkbox" id="btnSSSearch" class="checkbox" />
+                <div class="knobs"></div>
+                <div class="layer"></div>
+              </div>
             </div>
-        </header>
-        <div id="back"></div>
-        <div id="article">
-            <div id="buttons">
-                <button id="transform">翻译</button>
-                <div id="clock">番茄钟</div>
-                <button id="btnScreenshot">截图</button>
+          </li>
+          <li>
+            <div class="setting-item">
+              <span>确认访问页自动跳转</span>
+              <div class="button">
+                <input type="checkbox" id="btnDirectUrl" class="checkbox" />
+                <div class="knobs"></div>
+                <div class="layer"></div>
+              </div>
             </div>
-            <div class="setting">
-                <ul>
-                    <li>
-                        <div class="setting-item">
-                            <span>SS快捷搜索</span>
-                            <div class="button">
-                                <input type="checkbox" id="btnSSSearch" class="checkbox" />
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="setting-item">
-                            <span>确认访问页自动跳转</span>
-                            <div class="button">
-                                <input type="checkbox" id="btnDirectUrl" class="checkbox" />
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="setting-item">
-                            <span>Google广告屏蔽</span>
-                            <div class="button">
-                                <input type="checkbox" id="btnAdsBlock" class="checkbox" />
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="setting-item">
-                            <span>阅读原文自动展开</span>
-                            <div class="button">
-                                <input type="checkbox" id="btnExpandFulltext" class="checkbox" />
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="setting-item">
-                            <span>鼠标样式</span>
-                            <div class="button">
-                                <input type="checkbox" id="btnMouseStyle" class="checkbox" />
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="setting-item">
-                            <span>鼠标点击特效</span>
-                            <div class="button">
-                                <input type="checkbox" id="btnMouseEffect" class="checkbox" />
-                                <div class="knobs"></div>
-                                <div class="layer"></div>
-                            </div>
-                        </div>
-                    </li>
-
-                </ul>
+          </li>
+          <li>
+            <div class="setting-item">
+              <span>Google广告屏蔽</span>
+              <div class="button">
+                <input type="checkbox" id="btnAdsBlock" class="checkbox" />
+                <div class="knobs"></div>
+                <div class="layer"></div>
+              </div>
             </div>
-        </div>
-        <iframe src="assets/html/pomodoro/popup.html" id="pomodoro" style="border: 0; height: 450px; display: none;"></iframe>
+          </li>
+          <li>
+            <div class="setting-item">
+              <span>阅读原文自动展开</span>
+              <div class="button">
+                <input type="checkbox" id="btnExpandFulltext" class="checkbox" />
+                <div class="knobs"></div>
+                <div class="layer"></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="setting-item">
+              <span>鼠标样式</span>
+              <div class="button">
+                <input type="checkbox" id="btnMouseStyle" class="checkbox" />
+                <div class="knobs"></div>
+                <div class="layer"></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="setting-item">
+              <span>鼠标点击特效</span>
+              <div class="button">
+                <input type="checkbox" id="btnMouseEffect" class="checkbox" />
+                <div class="knobs"></div>
+                <div class="layer"></div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
-    <script src="assets/js/lib/jquery.min.js"></script>
-    <script src="assets/js/popup.js"></script>
-    <script src="assets/js/popup2.js"></script>
+    <iframe src="assets/html/pomodoro/popup.html" id="pomodoro" style="border: 0; height: 450px; display: none;"></iframe>
+  </div>
+  <script src="assets/js/lib/jquery.min.js"></script>
+  <script src="assets/js/popup.js"></script>
+  <script src="assets/js/popup2.js"></script>
 </body>
-
 </html>
